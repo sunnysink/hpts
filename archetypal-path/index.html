@@ -6,44 +6,8 @@
 <style>
   /* ============ TOKENS ============ */
   :root {
-    /* deliberately dark-first: this page is a night sky. the :root block
-       still defines the full LIGHT palette per the three-state theme rule. */
-    --sky-0:  #eef1fb;   /* light ground */
-    --sky-1:  #e3e7f6;
-    --panel:  #ffffff;
-    --panel-2:#f5f6fd;
-    --hair:   rgba(40,48,92,0.14);
-    --ink:    #1b2140;   /* body text */
-    --ink-soft:#4a5170;
-    --ink-faint:#727aa0;
-    --gold:   #b78a2e;   /* starlight gold, on light */
-    --gold-bright:#c99a34;
-    --lav:    #6d5aa6;
-    --cel:    #3f6aa8;
-    --star:   rgba(30,40,90,0.5);
-    --glow-gold: rgba(183,138,46,0.16);
-    --shadow: 0 18px 46px -22px rgba(24,28,60,0.42);
-  }
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) {
-      --sky-0:  #070a1c;
-      --sky-1:  #0c1230;
-      --panel:  rgba(24,30,64,0.62);
-      --panel-2:rgba(18,23,52,0.72);
-      --hair:   rgba(210,198,150,0.16);
-      --ink:    #eae7f4;
-      --ink-soft:#c3c6df;
-      --ink-faint:#8b90b6;
-      --gold:   #e6c46e;
-      --gold-bright:#f2d488;
-      --lav:    #c6b3e0;
-      --cel:    #a7c1e6;
-      --star:   rgba(233,231,244,0.9);
-      --glow-gold: rgba(230,196,110,0.20);
-      --shadow: 0 26px 60px -26px rgba(0,0,0,0.7);
-    }
-  }
-  :root[data-theme="dark"] {
+    /* dark-first by design: this page is a night sky. dark is the default for
+       every viewer; light is opt-in via the toggle ([data-theme="light"]). */
     --sky-0:  #070a1c;
     --sky-1:  #0c1230;
     --panel:  rgba(24,30,64,0.62);
@@ -59,6 +23,23 @@
     --star:   rgba(233,231,244,0.9);
     --glow-gold: rgba(230,196,110,0.20);
     --shadow: 0 26px 60px -26px rgba(0,0,0,0.7);
+  }
+  :root[data-theme="light"] {
+    --sky-0:  #eef1fb;
+    --sky-1:  #e3e7f6;
+    --panel:  #ffffff;
+    --panel-2:#f5f6fd;
+    --hair:   rgba(40,48,92,0.14);
+    --ink:    #1b2140;
+    --ink-soft:#4a5170;
+    --ink-faint:#727aa0;
+    --gold:   #b78a2e;
+    --gold-bright:#c99a34;
+    --lav:    #6d5aa6;
+    --cel:    #3f6aa8;
+    --star:   rgba(30,40,90,0.5);
+    --glow-gold: rgba(183,138,46,0.16);
+    --shadow: 0 18px 46px -22px rgba(24,28,60,0.42);
   }
 
   /* per-arc accent, set on each card/section */
@@ -942,7 +923,7 @@ const tbtn = document.getElementById('themeBtn');
 function currentDark(){
   const t = document.documentElement.getAttribute('data-theme');
   if (t) return t === 'dark';
-  return window.matchMedia('(prefers-color-scheme: dark)').matches;
+  return true; // dark is the default for this night-sky page
 }
 function syncIcon(){ tbtn.textContent = currentDark() ? '☀' : '☾'; }
 tbtn.addEventListener('click', () => {
