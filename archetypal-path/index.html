@@ -1,0 +1,1016 @@
+<title>The Archetypal Path</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Mulish:wght@300;400;500;600;700&display=swap">
+<style>
+  /* ============ TOKENS ============ */
+  :root {
+    /* deliberately dark-first: this page is a night sky. the :root block
+       still defines the full LIGHT palette per the three-state theme rule. */
+    --sky-0:  #eef1fb;   /* light ground */
+    --sky-1:  #e3e7f6;
+    --panel:  #ffffff;
+    --panel-2:#f5f6fd;
+    --hair:   rgba(40,48,92,0.14);
+    --ink:    #1b2140;   /* body text */
+    --ink-soft:#4a5170;
+    --ink-faint:#727aa0;
+    --gold:   #b78a2e;   /* starlight gold, on light */
+    --gold-bright:#c99a34;
+    --lav:    #6d5aa6;
+    --cel:    #3f6aa8;
+    --star:   rgba(30,40,90,0.5);
+    --glow-gold: rgba(183,138,46,0.16);
+    --shadow: 0 18px 46px -22px rgba(24,28,60,0.42);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --sky-0:  #070a1c;
+      --sky-1:  #0c1230;
+      --panel:  rgba(24,30,64,0.62);
+      --panel-2:rgba(18,23,52,0.72);
+      --hair:   rgba(210,198,150,0.16);
+      --ink:    #eae7f4;
+      --ink-soft:#c3c6df;
+      --ink-faint:#8b90b6;
+      --gold:   #e6c46e;
+      --gold-bright:#f2d488;
+      --lav:    #c6b3e0;
+      --cel:    #a7c1e6;
+      --star:   rgba(233,231,244,0.9);
+      --glow-gold: rgba(230,196,110,0.20);
+      --shadow: 0 26px 60px -26px rgba(0,0,0,0.7);
+    }
+  }
+  :root[data-theme="dark"] {
+    --sky-0:  #070a1c;
+    --sky-1:  #0c1230;
+    --panel:  rgba(24,30,64,0.62);
+    --panel-2:rgba(18,23,52,0.72);
+    --hair:   rgba(210,198,150,0.16);
+    --ink:    #eae7f4;
+    --ink-soft:#c3c6df;
+    --ink-faint:#8b90b6;
+    --gold:   #e6c46e;
+    --gold-bright:#f2d488;
+    --lav:    #c6b3e0;
+    --cel:    #a7c1e6;
+    --star:   rgba(233,231,244,0.9);
+    --glow-gold: rgba(230,196,110,0.20);
+    --shadow: 0 26px 60px -26px rgba(0,0,0,0.7);
+  }
+
+  /* per-arc accent, set on each card/section */
+  .arc-fool { --accent: var(--gold); --accent-soft: var(--glow-gold); }
+  .arc-1    { --accent: var(--gold); --accent-soft: rgba(230,196,110,0.16); }
+  .arc-2    { --accent: var(--lav);  --accent-soft: rgba(198,179,224,0.18); }
+  .arc-3    { --accent: var(--cel);  --accent-soft: rgba(167,193,230,0.18); }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--sky-0);
+    color: var(--ink);
+    font-family: "Mulish", system-ui, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* fixed starry ground */
+  #sky {
+    position: fixed; inset: 0; z-index: -2;
+    background:
+      radial-gradient(1200px 700px at 78% -8%, color-mix(in srgb, var(--lav) 16%, transparent), transparent 60%),
+      radial-gradient(1000px 620px at 12% 108%, color-mix(in srgb, var(--cel) 18%, transparent), transparent 60%),
+      linear-gradient(180deg, var(--sky-0), var(--sky-1) 60%, var(--sky-0));
+  }
+  #stars { position: fixed; inset: 0; z-index: -1; display: block; }
+
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+
+  /* ============ TYPE ============ */
+  h1,h2,h3 { font-family: "Cormorant Garamond", Georgia, serif; font-weight: 500; text-wrap: balance; margin: 0; }
+  .eyebrow {
+    font-size: 13px; letter-spacing: 0.32em; text-transform: uppercase;
+    color: var(--gold); font-weight: 600; font-family: "Mulish", sans-serif;
+  }
+
+  /* ============ HERO ============ */
+  header.hero { text-align: center; padding: clamp(84px,15vh,150px) 0 56px; }
+  .hero .glyph {
+    font-family: "Cormorant Garamond", serif; font-size: 34px; color: var(--gold);
+    letter-spacing: 0.5em; margin-left: 0.5em; opacity: 0.9;
+  }
+  .hero h1 {
+    font-size: clamp(52px, 11vw, 116px); line-height: 0.92; letter-spacing: -0.01em;
+    margin: 18px 0 6px;
+  }
+  .hero h1 em { font-style: italic; color: var(--gold); }
+  .hero .sub {
+    font-family: "Cormorant Garamond", serif; font-style: italic;
+    font-size: clamp(20px, 3.2vw, 30px); color: var(--ink-soft); margin-bottom: 26px;
+  }
+  .hero .lede {
+    max-width: 40rem; margin: 0 auto 34px; color: var(--ink-soft); font-size: 17px;
+  }
+  .hero-cta { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+  .btn {
+    font-family: "Mulish", sans-serif; font-size: 14px; font-weight: 600;
+    letter-spacing: 0.06em; padding: 14px 26px; border-radius: 999px;
+    border: 1px solid var(--hair); cursor: pointer; transition: all 0.25s ease;
+    color: var(--ink); background: var(--panel); backdrop-filter: blur(6px);
+  }
+  .btn:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
+  .btn.primary {
+    background: linear-gradient(120deg, var(--gold), var(--gold-bright));
+    color: #1a1508; border-color: transparent;
+    box-shadow: 0 10px 30px -12px var(--glow-gold);
+  }
+  .btn.primary:hover { box-shadow: 0 16px 38px -12px var(--glow-gold); }
+  a.btn { text-decoration: none; display: inline-block; }
+
+  /* ============ SECTION FRAME ============ */
+  section { position: relative; }
+  /* section.wrap beats the .wrap padding (class vs type) so vertical rhythm survives */
+  section.wrap { padding-top: 84px; padding-bottom: 56px; }
+  .sec-head { text-align: center; max-width: 44rem; margin: 0 auto 40px; }
+  .sec-head h2 { font-size: clamp(32px, 5vw, 46px); margin: 10px 0 12px; }
+  .sec-head p { color: var(--ink-soft); font-size: 16.5px; }
+
+  /* ============ PATHWORKING STEPS ============ */
+  .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap: 18px; }
+  .step {
+    background: var(--panel); border: 1px solid var(--hair); border-radius: 16px;
+    padding: 26px 22px 24px; position: relative; backdrop-filter: blur(8px);
+  }
+  .step .n {
+    font-family: "Cormorant Garamond", serif; font-size: 46px; line-height: 1;
+    color: var(--gold); opacity: 0.85;
+  }
+  .step h3 { font-size: 24px; margin: 8px 0 8px; }
+  .step p { color: var(--ink-soft); font-size: 14.5px; margin: 0; }
+
+  /* ============ DAILY DRAW ============ */
+  .draw-panel {
+    background: var(--panel-2); border: 1px solid var(--hair); border-radius: 22px;
+    padding: clamp(30px,5vw,52px); text-align: center; backdrop-filter: blur(10px);
+    box-shadow: var(--shadow); position: relative; overflow: hidden;
+  }
+  .draw-panel::before {
+    content:""; position:absolute; inset:0; opacity:0.5; pointer-events:none;
+    background: radial-gradient(420px 260px at 50% -10%, var(--glow-gold), transparent 70%);
+  }
+  .draw-slot { position: relative; z-index: 1; min-height: 132px; display: grid; place-items: center; }
+  .draw-empty { color: var(--ink-faint); font-family:"Cormorant Garamond",serif; font-style: italic; font-size: 22px; }
+  .draw-result { animation: rise 0.6s cubic-bezier(.2,.8,.2,1) both; }
+  .draw-result .roman { font-family:"Cormorant Garamond",serif; font-size: 30px; color: var(--accent, var(--gold)); letter-spacing:0.1em; }
+  .draw-result .name { font-family:"Cormorant Garamond",serif; font-size: clamp(34px,6vw,54px); line-height:1; margin: 2px 0 4px; }
+  .draw-result .arche { font-size: 13px; letter-spacing:0.28em; text-transform:uppercase; color: var(--accent, var(--gold)); font-weight:600; }
+  .draw-result .aff { font-family:"Cormorant Garamond",serif; font-style: italic; font-size: 20px; color: var(--ink-soft); max-width: 34rem; margin: 14px auto 0; }
+  .draw-result button.open-full {
+    margin-top: 20px; font: inherit; font-size: 13.5px; font-weight:600; letter-spacing:0.05em;
+    color: var(--accent, var(--gold)); background: none; border:none; cursor:pointer;
+    border-bottom: 1px solid currentColor; padding: 2px 0;
+  }
+  @keyframes rise { from { opacity:0; transform: translateY(14px) scale(.97);} to {opacity:1; transform:none;} }
+
+  /* ============ CONSTELLATION GRID ============ */
+  .arc-label { display:flex; align-items:center; gap:16px; margin: 44px 0 20px; }
+  .arc-label .roman-span { font-family:"Cormorant Garamond",serif; font-size: 26px; color: var(--accent); letter-spacing:0.1em; }
+  .arc-label h3 { font-size: 27px; }
+  .arc-label .desc { color: var(--ink-faint); font-size: 14px; margin-left: auto; text-align:right; max-width: 20rem; }
+  .arc-label .line { flex: 0 0 40px; height:1px; background: linear-gradient(90deg, var(--accent), transparent); }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(216px,1fr)); gap: 16px; }
+  .card {
+    text-align: left; cursor: pointer; font: inherit; color: inherit;
+    background: var(--panel); border: 1px solid var(--hair); border-radius: 16px;
+    padding: 20px 20px 18px; position: relative; overflow: hidden;
+    transition: transform 0.28s cubic-bezier(.2,.8,.2,1), box-shadow 0.28s, border-color 0.28s;
+    backdrop-filter: blur(8px); min-height: 172px; display:flex; flex-direction:column;
+  }
+  .card::after {
+    content:""; position:absolute; inset:0; border-radius: inherit; pointer-events:none;
+    box-shadow: inset 0 0 0 1px transparent, 0 0 0 0 var(--accent-soft); transition: box-shadow 0.3s; opacity:0;
+  }
+  .card:hover {
+    transform: translateY(-4px); border-color: color-mix(in srgb, var(--accent) 55%, var(--hair));
+    box-shadow: var(--shadow), 0 0 34px -10px var(--accent-soft);
+  }
+  .card:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  .card .roman {
+    font-family:"Cormorant Garamond",serif; font-size: 40px; line-height:1;
+    color: var(--accent); opacity: 0.9;
+  }
+  .card .cname { font-family:"Cormorant Garamond",serif; font-size: 27px; line-height:1.02; margin: 12px 0 3px; }
+  .card .carche { font-size: 12.5px; letter-spacing:0.2em; text-transform:uppercase; color: var(--accent); font-weight:600; }
+  .card .cfoot { margin-top: auto; padding-top: 12px; display:flex; flex-direction:column; gap:8px; align-items:flex-start; }
+  .card .cwords { color: var(--ink-faint); font-size: 13px; }
+  .card .cbadge {
+    display:none; align-items:center; gap:6px;
+    font-size: 10.5px; letter-spacing:0.14em; text-transform:uppercase; color: var(--accent); font-weight: 700;
+  }
+  .card.has-journal .cbadge { display:inline-flex; }
+  .card .star-mark { position:absolute; top:18px; right:18px; color: var(--accent); opacity:0.4; font-size:15px; transition: opacity 0.3s, text-shadow 0.3s; }
+  .card.has-journal .star-mark { opacity: 1; text-shadow: 0 0 12px var(--accent); }
+
+  /* ============ LIVING PRACTICES ============ */
+  .practice-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(260px,1fr)); gap: 16px; }
+  .practice {
+    background: var(--panel); border:1px solid var(--hair); border-radius: 14px; padding: 22px 22px;
+    backdrop-filter: blur(8px);
+  }
+  .practice h3 { font-size: 22px; margin-bottom: 7px; display:flex; align-items:baseline; gap:10px; }
+  .practice h3 span { font-family:"Mulish"; font-size:12px; letter-spacing:0.2em; color: var(--gold); font-weight:700; }
+  .practice p { color: var(--ink-soft); font-size: 14.5px; margin:0; }
+
+  /* ============ FOOTER ============ */
+  footer { text-align:center; padding: 60px 0 80px; border-top:1px solid var(--hair); margin-top: 40px; }
+  footer .mark { font-family:"Cormorant Garamond",serif; font-size: 25px; color: var(--gold); }
+  footer p { color: var(--ink-faint); font-size: 14px; margin: 8px 0 0; }
+
+  /* ============ THEME TOGGLE ============ */
+  .theme-toggle {
+    position: fixed; top: 16px; right: 16px; z-index: 30;
+    width: 42px; height: 42px; border-radius: 50%; border:1px solid var(--hair);
+    background: var(--panel); color: var(--ink); cursor:pointer; font-size:17px;
+    backdrop-filter: blur(8px); display:grid; place-items:center; transition: transform .2s;
+  }
+  .theme-toggle:hover { transform: rotate(18deg); }
+
+  /* ============ MODAL ============ */
+  .modal-back {
+    position: fixed; inset: 0; z-index: 40; display: none;
+    background: color-mix(in srgb, var(--sky-0) 72%, transparent);
+    backdrop-filter: blur(7px); padding: 24px; overflow-y: auto;
+  }
+  .modal-back.open { display: flex; align-items: flex-start; justify-content: center; }
+  .modal {
+    background:
+      radial-gradient(600px 300px at 50% -6%, var(--accent-soft), transparent 70%),
+      var(--panel-2);
+    border: 1px solid color-mix(in srgb, var(--accent) 40%, var(--hair));
+    border-radius: 22px; max-width: 720px; width: 100%; margin: 40px 0;
+    box-shadow: var(--shadow); position: relative;
+    animation: modalIn 0.42s cubic-bezier(.2,.85,.2,1) both;
+    backdrop-filter: blur(14px);
+  }
+  @keyframes modalIn { from { opacity:0; transform: translateY(20px) scale(.97);} to {opacity:1; transform:none;} }
+  @media (prefers-reduced-motion: reduce) {
+    .modal, .draw-result { animation: none; }
+    #stars { display: none; }
+  }
+  .modal-close {
+    position: sticky; top: 14px; float: right; margin: 14px 14px 0 0;
+    width: 38px; height: 38px; border-radius: 50%; border:1px solid var(--hair);
+    background: var(--panel); color: var(--ink); font-size: 18px; cursor:pointer; z-index:2;
+    display:grid; place-items:center;
+  }
+  .modal-close:hover { color: var(--accent); border-color: var(--accent); }
+  .modal-body { padding: 8px clamp(24px,5vw,48px) 46px; }
+  .modal .m-roman { font-family:"Cormorant Garamond",serif; font-size: 34px; color: var(--accent); letter-spacing:0.1em; }
+  .modal .m-name { font-family:"Cormorant Garamond",serif; font-size: clamp(40px,8vw,64px); line-height:0.95; margin: 2px 0 6px; }
+  .modal .m-arche { font-size: 13px; letter-spacing:0.3em; text-transform:uppercase; color: var(--accent); font-weight:600; }
+  .modal .m-essence { color: var(--ink-soft); font-size: 16.5px; margin: 22px 0 26px; }
+
+  .chips { display:flex; flex-wrap:wrap; gap:8px; margin-bottom: 30px; }
+  .chip {
+    font-size: 13px; padding: 5px 13px; border-radius: 999px;
+    border: 1px solid color-mix(in srgb, var(--accent) 34%, var(--hair));
+    color: var(--ink-soft); background: color-mix(in srgb, var(--accent) 8%, transparent);
+  }
+  .block-label {
+    font-size: 12.5px; letter-spacing: 0.26em; text-transform: uppercase;
+    color: var(--accent); font-weight: 700; margin: 30px 0 12px; display:flex; align-items:center; gap:10px;
+  }
+  .block-label::after { content:""; flex:1; height:1px; background: var(--hair); }
+
+  .visualize {
+    position: relative; border-radius: 16px; padding: 26px 26px;
+    background:
+      radial-gradient(320px 200px at 22% 0%, var(--accent-soft), transparent 72%),
+      var(--panel);
+    border: 1px solid var(--hair);
+    font-family:"Cormorant Garamond", serif; font-size: 21px; line-height: 1.55; color: var(--ink);
+  }
+  .affirmation {
+    text-align:center; padding: 14px 8px; margin: 6px 0;
+  }
+  .affirmation .q { font-family:"Cormorant Garamond",serif; font-size: 30px; color: var(--accent); line-height: 1; }
+  .affirmation p {
+    font-family:"Cormorant Garamond",serif; font-style: italic; font-size: clamp(23px,4vw,30px);
+    line-height:1.34; color: var(--ink); max-width: 34rem; margin: 6px auto 0;
+  }
+
+  .spread { display:grid; grid-template-columns: repeat(3,1fr); gap: 12px; }
+  .pos {
+    background: var(--panel); border:1px solid var(--hair); border-radius: 13px; padding: 18px 16px;
+    display:flex; flex-direction:column; gap: 10px;
+  }
+  .pos .pnum {
+    width: 30px; height:30px; border-radius:50%; display:grid; place-items:center;
+    font-family:"Cormorant Garamond",serif; font-size:19px; color:#1a1508;
+    background: linear-gradient(120deg, var(--accent), color-mix(in srgb, var(--accent) 60%, #fff));
+  }
+  :root:not([data-theme="light"]) .pos .pnum,
+  :root[data-theme="dark"] .pos .pnum { color: #14101f; }
+  .pos p { margin:0; font-size: 14.5px; color: var(--ink-soft); }
+
+  .reflect { list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:2px; }
+  .reflect li {
+    padding: 13px 4px 13px 26px; position: relative; color: var(--ink-soft); font-size: 15.5px;
+    border-bottom: 1px solid var(--hair);
+  }
+  .reflect li:last-child { border-bottom:none; }
+  .reflect li::before {
+    content:"✦"; position:absolute; left:2px; top:13px; color: var(--accent); font-size: 12px;
+  }
+
+  /* ---------- JOURNALING ---------- */
+  .journal-note {
+    background:
+      radial-gradient(280px 160px at 18% 0%, var(--accent-soft), transparent 72%),
+      var(--panel);
+    border: 1px solid var(--hair); border-radius: 16px; padding: 22px 22px 20px; margin-top: 10px;
+  }
+  .journal-note .jn-head { display:flex; align-items:baseline; justify-content:space-between; gap:10px; margin-bottom:4px; }
+  .journal-note .jn-title { font-family:"Cormorant Garamond",serif; font-size: 24px; color: var(--ink); }
+  .journal-note .jn-hint { color: var(--ink-faint); font-size: 13.5px; margin: 2px 0 12px; }
+  textarea.field {
+    width: 100%; box-sizing: border-box; font: inherit; font-size: 15px; line-height: 1.55;
+    color: var(--ink); background: color-mix(in srgb, var(--sky-0) 40%, var(--panel));
+    border: 1px solid var(--hair); border-radius: 11px; padding: 12px 14px; resize: none;
+    min-height: 92px; transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  textarea.field::placeholder { color: var(--ink-faint); opacity: 0.75; font-style: italic; }
+  textarea.field:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+
+  /* each reflection question is its own toggle */
+  .q-fold { border-top: 1px solid var(--hair); }
+  .q-fold:first-of-type { border-top: none; }
+  .q-fold > summary {
+    list-style: none; cursor: pointer; user-select: none;
+    display: flex; align-items: baseline; gap: 11px; padding: 15px 2px;
+  }
+  .q-fold > summary::-webkit-details-marker { display: none; }
+  .q-fold > summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 8px; }
+  .q-fold .q-star { color: var(--accent); font-size: 12px; flex: none; position: relative; top: 1px; }
+  .q-fold .q-text { color: var(--ink); font-size: 15.5px; line-height: 1.5; flex: 1; }
+  .q-fold .q-btn {
+    flex: none; align-self: center; display: inline-flex; align-items: center; gap: 6px;
+    font-size: 12px; letter-spacing: 0.04em; font-weight: 600;
+    color: var(--accent); opacity: 0.7; padding: 4px 2px; transition: opacity 0.2s;
+  }
+  .q-fold > summary:hover .q-btn, .q-fold[open] .q-btn { opacity: 1; }
+  .q-fold .q-btn .plus { transition: transform 0.3s; font-size: 14px; line-height: 1; }
+  .q-fold[open] .q-btn .plus { transform: rotate(45deg); }
+  .q-fold .q-btn .lbl::after { content: "Write"; }
+  .q-fold[open] .q-btn .lbl::after { content: "Close"; }
+  .q-fold .q-answer { padding: 0 2px 16px; }
+  .save-state {
+    font-size: 12px; color: var(--ink-faint); text-align:right; margin-top: 10px; min-height: 15px;
+    opacity: 0; transition: opacity 0.3s;
+  }
+  .save-state.show { opacity: 1; }
+
+  /* ---------- JOURNAL REVIEW ---------- */
+  .jr-entry { border:1px solid var(--hair); border-radius:15px; padding:20px 20px; margin-top:14px;
+    background: radial-gradient(240px 130px at 14% 0%, var(--accent-soft), transparent 72%), var(--panel); }
+  .jr-head { display:flex; align-items:baseline; gap:11px; margin-bottom:10px; }
+  .jr-head .jr-roman { font-family:"Cormorant Garamond",serif; color:var(--accent); font-size:22px; letter-spacing:0.06em; }
+  .jr-head .jr-name { font-family:"Cormorant Garamond",serif; font-size:25px; flex:1; line-height:1; }
+  .jr-open { font: inherit; font-size:12.5px; font-weight:600; letter-spacing:0.04em; color:var(--accent);
+    background:none; border:none; cursor:pointer; opacity:0.8; padding:2px; }
+  .jr-open:hover { opacity:1; text-decoration:underline; }
+  .jr-insight { color:var(--ink); font-size:15.5px; line-height:1.55; white-space:pre-wrap; margin:0 0 4px; }
+  .jr-qa { border-top:1px solid var(--hair); padding-top:12px; margin-top:12px; }
+  .jr-qa .jr-q { color:var(--accent); font-size:13px; line-height:1.45; margin:0 0 5px; }
+  .jr-qa .jr-a { color:var(--ink-soft); font-size:14.5px; line-height:1.55; white-space:pre-wrap; margin:0; }
+
+  @media (max-width: 560px) {
+    .spread { grid-template-columns: 1fr; }
+    .arc-label .desc { display:none; }
+    .hero .glyph { display:none; }
+  }
+</style>
+
+<div id="sky"></div>
+<canvas id="stars" aria-hidden="true"></canvas>
+<button class="theme-toggle" id="themeBtn" aria-label="Switch light or dark">☾</button>
+
+<header class="hero arc-fool">
+  <div class="glyph">✦ ✦ ✦</div>
+  <div class="eyebrow">Pathworking with Tarot</div>
+  <h1>The <em>Archetypal</em> Path</h1>
+  <div class="sub">A journey through the Major Arcana</div>
+  <p class="lede">The twenty-two Major Arcana are living archetypes, each one a doorway into a part of your own story. Step into their worlds through visualization, reflection, and the spreads inside, and let them guide you through the cycles of your life with clarity and confidence.</p>
+  <div class="hero-cta">
+    <button class="btn primary" id="drawBtn">Draw tonight's archetype</button>
+    <a class="btn" href="#constellation">Explore all 22</a>
+  </div>
+</header>
+
+<main>
+  <!-- HOW TO PATHWORK -->
+  <section class="wrap" id="how">
+    <div class="sec-head">
+      <div class="eyebrow">The Practice</div>
+      <h2>How to pathwork with an archetype</h2>
+      <p>Pathworking is a meditative journey into the world of a card. You step into its energy, meet the archetype as a presence, and let its wisdom surface. Five steps carry you in and back out again.</p>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="n">1</div>
+        <h3>Choose an archetype</h3>
+        <p>Select a Major Arcana card that resonates with you or reflects a current phase in your life. Ask whether its energy is a lesson, a strength, or a challenge.</p>
+      </div>
+      <div class="step">
+        <div class="n">2</div>
+        <h3>Create a sacred space</h3>
+        <p>Find a quiet, comfortable place where you won't be disturbed. Light a candle, burn incense, or play soft music. Place the card in front of you as a focal point.</p>
+      </div>
+      <div class="step">
+        <div class="n">3</div>
+        <h3>Begin the visualization</h3>
+        <p>Close your eyes and breathe. Let your body relax, then picture yourself stepping into the world of the card. What do you see? What do you feel? Imagine the archetype there with you.</p>
+      </div>
+      <div class="step">
+        <div class="n">4</div>
+        <h3>Engage with the archetype</h3>
+        <p>Notice its surroundings, actions, and presence. Ask what it wants to teach you, what it knows about your path, how you can carry its energy. Then listen for whatever comes.</p>
+      </div>
+      <div class="step">
+        <div class="n">5</div>
+        <h3>Reflect and integrate</h3>
+        <p>Thank the archetype and picture yourself returning to your own world. Journal the insights, emotions, and messages, then choose one way to live its lesson today.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- DAILY DRAW -->
+  <section class="wrap arc-fool" id="draw">
+    <div class="sec-head">
+      <div class="eyebrow">Daily Inspiration</div>
+      <h2>Draw an archetype for today</h2>
+      <p>Let one archetype find you. Draw a card, sit with its energy, and use its page to guide your day.</p>
+    </div>
+    <div class="draw-panel">
+      <div class="draw-slot" id="drawSlot" aria-live="polite">
+        <div class="draw-empty">Your archetype is waiting in the dark.</div>
+      </div>
+      <div style="position:relative;z-index:1;margin-top:22px;">
+        <button class="btn primary" id="drawBtn2">Draw a card</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONSTELLATION -->
+  <section class="wrap" id="constellation">
+    <div class="sec-head">
+      <div class="eyebrow">The Full Journey</div>
+      <h2>The twenty-two archetypes</h2>
+      <p>The Fool sets out at zero and travels the whole arc, from the waking world into the inner depths and on into the great mystery. Open any card to enter its world.</p>
+      <button class="btn" id="journalBtn" style="margin-top:8px;">✦ Open your journal</button>
+    </div>
+    <div id="cards"></div>
+  </section>
+
+  <!-- LIVING PRACTICES -->
+  <section class="wrap arc-3" id="living">
+    <div class="sec-head">
+      <div class="eyebrow">Beyond the Page</div>
+      <h2>Living the archetypes</h2>
+      <p>The archetypes are not fixed labels. They are evolving energies you can carry into daily life. A few ways to keep them close.</p>
+    </div>
+    <div class="practice-grid" id="practices"></div>
+  </section>
+</main>
+
+<footer class="arc-fool">
+  <div class="mark">✦</div>
+  <p>You are the hero of your own story. These archetypes are here to help you walk it.</p>
+  <p style="margin-top:14px;">The Archetypal Path &middot; High Priestess Tarot School</p>
+</footer>
+
+<!-- MODAL -->
+<div class="modal-back" id="modalBack" role="dialog" aria-modal="true" aria-labelledby="mName">
+  <div class="modal" id="modal">
+    <button class="modal-close" id="modalClose" aria-label="Close">✕</button>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
+<script>
+/* ---------- DATA ---------- */
+const CARDS = [
+  {num:0, roman:"0", name:"The Fool", arche:"The Explorer", arc:"fool",
+   essence:"The Fool embodies beginnings, curiosity, and limitless potential, inviting you to step into the unknown with trust and an open heart. As the first card in the Major Arcana, the Fool represents the courage to take risks and start fresh, a reminder that growth comes from letting go of fear and trusting the journey ahead.",
+   words:["New Beginnings","Trust","Curiosity","Innocence","Spontaneity","Adventure","Potential","Leap of Faith","Openness","Boundless Energy"],
+   visual:"Imagine standing on the edge of a cliff, the sun on your face and the wind in your hair. You feel the thrill of stepping into the unknown, fully trusting the path ahead.",
+   aff:"I embrace new beginnings with trust and an open heart.",
+   spread:["What new opportunity is calling me?","What fear or hesitation must I release?","How can I fully trust this journey?"],
+   reflect:["What new beginning am I being called to embrace?","What fears or doubts are holding me back from taking a leap of faith?","How can I cultivate more trust in the journey ahead?","In what areas of my life can I bring more curiosity and openness?","What possibilities excite me when I let go of expectations?"]},
+
+  {num:1, roman:"I", name:"The Magician", arche:"The Manifestor", arc:"1",
+   essence:"The Magician represents personal power, creativity, and the ability to manifest your desires. This archetype embodies resourcefulness, a reminder that you already have every tool you need to shape your reality. The Magician calls you to focus your energy and align your intentions with your actions, bridging the gap between thought and creation.",
+   words:["Manifestation","Resourcefulness","Creativity","Action","Focus","Intention","Willpower","Transformation","Potential"],
+   visual:"Visualize yourself standing at a table with all the tools of the Magician: a cup, a sword, a pentacle, and a wand. Feel the energy of the universe flowing through you as you use these tools to create your vision. See your intentions coming to life with clarity and purpose.",
+   aff:"I am a powerful manifester. I have everything I need to manifest my desires and bring my vision to life.",
+   spread:["What tools or resources do I have at my disposal?","How can I align my intentions with my actions?","What can I manifest by focusing my energy?"],
+   reflect:["What am I ready to create or manifest in my life?","How can I better use the tools and skills I already have?","Where am I hesitating to take action, and why?","What steps can I take to align my thoughts and actions?","How can I trust my ability to create positive change?"]},
+
+  {num:2, roman:"II", name:"The High Priestess", arche:"The Intuitive", arc:"1",
+   essence:"The High Priestess represents intuition, mystery, and the wisdom found within. She encourages you to trust your inner voice and explore the unseen aspects of life, inviting you to pause, reflect, and connect with your subconscious. Through intuition and spiritual connection she teaches that the answers you seek are already within you.",
+   words:["Intuition","Mystery","Inner Wisdom","Reflection","Subconscious","Spiritual Connection","Stillness","Insight","Divine Feminine"],
+   visual:"Visualize yourself entering a sacred temple bathed in soft moonlight. The High Priestess sits before you, holding a glowing scroll of hidden wisdom. As you approach, she invites you to sit in silence and feel the answers rising from within. You sense her energy guiding you deeper into your inner knowing.",
+   aff:"I trust my intuition and embrace the wisdom within me. The answers I seek are already present in my inner world.",
+   spread:["What is my intuition trying to tell me right now?","What hidden wisdom or truth is ready to be revealed?","How can I trust and strengthen my intuitive connection?"],
+   reflect:["What messages am I receiving from my intuition?","How can I create space for stillness and reflection in my life?","What hidden truths am I ready to uncover?","Where in my life can I let go of logic and trust my inner knowing?","How can I deepen my connection to the spiritual or unseen?"]},
+
+  {num:3, roman:"III", name:"The Empress", arche:"The Creator", arc:"1",
+   essence:"The Empress embodies creativity, abundance, and nurturing energy. She represents the power to bring ideas, projects, and relationships to life through care and intention. This archetype encourages you to connect with the natural world, honor cycles of growth, and nurture yourself and others, teaching that creation flourishes when rooted in love and harmony.",
+   words:["Creation","Abundance","Nurturing","Growth","Fertility","Love","Harmony","Care","Connection to Nature"],
+   visual:"Visualize yourself in a lush garden overflowing with flowers, trees, and ripe fruits. The Empress sits on a throne surrounded by nature, radiating warmth and abundance. She hands you a seed and invites you to plant it, nurturing it into full bloom. Feel the energy of growth, love, and creation flowing through you.",
+   aff:"I am a creator of abundance and beauty. I nurture my dreams and watch them grow with love and care.",
+   spread:["What am I ready to nurture and grow in my life?","What resources or support will help my creation thrive?","How can I cultivate abundance and harmony in this process?"],
+   reflect:["What creative project or idea am I ready to bring to life?","How can I better nurture myself and those around me?","What does abundance mean to me, and how can I cultivate it?","Where in my life can I create more balance and harmony?","How can I connect with nature to inspire my creative energy?"]},
+
+  {num:4, roman:"IV", name:"The Emperor", arche:"The Protector", arc:"1",
+   essence:"The Emperor represents structure, authority, and the protective energy needed to create stability. This archetype embodies strength, leadership, and the ability to set boundaries. He encourages you to take control of your life, establish order, and build a strong foundation for growth, teaching that true protection and power come from wisdom, discipline, and balance.",
+   words:["Structure","Authority","Stability","Leadership","Boundaries","Strength","Protection","Discipline","Foundation"],
+   visual:"Visualize yourself standing in a grand hall with towering pillars, a throne at its center. The Emperor stands strong, a shield in one hand and a scepter in the other. He invites you to sit beside him, offering his guidance on creating stability and protection in your life. Feel his energy instilling strength and clarity within you.",
+   aff:"I am strong, disciplined, and in control of my life. I build stability and protect what matters most with wisdom and courage.",
+   spread:["What area of my life needs more structure or stability?","What boundaries do I need to set to protect my energy?","How can I embody confident and compassionate leadership?"],
+   reflect:["Where in my life do I need to take charge and create structure?","How can I strengthen my boundaries to feel more protected?","What does stability mean to me, and how can I cultivate it?","What kind of leader do I aspire to be, and how can I embody that?","How can I balance control with flexibility and compassion?"]},
+
+  {num:5, roman:"V", name:"The Hierophant", arche:"The Teacher", arc:"1",
+   essence:"The Hierophant represents tradition, spiritual guidance, and the pursuit of knowledge. This archetype embodies the wisdom of shared beliefs and practices, encouraging you to learn from established teachings while finding your own truth. He invites you to seek mentors, connect with your spiritual path, and honor the lessons that help you grow.",
+   words:["Tradition","Wisdom","Spiritual Guidance","Learning","Teaching","Belief Systems","Mentorship","Sacred Knowledge","Growth"],
+   visual:"Visualize yourself entering a sacred temple filled with light. The Hierophant stands at the altar, surrounded by ancient books and symbols of wisdom. He welcomes you as a student, offering you a scroll with a personal teaching or message. Feel his guidance as you absorb the lesson and integrate it into your life.",
+   aff:"I seek wisdom with an open mind and honor the lessons that guide my growth. I trust in the balance of tradition and my own truth.",
+   spread:["What lesson or wisdom is ready to come into my life?","What belief or tradition is supporting me right now?","How can I integrate spiritual teachings into my daily practice?"],
+   reflect:["What spiritual or personal lessons am I ready to learn?","Who or what is acting as a mentor or guide in my life right now?","How do my beliefs support my growth, and where might they need re-evaluation?","What role does tradition or structure play in my spiritual journey?","How can I share the wisdom I've gained with others?"]},
+
+  {num:6, roman:"VI", name:"The Lovers", arche:"The Choice Maker", arc:"1",
+   essence:"The Lovers represent the power of choice and the alignment of values, relationships, and commitments. This archetype encourages you to make decisions from a place of authenticity and harmony, whether they involve partnerships, goals, or your personal path, teaching you to honor your heart and choose what aligns with your higher purpose.",
+   words:["Choice","Alignment","Commitment","Harmony","Love","Relationships","Authenticity","Balance","Values"],
+   visual:"Visualize yourself standing at a crossroads under a radiant sky. The Lovers appear, embodying harmony and alignment. They guide you to consider each path ahead, showing you how your choices reflect your true desires. Feel the clarity of making a decision that aligns with your heart and soul.",
+   aff:"I honor my heart and choose what aligns with my values and higher purpose. My decisions reflect my authenticity and truth.",
+   spread:["What choice am I facing right now?","What is influencing my decision?","How can I make a choice that aligns with my highest good?"],
+   reflect:["What choices in my life feel aligned with my authentic self?","How can I honor my values and heart in my decisions?","What fears or doubts arise when I consider making a commitment?","How do my relationships reflect my personal choices and growth?","What does alignment and harmony mean to me right now?"]},
+
+  {num:7, roman:"VII", name:"The Chariot", arche:"The Achiever", arc:"1",
+   essence:"The Chariot represents determination, willpower, and the drive to achieve your goals. This archetype embodies focus and control, encouraging you to harness your energy and overcome obstacles. It teaches that success comes from aligning your inner strength with external action, moving forward with confidence and purpose.",
+   words:["Determination","Willpower","Focus","Achievement","Victory","Control","Ambition","Momentum","Perseverance"],
+   visual:"Visualize yourself standing before a majestic chariot, glowing with power and readiness. You take the reins, feeling the energy of the horses pulling you forward. With unwavering focus, you guide the chariot along the path ahead, overcoming obstacles with ease and determination. Feel the triumph of moving toward your goals.",
+   aff:"I am focused and determined. I move forward with confidence, overcoming all obstacles to achieve my goals.",
+   spread:["What goal or destination am I moving toward?","What challenge or obstacle must I overcome?","How can I maintain focus and discipline on this journey?"],
+   reflect:["What goal am I determined to achieve, and why is it important to me?","How can I align my inner strength with my external actions?","What obstacles or distractions are slowing my progress?","What can I do to regain focus and maintain momentum?","How do I celebrate my victories, both big and small?"]},
+
+  {num:8, roman:"VIII", name:"Strength", arche:"The Gentle Power", arc:"2",
+   essence:"Strength embodies inner courage, resilience, and the ability to overcome challenges with compassion and grace. This archetype reminds you that true power comes from balancing strength with gentleness, and control with patience.",
+   words:["Courage","Resilience","Compassion","Patience","Inner Strength","Grace","Self-Control","Fortitude","Balance"],
+   visual:"Visualize yourself standing in a serene field with a powerful yet calm lion by your side. As you gently place your hand on the lion's mane, you feel a wave of courage and inner strength flowing through you. Together, you embody the balance of gentle power and fierce determination.",
+   aff:"I am strong, resilient, and compassionate. My power comes from within, and I approach life's challenges with grace and courage.",
+   spread:["What inner strength am I being called to access?","What challenge requires my courage and patience?","How can I balance power with compassion in this situation?"],
+   reflect:["How can I approach challenges with both courage and compassion?","What inner strength am I not fully recognizing or using?","How can I balance assertiveness with patience in my current situation?","What does resilience mean to me, and how can I cultivate it?","How can I lead with calm confidence in the face of adversity?"]},
+
+  {num:9, roman:"IX", name:"The Hermit", arche:"The Seeker", arc:"2",
+   essence:"The Hermit represents introspection, solitude, and the search for deeper truths. This archetype embodies the wisdom gained through self-reflection and spiritual exploration, encouraging you to step away from external distractions, embrace stillness, and seek the answers that lie within.",
+   words:["Introspection","Solitude","Inner Guidance","Self-Reflection","Wisdom","Spiritual Exploration","Seeking Truth","Clarity","Personal Growth"],
+   visual:"Visualize yourself climbing a quiet mountain under a starry sky, holding a lantern that glows softly in the darkness. The Hermit stands at the peak, his lantern illuminating the path. He invites you to sit with him in stillness, guiding you to seek answers within and uncover your inner wisdom.",
+   aff:"I embrace solitude and reflection to seek the truths within me. My inner wisdom is a guiding light on my path.",
+   spread:["What inner truth am I being called to explore?","What do I need to release to embrace stillness and reflection?","How can I use my insights to guide myself and others?"],
+   reflect:["What questions or truths am I seeking in my life right now?","How can I create space for introspection and self-discovery?","What distractions are keeping me from connecting with my inner wisdom?","How do I balance solitude with connection to others?","What lessons from my journey can I share to help others?"]},
+
+  {num:10, roman:"X", name:"Wheel of Fortune", arche:"The Cycle Weaver", arc:"2",
+   essence:"The Wheel of Fortune represents the cycles of life, the turning points that bring change, and the interplay between fate and free will. This archetype reminds you that life is constantly evolving, and what may seem like an ending is often a new beginning. The Cycle Weaver teaches you to embrace the flow of life, trust the process, and find meaning in both challenges and opportunities.",
+   words:["Cycles","Change","Turning Points","Destiny","Flow","Adaptability","Opportunity","Movement","Transformation"],
+   visual:"Visualize yourself standing before a giant, glowing wheel that turns slowly in the light. Each spoke represents a different phase or opportunity in life. As you reach out to touch the wheel, feel its rhythm align with your own. See how each cycle weaves together to create the tapestry of your life.",
+   aff:"I trust the cycles of life to guide me. I embrace change as an opportunity for growth and transformation.",
+   spread:["What cycle or phase am I currently experiencing?","What change or opportunity is emerging for me?","How can I align with the flow of this cycle?"],
+   reflect:["What changes or cycles are currently influencing my life?","How can I embrace the flow of change rather than resisting it?","What opportunities might be hidden in the challenges I'm facing?","How do I balance acceptance of fate with my ability to take action?","What lesson am I learning from this turning point in my life?"]},
+
+  {num:11, roman:"XI", name:"Justice", arche:"The Judge", arc:"2",
+   essence:"Justice represents fairness, truth, and the consequences of actions. This archetype embodies the wisdom of making balanced decisions and holding yourself accountable, encouraging you to seek clarity, act with integrity, and consider the greater good. The Judge teaches that harmony is achieved through honesty, fairness, and aligning your actions with your values.",
+   words:["Fairness","Truth","Accountability","Balance","Integrity","Clarity","Decisions","Consequences","Justice"],
+   visual:"Visualize yourself standing in a grand hall with scales glowing in front of you. Justice appears, holding a sword in one hand and balancing the scales in the other. She invites you to reflect on your choices and actions, asking you to weigh them against your values. Feel her calm presence as you seek clarity and alignment.",
+   aff:"I seek truth and act with fairness and integrity. My choices are aligned with my values and the greater good.",
+   spread:["What truth am I being called to acknowledge?","What choice or decision requires my clarity and fairness?","How can I align my actions with my highest values?"],
+   reflect:["What choices or actions in my life need greater fairness or integrity?","What truths am I avoiding, and how can I face them honestly?","How do my decisions impact others, and what can I do to promote harmony?","What can I do to bring more balance into my life?","Where am I being asked to take responsibility for my choices?"]},
+
+  {num:12, roman:"XII", name:"The Hanged Man", arche:"The Perspective-Shifter", arc:"2",
+   essence:"The Hanged Man represents surrender, patience, and the power of seeing things from a new perspective. This archetype encourages you to let go of control and embrace a pause to gain clarity. The Perspective-Shifter teaches that breakthroughs often come when you release resistance and open yourself to a fresh way of thinking or being.",
+   words:["Surrender","Patience","Perspective","Letting Go","Clarity","Pause","Reflection","Enlightenment","Transformation"],
+   visual:"Visualize yourself hanging upside down from a sturdy tree, supported by a glowing golden light. The world looks different from this new angle, and you notice details and patterns that weren't visible before. Feel the peace and insight that come from surrendering to the moment.",
+   aff:"I surrender to the flow of life. By seeing from a new perspective, I open myself to clarity and transformation.",
+   spread:["What am I being asked to let go of or surrender?","What new perspective can help me see clearly?","How can I find peace in this pause or transition?"],
+   reflect:["What situation in my life requires me to let go of control?","How can I embrace patience and trust the process?","What new perspective am I being invited to explore?","What resistance or attachment is holding me back?","How can I find value or growth in moments of stillness?"]},
+
+  {num:13, roman:"XIII", name:"Death", arche:"The Transformer", arc:"2",
+   essence:"Death represents endings, transformation, and the rebirth that follows letting go. This archetype encourages you to release what no longer serves you, making space for new growth and possibilities. The Transformer teaches that change is a natural and necessary part of life, and through letting go, you can find renewal and liberation.",
+   words:["Transformation","Endings","Rebirth","Release","Change","Renewal","Growth","Letting Go","Liberation"],
+   visual:"Visualize yourself walking through a misty forest, leaving behind objects that no longer serve you. Ahead, you see a glowing doorway, symbolizing transformation. As you step through, you feel the weight of the past lift and the promise of new beginnings fills you with strength and clarity.",
+   aff:"I release what no longer serves me and embrace transformation. Through endings, I create space for new beginnings.",
+   spread:["What am I being called to release or let go of?","What transformation is emerging for me?","How can I embrace this ending to welcome new beginnings?"],
+   reflect:["What in my life is ready to end or transform?","How can I honor the process of letting go?","What opportunities or growth are waiting on the other side of this change?","How can I approach transformation with courage and openness?","What new beginning am I ready to welcome into my life?"]},
+
+  {num:14, roman:"XIV", name:"Temperance", arche:"The Harmonizer", arc:"2",
+   essence:"Temperance represents balance, harmony, and the blending of opposites. This archetype encourages you to create equilibrium in your life by integrating different aspects of yourself and your experiences. The Harmonizer teaches you to approach situations with patience and moderation, trusting that balance leads to growth and alignment.",
+   words:["Balance","Harmony","Patience","Integration","Moderation","Flow","Alignment","Peace","Growth"],
+   visual:"Visualize yourself standing by a tranquil stream, pouring water from one vessel to another in a seamless, rhythmic flow. The Harmonizer stands beside you, guiding your hands, symbolizing balance and integration. Feel a sense of calm as you embody patience and alignment.",
+   aff:"I am balanced and aligned. Through patience and harmony, I create growth and peace in my life.",
+   spread:["What area of my life needs more balance or harmony?","What energies or aspects of myself need integration?","How can I practice patience and moderation to create alignment?"],
+   reflect:["How can I blend opposing energies or perspectives to create harmony?","What practices or habits help me maintain inner peace and alignment?","Where in my life am I being called to practice patience and moderation?","How can I create flow and ease in challenging situations?","What does balance feel like in my body when I find it?"]},
+
+  {num:15, roman:"XV", name:"The Devil", arche:"The Liberator", arc:"3",
+   essence:"The Devil represents the chains of limitation, addiction, and unhealthy attachments, as well as the opportunity to free yourself from them. This archetype challenges you to confront what holds you back and step into your personal power. The Liberator teaches that breaking free from fear and illusion leads to true liberation.",
+   words:["Limitation","Attachment","Fear","Liberation","Self-Awareness","Personal Power","Control","Illusion","Freedom"],
+   visual:"Visualize yourself standing in a shadowy cavern, bound by glowing chains. The Liberator appears, holding a key and reminding you that the power to free yourself lies within. As you unlock your chains, feel a surge of strength and clarity as you step into the light of freedom.",
+   aff:"I release fear and illusion. I reclaim my personal power and create freedom in my life.",
+   spread:["What attachment or limitation is holding me back?","What fear or illusion do I need to confront?","How can I reclaim my personal power and freedom?"],
+   reflect:["What unhealthy habits or attachments am I ready to release?","What fears are preventing me from stepping into my full potential?","How can I distinguish between external limitations and self-imposed ones?","What steps can I take to reclaim my power and create freedom in my life?","Where have I handed my power to something outside myself?"]},
+
+  {num:16, roman:"XVI", name:"The Tower", arche:"The Catalyst", arc:"3",
+   essence:"The Tower represents sudden change, upheaval, and the breaking down of old structures to make way for transformation. This archetype challenges you to release what is no longer serving you, even when it feels uncomfortable. The Catalyst teaches that through disruption and chaos, new clarity, freedom, and growth can emerge.",
+   words:["Change","Upheaval","Transformation","Release","Awakening","Disruption","Truth","Clarity","Rebuilding"],
+   visual:"Visualize yourself standing before a tall, crumbling tower struck by lightning. As the walls fall, you see the structures that no longer serve you breaking apart. The Catalyst stands beside you, guiding you toward the foundation, where new possibilities begin to emerge. Feel the liberation and clarity as you prepare to rebuild stronger than before.",
+   aff:"I embrace change and release what no longer serves me. Through transformation, I find clarity, freedom, and growth.",
+   spread:["What structure or belief is crumbling in my life?","What truth is being revealed through this disruption?","How can I rebuild with clarity and intention?"],
+   reflect:["What changes or disruptions are shaking up my life right now?","How can I embrace these changes as opportunities for growth?","What beliefs or patterns am I being called to release?","What truths are emerging from this period of upheaval?","How can I approach rebuilding with a sense of clarity and purpose?"]},
+
+  {num:17, roman:"XVII", name:"The Star", arche:"The Dreamer", arc:"3",
+   essence:"The Star represents hope, inspiration, and the guiding light that leads you toward renewal and purpose. This archetype encourages you to connect with your dreams and trust in the possibilities ahead. The Dreamer teaches you to embrace optimism, align with your higher purpose, and let your inner light shine as you move forward with clarity and grace.",
+   words:["Hope","Inspiration","Renewal","Dreams","Purpose","Clarity","Optimism","Healing","Faith"],
+   visual:"Visualize yourself standing under a vast, starlit sky, a radiant star shining brightly above you. The Dreamer steps forward, offering you a cup of shimmering water. As you drink, feel the light of hope and inspiration filling your being, guiding you toward your dreams and higher purpose.",
+   aff:"I am filled with hope and inspiration. My dreams guide me toward renewal, purpose, and infinite possibilities.",
+   spread:["What dream or vision is calling to me right now?","What healing or renewal do I need to align with this vision?","How can I let hope and inspiration guide me forward?"],
+   reflect:["What dreams or goals inspire me, and how can I align with them?","Where in my life can I invite more hope and optimism?","What healing needs to take place for me to move forward with clarity?","How can I trust in the possibilities ahead, even when they feel distant?","What steps can I take to shine my inner light and inspire others?"]},
+
+  {num:18, roman:"XVIII", name:"The Moon", arche:"The Veil Lifter", arc:"3",
+   essence:"The Moon represents intuition, mystery, and the hidden realms of the subconscious. This archetype encourages you to look beyond the surface and trust the deeper truths that lie beneath. The Veil Lifter teaches you to embrace uncertainty, question illusions, and move through emotional or mental fog to uncover clarity and insight.",
+   words:["Intuition","Mystery","Illusion","Subconscious","Uncertainty","Dreams","Clarity","Emotional Depth","Inner Wisdom"],
+   visual:"Visualize yourself walking along a moonlit path through a dense fog, the light from the moon guiding your way. As you walk, the Veil Lifter appears beside you, holding a lantern that illuminates the secrets hidden in the mist. You are drawn to trust your intuition as you step deeper into the unknown, feeling the clarity emerge from the fog.",
+   aff:"I trust my intuition and embrace the mystery of the unknown. As I lift the veil, clarity and wisdom guide my path.",
+   spread:["What illusion or deception am I being called to uncover?","What hidden wisdom do I need to access right now?","How can I trust my intuition to guide me through uncertainty?"],
+   reflect:["What areas of my life feel unclear or confusing right now?","How can I tap into my intuition to find the answers I seek?","What fears or illusions are keeping me from seeing the truth?","How can I embrace uncertainty with trust and curiosity?","What deeper emotional or subconscious truths am I ready to uncover?"]},
+
+  {num:19, roman:"XIX", name:"The Sun", arche:"The Life Giver", arc:"3",
+   essence:"The Sun represents vitality, clarity, and the power of positive energy. This archetype embodies joy, growth, and the warmth that brings light to all aspects of life. The Life Giver teaches you to embrace your personal power, shine brightly, and celebrate life's blessings. With the Sun's energy, everything is illuminated, and opportunities for growth and success are abundant.",
+   words:["Vitality","Clarity","Joy","Abundance","Success","Confidence","Optimism","Illumination","Energy"],
+   visual:"Visualize yourself standing in a golden field under the radiant light of the Sun. Feel the warmth filling you with energy and vitality as you bask in its light. The Life Giver stands beside you, offering you the gift of confidence and clarity. As you absorb the light, you feel revitalized and ready to move forward with joy and optimism.",
+   aff:"I am filled with vitality, confidence, and joy. The light of the Sun illuminates my path, bringing abundance and growth into my life.",
+   spread:["What area of my life is ready to receive more light and energy?","How can I embrace my personal power with confidence?","What opportunity for growth is being illuminated for me right now?"],
+   reflect:["Where in my life can I invite more joy and abundance?","What gifts can I fully embrace and share with the world?","How can I nurture my vitality and confidence to achieve my goals?","What opportunities are emerging that I can step into with optimism?","How can I celebrate life's blessings and keep my energy aligned with positivity?"]},
+
+  {num:20, roman:"XX", name:"Judgement", arche:"The Awakener", arc:"3",
+   essence:"Judgement represents awakening, transformation, and the call to rise to your higher self. This archetype encourages you to assess your past, release old patterns, and embrace a new chapter of growth. The Awakener invites you to listen to the inner call for change and renewal, guiding you to let go of past burdens and step into a more authentic, self-assured version of yourself.",
+   words:["Awakening","Transformation","Renewal","Redemption","Self-Reflection","Clarity","Rebirth","Calling","Liberation"],
+   visual:"Visualize yourself standing on the edge of a cliff, surrounded by the sound of a powerful trumpet. As the sound echoes, you feel an inner calling to rise above past limitations. The Awakener appears before you, holding a scroll with your new path laid out. Feel the freedom of shedding old patterns and embracing the transformation ahead.",
+   aff:"I release the past and embrace my transformation. I answer the call for growth and awaken to my highest potential.",
+   spread:["What aspect of my life is calling for renewal or transformation?","What past patterns or beliefs do I need to release to fully awaken?","How can I answer the call for growth and embrace my true potential?"],
+   reflect:["What old patterns or beliefs am I ready to release?","How can I embrace change and transformation in my life?","What inner calling or awakening am I being asked to answer?","How can I move forward with clarity and purpose?","What areas of my life need to be reborn or renewed to align with my true self?"]},
+
+  {num:21, roman:"XXI", name:"The World", arche:"The Wholeness Seeker", arc:"3",
+   essence:"The World represents completion, wholeness, and the harmonious integration of all aspects of life. This archetype embodies the culmination of a journey, where everything comes together in balance and alignment. The Wholeness Seeker teaches that true fulfillment comes from accepting and embracing all parts of yourself and your journey.",
+   words:["Completion","Wholeness","Unity","Fulfillment","Integration","Balance","Harmony","Accomplishment","Alignment"],
+   visual:"Visualize yourself standing in the center of a vibrant, swirling circle of light. Each section of the circle represents a different phase of your life, weaving together to create a perfect whole. As you step into the center, you feel a deep sense of peace and unity with yourself and the universe. The Wholeness Seeker stands with you, reminding you that all aspects of your journey have led to this moment of fulfillment.",
+   aff:"I am whole, complete, and aligned with my purpose. I embrace all aspects of my journey and step forward in harmony and fulfillment.",
+   spread:["What is coming to completion or fulfillment in my life right now?","How can I embrace my journey as a whole?","What can I do to create balance and unity in my life moving forward?"],
+   reflect:["What areas of my life are ready to come together in harmony?","How can I integrate the lessons from my past to create wholeness?","What does fulfillment mean to me, and how can I achieve it?","How can I honor and celebrate the journey that has brought me to this point?","What steps can I take to maintain balance and alignment in my life?"]}
+];
+
+const ARCS = [
+  {key:"fool", cls:"arc-fool", roman:"0", title:"The Journey Begins", desc:"The Fool sets out, ready for anything.", from:0, to:0},
+  {key:"1", cls:"arc-1", roman:"I – VII", title:"The Waking World", desc:"Meeting the outer life: power, love, will, and the people who shape us.", from:1, to:7},
+  {key:"2", cls:"arc-2", roman:"VIII – XIV", title:"The Inner Depths", desc:"The turn inward: courage, solitude, surrender, and change.", from:8, to:14},
+  {key:"3", cls:"arc-3", roman:"XV – XXI", title:"The Great Mystery", desc:"The spiritual arc: liberation, awakening, and wholeness.", from:15, to:21}
+];
+
+const PRACTICES = [
+  {label:"01", title:"Meditate and visualize", body:"Each day, imagine stepping into an archetype's energy. Light a candle or set its card in front of you, breathe deeply, and invite that presence to guide your inner journey."},
+  {label:"02", title:"Act as if", body:"When a challenge arrives, ask what the archetype would do. Let the High Priestess trust her intuition, let the Emperor set the boundary. Then take the aligned action yourself."},
+  {label:"03", title:"Use affirmations", body:"Speak the archetype's affirmation aloud. “I trust my intuition and embrace the wisdom within” for the High Priestess, “I am a creator of abundance and beauty” for the Empress."},
+  {label:"04", title:"Practice small rituals", body:"Build a simple ritual around a card. Light a candle for the Emperor's leadership, take a walk in nature for the Hermit's introspection, hold an object that carries the energy."},
+  {label:"05", title:"Journal the archetype", body:"Ask how this archetype is showing up in your life today, and what its energy is teaching you. Keep a dedicated journal and watch how each one evolves within you over time."},
+  {label:"06", title:"Set aligned intentions", body:"Choose goals that mirror the archetype's strengths: ambition for the Chariot, healing for the Star. Write them down and let that energy carry you toward them."},
+  {label:"07", title:"Notice the cycles", body:"See which archetypes you admire in others, and recognize when your own life mirrors a card's energy. Naming the phase helps you move through it with clarity."}
+];
+
+/* ---------- RENDER GRID ---------- */
+const cardsEl = document.getElementById('cards');
+ARCS.forEach(arc => {
+  const label = document.createElement('div');
+  label.className = 'arc-label ' + arc.cls;
+  label.innerHTML = `<span class="roman-span">${arc.roman}</span><h3>${arc.title}</h3><span class="line"></span><span class="desc">${arc.desc}</span>`;
+  cardsEl.appendChild(label);
+
+  const grid = document.createElement('div');
+  grid.className = 'grid ' + arc.cls;
+  for (let i = arc.from; i <= arc.to; i++) {
+    const c = CARDS[i];
+    const btn = document.createElement('button');
+    btn.className = 'card';
+    btn.dataset.num = c.num;
+    btn.setAttribute('aria-label', `Open ${c.name}`);
+    btn.innerHTML =
+      `<span class="star-mark">✦</span>` +
+      `<div class="roman">${c.roman}</div>` +
+      `<div class="cname">${c.name}</div>` +
+      `<div class="carche">${c.arche}</div>` +
+      `<div class="cfoot"><div class="cwords">${c.words.slice(0,3).join(' &middot; ')}</div><div class="cbadge">✦ Journaled</div></div>`;
+    btn.addEventListener('click', () => openCard(c.num));
+    grid.appendChild(btn);
+  }
+  cardsEl.appendChild(grid);
+});
+
+/* ---------- PRACTICES ---------- */
+const pEl = document.getElementById('practices');
+PRACTICES.forEach(p => {
+  const d = document.createElement('div');
+  d.className = 'practice';
+  d.innerHTML = `<h3><span>${p.label}</span>${p.title}</h3><p>${p.body}</p>`;
+  pEl.appendChild(d);
+});
+
+/* ---------- MODAL ---------- */
+const back = document.getElementById('modalBack');
+const body = document.getElementById('modalBody');
+const closeBtn = document.getElementById('modalClose');
+const modalEl = document.getElementById('modal');
+let lastFocus = null;
+
+function arcClass(arc){ return arc === 'fool' ? 'arc-fool' : 'arc-' + arc; }
+
+/* ---------- JOURNAL PERSISTENCE (per device) ---------- */
+const STORE_KEY = 'apath:notes:v1';
+function loadStore(){
+  try { return JSON.parse(localStorage.getItem(STORE_KEY)) || {}; }
+  catch(e){ return {}; }
+}
+function saveStore(store){
+  try { localStorage.setItem(STORE_KEY, JSON.stringify(store)); return true; }
+  catch(e){ return false; }
+}
+function cardHasNotes(num){
+  const rec = loadStore()[num];
+  return !!(rec && Object.values(rec).some(v => (v || '').trim().length));
+}
+function escapeHTML(s){
+  return (s || '').replace(/[&<>"]/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[ch]));
+}
+let saveTimer = null;
+function wireJournal(num){
+  const rec = loadStore()[num] || {};
+  const fields = body.querySelectorAll('textarea.field');
+  const saveState = body.querySelector('#saveState');
+
+  // populate saved values; open any question that already has an answer
+  fields.forEach(t => {
+    const key = t.dataset.key;
+    if (rec[key]) {
+      t.value = rec[key];
+      const fold = t.closest('.q-fold');
+      if (fold) fold.open = true;
+    }
+    autoGrow(t);
+  });
+
+  fields.forEach(t => {
+    t.addEventListener('input', () => {
+      autoGrow(t);
+      clearTimeout(saveTimer);
+      saveTimer = setTimeout(() => {
+        const s = loadStore();
+        const r = s[num] || {};
+        const v = t.value.trim();
+        if (v) r[t.dataset.key] = t.value; else delete r[t.dataset.key];
+        if (Object.keys(r).length) s[num] = r; else delete s[num];
+        if (saveStore(s)) flashSaved(saveState);
+      }, 500);
+    });
+  });
+
+  // measure textareas the moment their question is opened
+  body.querySelectorAll('.q-fold').forEach(fold => {
+    fold.addEventListener('toggle', () => {
+      if (fold.open) { const t = fold.querySelector('textarea.field'); if (t) autoGrow(t); }
+    });
+  });
+}
+function flashSaved(el){
+  if (!el) return;
+  el.classList.add('show');
+  clearTimeout(el._t);
+  el._t = setTimeout(() => el.classList.remove('show'), 1400);
+}
+function autoGrow(t){
+  t.style.height = 'auto';
+  t.style.height = Math.max(t.scrollHeight, 92) + 'px';
+}
+
+function openCard(num){
+  const c = CARDS[num];
+  lastFocus = document.activeElement;
+  modalEl.className = 'modal ' + arcClass(c.arc);
+  body.innerHTML =
+    `<div class="m-roman">${c.roman}</div>` +
+    `<h1 class="m-name" id="mName">${c.name}</h1>` +
+    `<div class="m-arche">${c.arche}</div>` +
+    `<p class="m-essence">${c.essence}</p>` +
+    `<div class="chips">${c.words.map(w=>`<span class="chip">${w}</span>`).join('')}</div>` +
+
+    `<div class="block-label">Pathworking visualization</div>` +
+    `<div class="visualize">${c.visual}</div>` +
+
+    `<div class="block-label">Affirmation</div>` +
+    `<div class="affirmation"><div class="q">&ldquo;</div><p>${c.aff}</p></div>` +
+
+    `<div class="block-label">A three-card spread</div>` +
+    `<div class="spread">${c.spread.map((s,i)=>`<div class="pos"><div class="pnum">${i+1}</div><p>${s}</p></div>`).join('')}</div>` +
+
+    `<div class="block-label">Your pathworking insights</div>` +
+    `<div class="journal-note">` +
+      `<div class="jn-hint">What did ${c.name} show you? Note the images, feelings, and messages that came up. Your writing saves on this device, just for you.</div>` +
+      `<textarea class="field" data-key="insights" placeholder="When I stepped into this archetype's world…"></textarea>` +
+    `</div>` +
+
+    `<div class="block-label">Questions for reflection</div>` +
+    `<div class="q-list">` +
+      c.reflect.map((r,i)=>
+        `<details class="q-fold">` +
+          `<summary>` +
+            `<span class="q-star">✦</span>` +
+            `<span class="q-text">${r}</span>` +
+            `<span class="q-btn"><span class="plus">＋</span><span class="lbl"></span></span>` +
+          `</summary>` +
+          `<div class="q-answer"><textarea class="field" data-key="q${i}" placeholder="Write your reflection…"></textarea></div>` +
+        `</details>`
+      ).join('') +
+    `</div>` +
+    `<div class="save-state" id="saveState">Saved ✦</div>`;
+
+  back.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  back.scrollTop = 0;
+  closeBtn.focus();
+  wireJournal(c.num);
+}
+function closeCard(){
+  back.classList.remove('open');
+  document.body.style.overflow = '';
+  refreshGridMarks();
+  if (lastFocus) lastFocus.focus();
+}
+function refreshGridMarks(){
+  document.querySelectorAll('.card[data-num]').forEach(btn => {
+    btn.classList.toggle('has-journal', cardHasNotes(+btn.dataset.num));
+  });
+}
+closeBtn.addEventListener('click', closeCard);
+back.addEventListener('click', e => { if (e.target === back) closeCard(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && back.classList.contains('open')) closeCard(); });
+
+/* ---------- JOURNAL REVIEW ---------- */
+function openJournalReview(){
+  const store = loadStore();
+  const nums = CARDS.map(c => c.num).filter(n => cardHasNotes(n));
+  lastFocus = document.activeElement;
+  modalEl.className = 'modal arc-fool';
+  let html =
+    `<div class="m-arche">Your Journal</div>` +
+    `<h1 class="m-name" id="mName">Pathworking Notes</h1>`;
+  if (!nums.length){
+    html += `<p class="m-essence">Nothing saved yet. Open any archetype, write what came up in the visualization, and it will gather here for you. Everything stays on this device.</p>`;
+  } else {
+    html += `<p class="m-essence">Everything you've written, gathered in one place. It lives on this device, just for you.</p>`;
+    nums.forEach(n => {
+      const c = CARDS[n], rec = store[n] || {};
+      html += `<div class="jr-entry ${arcClass(c.arc)}">` +
+        `<div class="jr-head"><span class="jr-roman">${c.roman}</span><span class="jr-name">${c.name}</span>` +
+        `<button class="jr-open" data-num="${n}">Open &rarr;</button></div>`;
+      if ((rec.insights || '').trim())
+        html += `<p class="jr-insight">${escapeHTML(rec.insights)}</p>`;
+      c.reflect.forEach((q,i) => {
+        if ((rec['q'+i] || '').trim())
+          html += `<div class="jr-qa"><p class="jr-q">${q}</p><p class="jr-a">${escapeHTML(rec['q'+i])}</p></div>`;
+      });
+      html += `</div>`;
+    });
+  }
+  body.innerHTML = html;
+  body.querySelectorAll('.jr-open').forEach(b => b.addEventListener('click', () => openCard(+b.dataset.num)));
+  back.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  back.scrollTop = 0;
+  closeBtn.focus();
+}
+document.getElementById('journalBtn').addEventListener('click', openJournalReview);
+
+/* ---------- DAILY DRAW ---------- */
+const slot = document.getElementById('drawSlot');
+let lastDraw = -1;
+function drawCard(){
+  let n;
+  do { n = Math.floor(Math.random() * CARDS.length); } while (n === lastDraw && CARDS.length > 1);
+  lastDraw = n;
+  const c = CARDS[n];
+  slot.className = 'draw-slot ' + arcClass(c.arc);
+  slot.innerHTML =
+    `<div class="draw-result">` +
+    `<div class="roman">${c.roman}</div>` +
+    `<div class="name">${c.name}</div>` +
+    `<div class="arche">${c.arche}</div>` +
+    `<div class="aff">${c.aff}</div>` +
+    `<button class="open-full" aria-label="Open ${c.name}">Enter this archetype →</button>` +
+    `</div>`;
+  slot.querySelector('.open-full').addEventListener('click', () => openCard(c.num));
+}
+document.getElementById('drawBtn2').addEventListener('click', drawCard);
+document.getElementById('drawBtn').addEventListener('click', () => {
+  document.getElementById('draw').scrollIntoView({behavior:'smooth'});
+  setTimeout(drawCard, 480);
+});
+
+/* ---------- THEME TOGGLE ---------- */
+const tbtn = document.getElementById('themeBtn');
+function currentDark(){
+  const t = document.documentElement.getAttribute('data-theme');
+  if (t) return t === 'dark';
+  return window.matchMedia('(prefers-color-scheme: dark)').matches;
+}
+function syncIcon(){ tbtn.textContent = currentDark() ? '☀' : '☾'; }
+tbtn.addEventListener('click', () => {
+  document.documentElement.setAttribute('data-theme', currentDark() ? 'light' : 'dark');
+  syncIcon();
+});
+syncIcon();
+
+/* mark any cards already journaled on this device */
+refreshGridMarks();
+
+/* ---------- STARFIELD ---------- */
+(function(){
+  const canvas = document.getElementById('stars');
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const ctx = canvas.getContext('2d');
+  let w, h, stars, shooting = [];
+  function starColor(){
+    const cs = getComputedStyle(document.documentElement);
+    return cs.getPropertyValue('--star').trim() || 'rgba(255,255,255,.8)';
+  }
+  function resize(){
+    w = canvas.width = window.innerWidth;
+    h = canvas.height = window.innerHeight;
+    const count = Math.min(150, Math.floor(w*h/12000));
+    stars = Array.from({length:count}, () => ({
+      x: Math.random()*w, y: Math.random()*h,
+      r: Math.random()*1.3 + 0.3,
+      base: Math.random()*0.5 + 0.3,
+      tw: Math.random()*0.02 + 0.004,
+      ph: Math.random()*Math.PI*2
+    }));
+  }
+  function spawnShoot(){
+    if (shooting.length < 1 && Math.random() < 0.012){
+      const startX = Math.random()*w*0.7 + w*0.15;
+      shooting.push({x:startX, y:Math.random()*h*0.4, len:0, max:Math.random()*160+120, sp:Math.random()*6+7, life:1});
+    }
+  }
+  function draw(){
+    ctx.clearRect(0,0,w,h);
+    const col = starColor();
+    for (const s of stars){
+      s.ph += s.tw;
+      const a = s.base + Math.sin(s.ph)*0.35;
+      ctx.globalAlpha = Math.max(0, Math.min(1, a));
+      ctx.fillStyle = col;
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI*2);
+      ctx.fill();
+    }
+    spawnShoot();
+    for (let i = shooting.length-1; i>=0; i--){
+      const sh = shooting[i];
+      sh.x += sh.sp; sh.y += sh.sp*0.55; sh.len = Math.min(sh.max, sh.len + sh.sp*2); sh.life -= 0.012;
+      ctx.globalAlpha = Math.max(0, sh.life);
+      ctx.strokeStyle = col;
+      ctx.lineWidth = 1.6;
+      ctx.beginPath();
+      ctx.moveTo(sh.x, sh.y);
+      ctx.lineTo(sh.x - sh.len, sh.y - sh.len*0.55);
+      ctx.stroke();
+      if (sh.life <= 0 || sh.x > w || sh.y > h) shooting.splice(i,1);
+    }
+    ctx.globalAlpha = 1;
+    requestAnimationFrame(draw);
+  }
+  window.addEventListener('resize', resize);
+  resize(); draw();
+})();
+</script>
