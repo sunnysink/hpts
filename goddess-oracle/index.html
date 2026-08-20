@@ -1,0 +1,1417 @@
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Hanken+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #07050f;
+  --bg2: #130b22;
+  --ink: #F3EAFF;
+  --ink-dim: #C2ACE2;
+  --ink-faint: #85709f;
+  --violet: #A76BFF;
+  --violet-lt: #C9A5FF;
+  --orchid: #E86FD8;
+  --magenta: #FF6FC8;
+  --teal: #5FE3D0;
+  --aqua: #7DE8F7;
+  --gold: #FFE3A3;
+  --leaf: #8BE9AE;
+  --card-surface: rgba(28,16,48,0.70);
+  --card-border: rgba(167,107,255,0.24);
+  --el-fire: #FFB37A;
+  --el-water: #7DE8F7;
+  --el-earth: #8BE9AE;
+  --el-air: #C9B6FF;
+  --el-aether: #FF8FE0;
+  --serif: 'Cormorant Garamond', 'Hoefler Text', Georgia, serif;
+  --sans: 'Hanken Grotesk', system-ui, -apple-system, sans-serif;
+  --mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+}
+
+html, body { height: 100%; margin: 0; padding: 0; }
+
+body {
+  font-family: var(--sans);
+  background: var(--bg);
+  color: var(--ink);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Canopy glow */
+.orb {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(90px);
+  pointer-events: none;
+  z-index: 0;
+}
+.orb-1 { width: 520px; height: 520px; top: -180px; left: 50%; transform: translateX(-50%);
+  background: radial-gradient(circle, var(--gold) 0%, transparent 68%); opacity: 0.16; }
+.orb-2 { width: 560px; height: 560px; top: 8%; left: -180px;
+  background: radial-gradient(circle, var(--orchid) 0%, transparent 70%); opacity: 0.20; }
+.orb-3 { width: 600px; height: 600px; bottom: -220px; right: -200px;
+  background: radial-gradient(circle, var(--teal) 0%, transparent 70%); opacity: 0.16; }
+.orb-4 { width: 420px; height: 420px; top: 45%; right: 8%;
+  background: radial-gradient(circle, var(--violet) 0%, transparent 70%); opacity: 0.18; }
+
+/* Light shafts through the trees */
+#rays { position: fixed; inset: 0; z-index: 1; pointer-events: none; overflow: hidden; }
+.ray {
+  position: absolute;
+  top: -30vh;
+  width: 120px;
+  height: 150vh;
+  transform-origin: top center;
+  background: linear-gradient(to bottom, rgba(255,240,220,0.16), rgba(200,160,255,0.06) 45%, transparent 80%);
+  filter: blur(22px);
+  animation: sway 14s ease-in-out infinite;
+}
+.ray:nth-child(1) { left: 38%; transform: rotate(9deg); animation-delay: 0s; }
+.ray:nth-child(2) { left: 50%; width: 180px; transform: rotate(-4deg); animation-delay: -5s; opacity: 0.8; }
+.ray:nth-child(3) { left: 62%; width: 90px; transform: rotate(-14deg); animation-delay: -9s; opacity: 0.6; }
+@keyframes sway {
+  0%, 100% { opacity: 0.55; }
+  50% { opacity: 0.95; }
+}
+
+/* Drifting light motes */
+#motes { position: fixed; inset: 0; z-index: 1; pointer-events: none; overflow: hidden; }
+.mote {
+  position: absolute;
+  bottom: -12px;
+  width: 3px; height: 3px;
+  border-radius: 50%;
+  background: var(--aqua);
+  box-shadow: 0 0 8px 2px currentColor;
+  color: var(--aqua);
+  opacity: 0;
+  animation: float linear infinite;
+}
+@keyframes float {
+  0% { transform: translateY(0) translateX(0) scale(0.6); opacity: 0; }
+  12% { opacity: 0.9; }
+  85% { opacity: 0.45; }
+  100% { transform: translateY(-112vh) translateX(var(--drift, 30px)) scale(1); opacity: 0; }
+}
+
+.wrap { position: relative; z-index: 2; max-width: 900px; margin: 0 auto; padding: 3.25rem 1.5rem 4.5rem; }
+
+/* Header */
+.brand-label {
+  text-align: center;
+  font-family: var(--mono);
+  font-size: 0.66rem;
+  font-weight: 500;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  color: var(--violet-lt);
+  margin-bottom: 1rem;
+}
+.title {
+  text-align: center;
+  font-family: var(--serif);
+  font-size: clamp(2.6rem, 7.5vw, 4.25rem);
+  font-weight: 600;
+  line-height: 1.04;
+  letter-spacing: -0.01em;
+  background: linear-gradient(100deg, var(--aqua) 0%, var(--violet-lt) 28%, var(--magenta) 52%, var(--gold) 74%, var(--teal) 100%);
+  background-size: 220% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 12s linear infinite;
+}
+@keyframes shimmer { to { background-position: 220% center; } }
+.subtitle {
+  text-align: center;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1.28rem;
+  color: var(--ink-dim);
+  margin-top: 0.9rem;
+  max-width: 540px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.42;
+}
+
+/* Filters */
+.controls {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin: 2.5rem 0 0.5rem;
+}
+.pill {
+  font-family: var(--mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  background: rgba(255,255,255,0.025);
+  border: 1px solid var(--card-border);
+  padding: 0.55rem 1.05rem;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.pill:hover { color: var(--ink); border-color: var(--violet); }
+.pill.active {
+  color: #14071f;
+  background: linear-gradient(100deg, var(--aqua), var(--violet-lt) 45%, var(--magenta));
+  border-color: transparent;
+  font-weight: 600;
+}
+
+/* Draw stage */
+.stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 2.75rem;
+  min-height: 520px;
+}
+
+.deck-card {
+  position: relative;
+  width: 330px;
+  max-width: 84vw;
+  aspect-ratio: 5 / 8;
+  perspective: 1500px;
+  cursor: pointer;
+}
+
+.flipper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.9s cubic-bezier(0.4, 0.0, 0.2, 1);
+  transform-style: preserve-3d;
+}
+.deck-card.revealed .flipper { transform: rotateY(180deg); }
+
+.face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  border-radius: 20px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Card back */
+.back {
+  background:
+    radial-gradient(circle at 50% 34%, rgba(255,227,163,0.20), transparent 58%),
+    radial-gradient(circle at 20% 80%, rgba(232,111,216,0.18), transparent 60%),
+    radial-gradient(circle at 85% 70%, rgba(95,227,208,0.16), transparent 60%),
+    linear-gradient(165deg, #1d1030 0%, #0a0614 100%);
+  border: 1px solid rgba(201,165,255,0.38);
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 26px 70px -22px rgba(0,0,0,0.85), inset 0 0 70px rgba(0,0,0,0.45);
+}
+.back::before {
+  content: "";
+  position: absolute;
+  inset: 15px;
+  border: 1px solid rgba(201,165,255,0.26);
+  border-radius: 13px;
+}
+.back-art { width: 150px; height: 150px; }
+.back-art .spokes { animation: turn 46s linear infinite; transform-origin: 60px 60px; }
+@keyframes turn { to { transform: rotate(360deg); } }
+.back-word {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.36em;
+  text-transform: uppercase;
+  color: var(--violet-lt);
+  margin-top: 1.3rem;
+}
+.deck-card:not(.revealed):hover .flipper { transform: translateY(-9px) rotate(-1.2deg); }
+
+/* Card front */
+.front {
+  transform: rotateY(180deg);
+  background:
+    radial-gradient(circle at 50% 0%, rgba(255,227,163,0.10), transparent 55%),
+    var(--card-surface);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--card-border);
+  box-shadow: 0 26px 70px -22px rgba(0,0,0,0.85);
+  padding: 3rem 1.7rem 2.6rem;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+.front::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--aqua), var(--violet), var(--magenta), var(--gold));
+}
+.card-el {
+  position: absolute;
+  top: 1.25rem;
+  left: 0; right: 0;
+  font-family: var(--mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+}
+.card-num {
+  position: absolute;
+  bottom: 1.15rem;
+  left: 0; right: 0;
+  font-family: var(--mono);
+  font-size: 0.56rem;
+  letter-spacing: 0.2em;
+  color: var(--ink-faint);
+}
+.card-glyph { margin-bottom: 0.9rem; }
+.card-glyph svg { width: 34px; height: 34px; }
+.card-name {
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: 2.1rem;
+  line-height: 1.05;
+  margin-bottom: 0.25rem;
+}
+.card-title {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1.02rem;
+  color: var(--ink-dim);
+  margin-bottom: 0.2rem;
+}
+.card-pantheon {
+  font-family: var(--mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-bottom: 1.25rem;
+}
+.divider {
+  width: 54px; height: 1px;
+  background: linear-gradient(90deg, transparent, currentColor, transparent);
+  opacity: 0.55;
+  margin: 0 auto 1.25rem;
+}
+.card-message {
+  font-family: var(--serif);
+  font-size: 1.42rem;
+  line-height: 1.34;
+  color: var(--ink);
+  font-weight: 500;
+}
+.card-invite {
+  font-family: var(--sans);
+  font-size: 0.86rem;
+  font-style: italic;
+  line-height: 1.5;
+  color: var(--ink-dim);
+  margin-top: 1.15rem;
+  padding-top: 1.05rem;
+  border-top: 1px solid rgba(201,165,255,0.16);
+}
+.card-invite b {
+  display: block;
+  font-family: var(--mono);
+  font-style: normal;
+  font-size: 0.55rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  margin-bottom: 0.4rem;
+}
+
+.hint {
+  margin-top: 1.5rem;
+  font-family: var(--mono);
+  font-size: 0.64rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  min-height: 1rem;
+}
+
+/* Buttons */
+.btn-row { display: flex; gap: 0.7rem; flex-wrap: wrap; justify-content: center; margin-top: 1.6rem; }
+.btn {
+  font-family: var(--sans);
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  padding: 0.8rem 1.7rem;
+  border-radius: 30px;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all 0.2s ease;
+}
+.btn-primary {
+  color: #14071f;
+  background: linear-gradient(100deg, var(--aqua), var(--violet-lt) 50%, var(--magenta));
+  box-shadow: 0 8px 26px -8px rgba(232,111,216,0.6);
+}
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 32px -8px rgba(232,111,216,0.8); }
+.btn-ghost {
+  color: var(--ink-dim);
+  background: transparent;
+  border-color: var(--card-border);
+}
+.btn-ghost:hover { color: var(--ink); border-color: var(--violet); }
+.btn:focus-visible, .pill:focus-visible, .mini:focus-visible { outline: 2px solid var(--aqua); outline-offset: 3px; }
+
+/* Section heading */
+.section-head { text-align: center; margin: 4.5rem 0 0.5rem; }
+.section-head h2 {
+  font-family: var(--serif);
+  font-size: 2.1rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+.section-head p {
+  font-family: var(--sans);
+  color: var(--ink-dim);
+  font-size: 0.88rem;
+  margin-top: 0.4rem;
+}
+
+/* Gallery */
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-top: 1.75rem;
+}
+.mini {
+  position: relative;
+  background: var(--card-surface);
+  border: 1px solid var(--card-border);
+  border-radius: 15px;
+  padding: 1.5rem 1.15rem 1.8rem;
+  min-height: 210px;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  overflow: hidden;
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+}
+.mini::before {
+  content: "";
+  position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, transparent, currentColor, transparent);
+}
+.mini:hover { transform: translateY(-4px); border-color: currentColor; box-shadow: 0 16px 40px -18px rgba(0,0,0,0.9); }
+.mini .mel {
+  font-family: var(--mono);
+  font-size: 0.53rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  margin-bottom: 0.7rem;
+}
+.mini .mname {
+  font-family: var(--serif);
+  font-size: 1.4rem;
+  font-weight: 600;
+  line-height: 1.1;
+  margin-bottom: 0.15rem;
+}
+.mini .mtitle {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 0.86rem;
+  color: var(--ink-dim);
+  margin-bottom: 0.75rem;
+}
+.mini .mtext {
+  font-family: var(--serif);
+  font-size: 1rem;
+  line-height: 1.35;
+  color: var(--ink);
+}
+.mini .mnum {
+  position: absolute; bottom: 0.6rem; right: 0.75rem;
+  font-family: var(--mono); font-size: 0.53rem; color: var(--ink-faint);
+}
+.mini.user-card { border-style: dashed; }
+.mini.journaled { border-color: rgba(255,227,163,0.55); }
+.journaled-badge {
+  position: absolute;
+  top: 0.6rem; right: 0.65rem;
+  width: 21px; height: 21px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  background: linear-gradient(135deg, var(--gold), var(--magenta));
+  color: #14071f;
+  font-size: 0.7rem; font-weight: 700;
+  box-shadow: 0 0 14px rgba(255,227,163,0.5);
+  z-index: 2;
+}
+.journaled-mark {
+  position: absolute;
+  top: 1.2rem; right: 1.2rem;
+  font-family: var(--mono);
+  font-size: 0.54rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+/* Add your own */
+.adder {
+  margin-top: 2.5rem;
+  background: rgba(255,255,255,0.018);
+  border: 1px solid var(--card-border);
+  border-radius: 18px;
+  padding: 1.9rem 1.6rem;
+}
+.adder h3 {
+  font-family: var(--serif);
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--violet-lt);
+  margin-bottom: 0.3rem;
+}
+.adder .help {
+  font-family: var(--sans);
+  font-size: 0.85rem;
+  color: var(--ink-dim);
+  margin-bottom: 1.3rem;
+  line-height: 1.55;
+}
+.field { margin-bottom: 1rem; }
+.field label {
+  display: block;
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--violet-lt);
+  margin-bottom: 0.45rem;
+}
+.field input, .field textarea, .field select {
+  width: 100%;
+  font-family: var(--sans);
+  font-size: 0.95rem;
+  color: var(--ink);
+  background: rgba(10,6,20,0.7);
+  border: 1px solid var(--card-border);
+  border-radius: 11px;
+  padding: 0.75rem 0.9rem;
+  resize: vertical;
+}
+.field input:focus, .field textarea:focus, .field select:focus { outline: none; border-color: var(--violet); }
+.field textarea { min-height: 70px; }
+.field select option { background: var(--bg2); color: var(--ink); }
+.row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.adder-actions { display: flex; gap: 0.7rem; align-items: center; flex-wrap: wrap; margin-top: 0.5rem; }
+.muted-note { font-family: var(--sans); font-size: 0.74rem; color: var(--gold); line-height: 1.5; }
+
+.tap-hint {
+  text-align: center;
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-top: 0.7rem;
+}
+
+/* Journal modal */
+.modal-overlay {
+  position: fixed; inset: 0; z-index: 50;
+  background: rgba(6,3,12,0.78);
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
+  display: flex; align-items: center; justify-content: center;
+  padding: 1.5rem;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+.modal-overlay.open { opacity: 1; pointer-events: auto; }
+.modal {
+  width: 100%; max-width: 560px;
+  max-height: 88vh; overflow-y: auto;
+  background: linear-gradient(165deg, #1d1030 0%, #0c0718 100%);
+  border: 1px solid var(--card-border);
+  border-radius: 20px;
+  padding: 2rem 1.8rem;
+  position: relative;
+  transform: translateY(14px) scale(0.98);
+  transition: transform 0.25s ease;
+  box-shadow: 0 30px 90px -20px rgba(0,0,0,0.9);
+}
+.modal-overlay.open .modal { transform: none; }
+.modal-close {
+  position: absolute; top: 0.85rem; right: 1.05rem;
+  background: none; border: none; cursor: pointer;
+  color: var(--ink-faint); font-size: 1.6rem; line-height: 1;
+  transition: color 0.2s ease;
+}
+.modal-close:hover { color: var(--ink); }
+.modal-eyebrow {
+  font-family: var(--mono);
+  font-size: 0.58rem; letter-spacing: 0.26em; text-transform: uppercase;
+  color: var(--violet-lt); margin-bottom: 0.9rem;
+}
+.modal-card {
+  border-left: 3px solid currentColor;
+  padding: 0.1rem 0 0.1rem 1rem;
+  margin-bottom: 1.4rem;
+}
+.modal-card .mc-name { font-family: var(--serif); font-size: 1.35rem; font-weight: 600; line-height: 1.1; }
+.modal-card .mc-title { font-family: var(--serif); font-style: italic; font-size: 0.92rem; color: var(--ink-dim); margin-bottom: 0.6rem; }
+.modal-card .mc-text { font-family: var(--serif); font-size: 1.25rem; line-height: 1.32; color: var(--ink); font-weight: 500; }
+.modal-card .mc-invite { font-family: var(--sans); font-size: 0.85rem; font-style: italic; color: var(--ink-dim); margin-top: 0.6rem; line-height: 1.5; }
+.modal textarea {
+  width: 100%; min-height: 145px;
+  font-family: var(--sans); font-size: 0.98rem; line-height: 1.55;
+  color: var(--ink);
+  background: rgba(10,6,20,0.7);
+  border: 1px solid var(--card-border);
+  border-radius: 12px; padding: 0.9rem 1rem; resize: vertical;
+}
+.modal textarea:focus { outline: none; border-color: var(--violet); }
+.modal-actions { display: flex; gap: 0.8rem; align-items: center; margin-top: 1rem; flex-wrap: wrap; }
+.modal-note { font-family: var(--sans); font-size: 0.76rem; color: var(--gold); }
+
+.entry-del {
+  background: none; border: 1px solid var(--card-border); color: var(--ink-faint);
+  border-radius: 8px; font-size: 0.58rem; font-family: var(--mono); letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 0.3rem 0.6rem; cursor: pointer; transition: all 0.2s ease;
+}
+.entry-del:hover { color: var(--magenta); border-color: var(--magenta); }
+
+.past { margin-top: 1.7rem; }
+.past h4 {
+  font-family: var(--mono); font-size: 0.56rem; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--ink-faint); margin-bottom: 0.8rem;
+}
+.past-entry {
+  background: rgba(255,255,255,0.025);
+  border: 1px solid var(--card-border);
+  border-radius: 11px; padding: 0.85rem 0.95rem; margin-bottom: 0.6rem;
+  position: relative;
+}
+.past-entry p { font-family: var(--sans); font-size: 0.88rem; line-height: 1.55; color: var(--ink); white-space: pre-wrap; padding-right: 4rem; }
+.past-entry .pe-date { font-family: var(--mono); font-size: 0.55rem; color: var(--ink-faint); margin-top: 0.5rem; letter-spacing: 0.1em; }
+.past-entry .entry-del { position: absolute; top: 0.7rem; right: 0.7rem; }
+
+/* Journal section */
+.journal-empty {
+  text-align: center; font-family: var(--sans); color: var(--ink-dim);
+  font-size: 0.92rem; line-height: 1.6; padding: 2.5rem 1rem; max-width: 400px; margin: 1.75rem auto 0;
+}
+.journal-actions { display: flex; justify-content: center; margin-top: 1.4rem; }
+.journal-list { margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.9rem; }
+.j-entry {
+  background: var(--card-surface);
+  border: 1px solid var(--card-border);
+  border-radius: 15px; padding: 1.3rem 1.35rem;
+  position: relative;
+}
+.j-entry .j-el {
+  font-family: var(--mono); font-size: 0.53rem; letter-spacing: 0.2em; text-transform: uppercase;
+  display: block; margin-bottom: 0.3rem;
+}
+.j-entry .j-card { font-family: var(--serif); font-size: 1.15rem; margin-bottom: 0.6rem; padding-right: 5rem; }
+.j-entry .j-body { font-family: var(--sans); font-size: 0.95rem; line-height: 1.6; color: var(--ink); white-space: pre-wrap; }
+.j-entry .j-date { font-family: var(--mono); font-size: 0.55rem; letter-spacing: 0.1em; color: var(--ink-faint); margin-top: 0.75rem; }
+.j-entry .entry-del { position: absolute; top: 1.1rem; right: 1.15rem; }
+
+.footer {
+  text-align: center;
+  margin-top: 4rem;
+  font-family: var(--mono);
+  font-size: 0.64rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+.footer a {
+  color: var(--violet-lt);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(167,107,255,0.4);
+  padding-bottom: 1px;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+.footer a:hover { color: var(--magenta); border-color: var(--magenta); }
+
+/* Confirm dialog */
+.confirm-overlay {
+  position: fixed; inset: 0; z-index: 60;
+  background: rgba(6,3,12,0.82);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  display: flex; align-items: center; justify-content: center;
+  padding: 1.5rem;
+  animation: confirmIn 0.18s ease;
+}
+@keyframes confirmIn { from { opacity: 0; } to { opacity: 1; } }
+.confirm-box {
+  width: 100%; max-width: 370px;
+  background: linear-gradient(165deg, #1d1030 0%, #0c0718 100%);
+  border: 1px solid var(--card-border);
+  border-radius: 18px;
+  padding: 2rem 1.8rem;
+  text-align: center;
+  box-shadow: 0 30px 90px -20px rgba(0,0,0,0.9);
+}
+.confirm-box p { font-family: var(--sans); font-size: 0.95rem; color: var(--ink); line-height: 1.5; margin-bottom: 1.4rem; }
+.confirm-btns { display: flex; gap: 0.75rem; justify-content: center; }
+
+@media (max-width: 560px) {
+  .row2 { grid-template-columns: 1fr; }
+  .card-message { font-size: 1.28rem; }
+  .card-name { font-size: 1.85rem; }
+  .front { padding: 2.7rem 1.35rem 2.5rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mote, .ray, .title, .back-art .spokes { animation: none; }
+  .flipper { transition-duration: 0.01ms; }
+}
+</style>
+
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+<div class="orb orb-3"></div>
+<div class="orb orb-4"></div>
+<div id="rays"><div class="ray"></div><div class="ray"></div><div class="ray"></div></div>
+<div id="motes"></div>
+
+<div class="wrap">
+  <div class="brand-label" id="brandLabel">Divine Feminine &nbsp;&#8226;&nbsp; Archetype Oracle</div>
+  <h1 class="title" id="deckTitle">She Speaks</h1>
+  <p class="subtitle" id="deckSubtitle">Twenty seven goddesses, one message each. Pull a card when you need to remember what you carry.</p>
+
+  <div class="controls" id="filters">
+    <button class="pill active" data-filter="all">Whole deck</button>
+    <button class="pill" data-filter="Fire">Fire</button>
+    <button class="pill" data-filter="Water">Water</button>
+    <button class="pill" data-filter="Earth">Earth</button>
+    <button class="pill" data-filter="Air">Air</button>
+    <button class="pill" data-filter="Aether">Aether</button>
+  </div>
+
+  <div class="stage">
+    <div class="deck-card" id="deckCard" tabindex="0" role="button" aria-label="Draw a card">
+      <div class="flipper">
+        <div class="face back">
+          <svg class="back-art" viewBox="0 0 120 120" aria-hidden="true">
+            <defs>
+              <radialGradient id="coreGlow" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#FFF6E0" stop-opacity="1"/>
+                <stop offset="45%" stop-color="#FFE3A3" stop-opacity="0.75"/>
+                <stop offset="100%" stop-color="#E86FD8" stop-opacity="0"/>
+              </radialGradient>
+              <linearGradient id="spokeGrad" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#7DE8F7"/>
+                <stop offset="50%" stop-color="#C9A5FF"/>
+                <stop offset="100%" stop-color="#FF6FC8"/>
+              </linearGradient>
+            </defs>
+            <g class="spokes" stroke="url(#spokeGrad)" stroke-width="0.9" stroke-linecap="round" opacity="0.85">
+              <line x1="60" y1="8" x2="60" y2="30"/>
+              <line x1="60" y1="90" x2="60" y2="112"/>
+              <line x1="8" y1="60" x2="30" y2="60"/>
+              <line x1="90" y1="60" x2="112" y2="60"/>
+              <line x1="23" y1="23" x2="38" y2="38"/>
+              <line x1="82" y1="82" x2="97" y2="97"/>
+              <line x1="97" y1="23" x2="82" y2="38"/>
+              <line x1="38" y1="82" x2="23" y2="97"/>
+              <line x1="60" y1="16" x2="60" y2="26" transform="rotate(22.5 60 60)"/>
+              <line x1="60" y1="16" x2="60" y2="26" transform="rotate(67.5 60 60)"/>
+              <line x1="60" y1="16" x2="60" y2="26" transform="rotate(112.5 60 60)"/>
+              <line x1="60" y1="16" x2="60" y2="26" transform="rotate(157.5 60 60)"/>
+              <line x1="60" y1="16" x2="60" y2="26" transform="rotate(202.5 60 60)"/>
+              <line x1="60" y1="16" x2="60" y2="26" transform="rotate(247.5 60 60)"/>
+              <line x1="60" y1="16" x2="60" y2="26" transform="rotate(292.5 60 60)"/>
+              <line x1="60" y1="16" x2="60" y2="26" transform="rotate(337.5 60 60)"/>
+            </g>
+            <circle cx="60" cy="60" r="44" fill="none" stroke="#C9A5FF" stroke-opacity="0.28" stroke-dasharray="1 5" stroke-width="0.8"/>
+            <circle cx="60" cy="60" r="34" fill="url(#coreGlow)"/>
+            <path d="M60 40 L64 56 L80 60 L64 64 L60 80 L56 64 L40 60 L56 56 Z" fill="#FFF6E0" opacity="0.95"/>
+            <circle cx="60" cy="60" r="3.2" fill="#FFFFFF"/>
+          </svg>
+          <div class="back-word">Draw a Card</div>
+        </div>
+        <div class="face front" id="cardFront"></div>
+      </div>
+    </div>
+    <div class="hint" id="hint">Tap the card to draw</div>
+    <div class="btn-row">
+      <button class="btn btn-primary" id="drawBtn">Draw a card</button>
+      <button class="btn btn-ghost" id="reflectBtn" style="display:none;">Sit with her</button>
+      <button class="btn btn-ghost" id="galleryBtn">Browse full deck</button>
+      <button class="btn btn-ghost" id="journalBtn">My journal</button>
+    </div>
+  </div>
+
+  <div id="gallerySection" style="display:none;">
+    <div class="section-head">
+      <h2>The Full Deck</h2>
+      <p id="deckCount"></p>
+    </div>
+    <p class="tap-hint">Tap any card to write with her &nbsp;&#8226;&nbsp; a star marks the ones you have written on</p>
+    <div class="gallery" id="gallery"></div>
+
+    <div class="adder">
+      <h3>Add your own goddess</h3>
+      <p class="help">Make this deck yours. Add a goddess, an archetype, or an aspect of Her you work with, and she gets shuffled in with the rest. Your cards save across sessions so they are here next time.</p>
+      <div class="row2">
+        <div class="field">
+          <label>Name</label>
+          <input type="text" id="nameInput" placeholder="e.g. Bastet" maxlength="34">
+        </div>
+        <div class="field">
+          <label>Element</label>
+          <select id="elementField">
+            <option value="Fire">Fire</option>
+            <option value="Water">Water</option>
+            <option value="Earth">Earth</option>
+            <option value="Air">Air</option>
+            <option value="Aether">Aether</option>
+          </select>
+        </div>
+      </div>
+      <div class="row2">
+        <div class="field">
+          <label>Title</label>
+          <input type="text" id="titleInput" placeholder="e.g. Keeper of Pleasure" maxlength="44">
+        </div>
+        <div class="field">
+          <label>Tradition</label>
+          <input type="text" id="pantheonInput" placeholder="e.g. Egyptian" maxlength="28">
+        </div>
+      </div>
+      <div class="field">
+        <label>Her message</label>
+        <textarea id="messageInput" placeholder="e.g. Rest is allowed to be part of the plan. Take the afternoon." maxlength="240"></textarea>
+      </div>
+      <div class="field">
+        <label>Her invitation</label>
+        <input type="text" id="inviteInput" placeholder="e.g. Do one thing today purely because it feels good." maxlength="160">
+      </div>
+      <div class="adder-actions">
+        <button class="btn btn-primary" id="addBtn">Add to deck</button>
+        <button class="btn btn-ghost" id="clearMineBtn">Remove my cards</button>
+        <span class="muted-note" id="addNote"></span>
+      </div>
+    </div>
+  </div>
+
+  <div id="journalSection" style="display:none;">
+    <div class="section-head">
+      <h2>My Oracle Journal</h2>
+      <p id="journalCount"></p>
+    </div>
+    <div class="journal-actions" id="journalActions" style="display:none;">
+      <button class="btn btn-ghost" id="exportBtn">Download my journal</button>
+    </div>
+    <div id="journalList"></div>
+  </div>
+
+  <div class="footer">Made for the <a href="https://www.skool.com/soul-forged-founders/about" target="_blank" rel="noopener">Alchemist's AI Toolkit</a></div>
+
+  <div class="modal-overlay" id="reflectModal">
+    <div class="modal" role="dialog" aria-modal="true" aria-label="Write with this goddess">
+      <button class="modal-close" id="modalClose" aria-label="Close">&times;</button>
+      <div class="modal-eyebrow">Sit with her</div>
+      <div class="modal-card" id="modalCard"></div>
+      <textarea id="reflectInput" placeholder="Write what comes up. No one sees this but you."  maxlength="4000"></textarea>
+      <div class="modal-actions">
+        <button class="btn btn-primary" id="saveReflectBtn">Save to journal</button>
+        <span class="modal-note" id="modalNote"></span>
+      </div>
+      <div class="past" id="modalPast"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ============================================================
+   THE DECK. Edit me to build your own.
+   ------------------------------------------------------------
+   Every card looks like this:
+     {
+       name: "Hekate",
+       title: "Keeper of the Keys",
+       pantheon: "Greek",
+       element: "Fire" | "Water" | "Earth" | "Air" | "Aether",
+       message: "her short oracle message",
+       invitation: "one small action for today"
+     }
+   Add, remove, or rewrite freely. Members can also add
+   goddesses live in the browser using the panel below the deck.
+   ============================================================ */
+const DECK_META = {
+  label: "Divine Feminine \u00b7 Archetype Oracle",
+  title: "She Speaks",
+  subtitle: "Twenty seven goddesses, one message each. Pull a card when you need to remember what you carry."
+};
+
+const CARDS = [
+  /* ---------- FIRE ---------- */
+  { name: "Sekhmet", title: "Lady of Flame", pantheon: "Egyptian", element: "Fire",
+    message: "Your anger knows exactly where your boundary sits. Let it speak once, clearly, then hold what it told you.",
+    invitation: "Name the one line you will stop letting people cross." },
+  { name: "Brigid", title: "Keeper of the Forge", pantheon: "Celtic", element: "Fire",
+    message: "What you are making is worth the heat it takes. Come back to it today, even for ten minutes.",
+    invitation: "Put your hands on the work before you put them on your phone." },
+  { name: "Kali", title: "The Liberator", pantheon: "Hindu", element: "Fire",
+    message: "Let the ending finish. Your hands come back to you empty and ready.",
+    invitation: "Write down one thing you are done carrying, then say it out loud." },
+  { name: "Hestia", title: "Tender of the Hearth", pantheon: "Greek", element: "Fire",
+    message: "Everything you build draws its warmth from the fire at the center of your own life. Feed that one first.",
+    invitation: "Do one small thing today that serves only your own home and body." },
+  { name: "Freyja", title: "Gold and Desire", pantheon: "Norse", element: "Fire",
+    message: "Wanting is holy. Say the want out loud and watch how quickly the path shows itself.",
+    invitation: "Name the desire you have been softening for other people's comfort." },
+  { name: "Durga", title: "The Unshakable", pantheon: "Hindu", element: "Fire",
+    message: "You are steadier than the thing in front of you. Meet it once, fully, instead of a hundred times in your head.",
+    invitation: "Take the one action you have been circling all week." },
+
+  /* ---------- WATER ---------- */
+  { name: "Aphrodite", title: "Born of the Sea", pantheon: "Greek", element: "Water",
+    message: "Pleasure is a compass. What you love is pointing at what you are here for.",
+    invitation: "Give yourself one hour of something you love for no reason at all." },
+  { name: "Danu", title: "Mother of Rivers", pantheon: "Celtic", element: "Water",
+    message: "Something older than this moment is carrying you. Loosen your grip and keep moving.",
+    invitation: "Ask for help with the thing you have been doing alone." },
+  { name: "Ceridwen", title: "Keeper of the Cauldron", pantheon: "Welsh", element: "Water",
+    message: "The long brew is working on the days nothing appears to change. Keep stirring.",
+    invitation: "List three things quietly maturing in your life right now." },
+  { name: "Tiamat", title: "The First Deep", pantheon: "Babylonian", element: "Water",
+    message: "What you are becoming is already forming in the dark. Give it more time before you pull it into the light.",
+    invitation: "Keep one thing private today and let it grow." },
+  { name: "Nephthys", title: "Keeper of the Threshold", pantheon: "Egyptian", element: "Water",
+    message: "You are standing between two rooms. Standing here is the whole work for now.",
+    invitation: "Write down what you are leaving and what you are walking toward." },
+
+  /* ---------- EARTH ---------- */
+  { name: "Demeter", title: "The Harvest", pantheon: "Greek", element: "Earth",
+    message: "You planted this. Take the yield without apologizing for how good it is.",
+    invitation: "Say thank you to yourself for one result you created." },
+  { name: "Gaia", title: "The Ground Itself", pantheon: "Greek", element: "Earth",
+    message: "You are allowed to be a body. Feed it, move it, put it in the sun.",
+    invitation: "Go outside and stand on the ground for five minutes." },
+  { name: "Lakshmi", title: "The Overflowing", pantheon: "Hindu", element: "Earth",
+    message: "Wealth moves toward what is tended and open. Clean one corner of your life today and watch.",
+    invitation: "Handle the money task you have been avoiding." },
+  { name: "Mokosh", title: "Spinner of the Damp Earth", pantheon: "Slavic", element: "Earth",
+    message: "Your work has a season. Match your pace to the one you are actually in.",
+    invitation: "Cut one thing from this week's list and let it wait." },
+  { name: "Rhiannon", title: "Sovereign Rider", pantheon: "Welsh", element: "Earth",
+    message: "You set the pace. The people who want to be with you will keep up.",
+    invitation: "Stop explaining one decision you already made." },
+
+  /* ---------- AIR ---------- */
+  { name: "Athena", title: "The Clear Strategy", pantheon: "Greek", element: "Air",
+    message: "You already know the smart move. Write it down and take the first step of it today.",
+    invitation: "Turn the swirl in your head into three written steps." },
+  { name: "Saraswati", title: "The Flowing Word", pantheon: "Hindu", element: "Air",
+    message: "Your voice gets clearer through use. Say the thing imperfectly rather than not at all.",
+    invitation: "Post, send, or speak one unpolished true thing." },
+  { name: "Iris", title: "The Bridge", pantheon: "Greek", element: "Air",
+    message: "The message you carry is simpler than you are making it. Say it plainly and let it land.",
+    invitation: "Send the message you have been drafting in your head." },
+  { name: "Frigg", title: "Spinner of the Thread", pantheon: "Norse", element: "Air",
+    message: "You can see where this leads. Trust what you already know and prepare instead of worry.",
+    invitation: "Make one plan for the outcome you actually expect." },
+  { name: "Ma'at", title: "The Feather", pantheon: "Egyptian", element: "Air",
+    message: "Truth makes you lighter. Say the honest sentence and feel the weight leave.",
+    invitation: "Tell one truth you have been managing around." },
+
+  /* ---------- AETHER ---------- */
+  { name: "Hekate", title: "Keeper of the Keys", pantheon: "Greek", element: "Aether",
+    message: "Three roads, and every one of them is yours to choose. Pick one and the fog clears as you walk.",
+    invitation: "Choose the option you keep coming back to." },
+  { name: "Isis", title: "The Great Magic", pantheon: "Egyptian", element: "Aether",
+    message: "You can gather what was scattered. Start with one piece and stay with it.",
+    invitation: "Return to a project you abandoned and give it one hour." },
+  { name: "Inanna", title: "She Who Descends", pantheon: "Sumerian", element: "Aether",
+    message: "You set something down at every gate on the way in. You come back up carrying only what is yours.",
+    invitation: "Name one identity you are ready to leave behind." },
+  { name: "Nyx", title: "First Night", pantheon: "Greek", element: "Aether",
+    message: "Rest is part of the work. Nothing is being lost while you sleep.",
+    invitation: "Go to bed early and let the unfinished thing stay unfinished." },
+  { name: "Arianrhod", title: "Keeper of the Silver Wheel", pantheon: "Welsh", element: "Aether",
+    message: "This has come around again because you can meet it at a new level. Meet it as who you are now.",
+    invitation: "Notice the pattern repeating and choose differently once." },
+  { name: "Persephone", title: "Queen of Both Worlds", pantheon: "Greek", element: "Aether",
+    message: "You know how to live in the bright season and in the dark one. Both of them belong to you.",
+    invitation: "Let yourself feel exactly which season you are in." }
+];
+
+/* ============================================================
+   Storage (Claude artifact compatible)
+   ============================================================ */
+const STORAGE_KEY = "goddessOracleUserCards:v1";
+const JOURNAL_KEY = "goddessOracleJournal:v1";
+
+let _userCards = [];
+let _journal = [];
+
+async function initStorage() {
+  try {
+    const cardsResult = await window.storage.get(STORAGE_KEY);
+    _userCards = cardsResult ? JSON.parse(cardsResult.value) : [];
+  } catch (e) { _userCards = []; }
+  try {
+    const journalResult = await window.storage.get(JOURNAL_KEY);
+    _journal = journalResult ? JSON.parse(journalResult.value) : [];
+  } catch (e) { _journal = []; }
+}
+
+function loadUserCards() { return _userCards; }
+function saveUserCards(cards) {
+  _userCards = cards;
+  window.storage.set(STORAGE_KEY, JSON.stringify(cards)).catch(() => {});
+}
+function loadJournal() { return _journal; }
+function saveJournal(j) {
+  _journal = j;
+  window.storage.set(JOURNAL_KEY, JSON.stringify(j)).catch(() => {});
+}
+
+/* ============================================================
+   App logic
+   ============================================================ */
+const EL_COLOR = {
+  Fire: "var(--el-fire)",
+  Water: "var(--el-water)",
+  Earth: "var(--el-earth)",
+  Air: "var(--el-air)",
+  Aether: "var(--el-aether)"
+};
+
+function elementGlyph(el, size) {
+  const s = size || 34;
+  const open = '<svg viewBox="0 0 32 32" width="' + s + '" height="' + s + '" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true">';
+  const shapes = {
+    Fire: '<path d="M16 4 L28 26 L4 26 Z"/>',
+    Water: '<path d="M16 28 L4 6 L28 6 Z"/>',
+    Air: '<path d="M16 4 L28 26 L4 26 Z"/><path d="M9 18 H23"/>',
+    Earth: '<path d="M16 28 L4 6 L28 6 Z"/><path d="M9 15 H23"/>',
+    Aether: '<path d="M16 3 L18.6 13.4 L29 16 L18.6 18.6 L16 29 L13.4 18.6 L3 16 L13.4 13.4 Z"/><circle cx="16" cy="16" r="1.4" fill="currentColor" stroke="none"/>'
+  };
+  return open + (shapes[el] || shapes.Aether) + '</svg>';
+}
+
+let activeFilter = "all";
+let lastIndex = -1;
+let currentDrawn = null;
+
+document.getElementById("brandLabel").innerHTML = DECK_META.label;
+document.getElementById("deckTitle").textContent = DECK_META.title;
+document.getElementById("deckSubtitle").textContent = DECK_META.subtitle;
+
+function allCards() { return CARDS.concat(loadUserCards()); }
+
+function filtered() {
+  const all = allCards();
+  if (activeFilter === "all") return all.map((c, i) => ({ c, i }));
+  return all.map((c, i) => ({ c, i })).filter(o => o.c.element === activeFilter);
+}
+
+function cardKey(c) { return (c.name || "") + "||" + (c.message || ""); }
+function journaledKeySet() { return new Set(loadJournal().map(e => e.key)); }
+function entriesForKey(key) { return loadJournal().filter(e => e.key === key).sort((a, b) => b.ts - a.ts); }
+function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2, 7); }
+
+function formatDate(ts) {
+  const d = new Date(ts);
+  return d.toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" }) +
+    "  \u00b7  " + d.toLocaleTimeString(undefined, { hour: "numeric", minute: "2-digit" });
+}
+
+function deleteEntry(id) { saveJournal(loadJournal().filter(e => e.id !== id)); }
+
+function safeConfirm(message) {
+  return new Promise((resolve) => {
+    const overlay = document.createElement("div");
+    overlay.className = "confirm-overlay";
+    const box = document.createElement("div");
+    box.className = "confirm-box";
+    const msg = document.createElement("p");
+    msg.textContent = message;
+    const btns = document.createElement("div");
+    btns.className = "confirm-btns";
+    const yesBtn = document.createElement("button");
+    yesBtn.className = "btn btn-primary";
+    yesBtn.textContent = "Yes, do it";
+    const noBtn = document.createElement("button");
+    noBtn.className = "btn btn-ghost";
+    noBtn.textContent = "Cancel";
+    btns.appendChild(yesBtn);
+    btns.appendChild(noBtn);
+    box.appendChild(msg);
+    box.appendChild(btns);
+    overlay.appendChild(box);
+    document.body.appendChild(overlay);
+    function cleanup(result) { overlay.remove(); resolve(result); }
+    yesBtn.addEventListener("click", () => cleanup(true));
+    noBtn.addEventListener("click", () => cleanup(false));
+    overlay.addEventListener("click", (e) => { if (e.target === overlay) cleanup(false); });
+  });
+}
+
+function escapeHtml(s) {
+  return String(s == null ? "" : s).replace(/[&<>"']/g, m => ({
+    "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+  }[m]));
+}
+
+// ---------- Draw ----------
+const deckCard = document.getElementById("deckCard");
+const cardFront = document.getElementById("cardFront");
+const hint = document.getElementById("hint");
+const drawBtn = document.getElementById("drawBtn");
+const reflectBtn = document.getElementById("reflectBtn");
+
+function renderFront(card, idx, total) {
+  const color = EL_COLOR[card.element] || "var(--el-aether)";
+  let html = "";
+  html += '<div class="card-el" style="color:' + color + '">' + escapeHtml(card.element || "Aether") + '</div>';
+  if (journaledKeySet().has(cardKey(card))) html += '<div class="journaled-mark">&#10022; Written</div>';
+  html += '<div class="card-glyph" style="color:' + color + '">' + elementGlyph(card.element, 34) + '</div>';
+  html += '<div class="card-name" style="color:' + color + '">' + escapeHtml(card.name) + '</div>';
+  if (card.title) html += '<div class="card-title">' + escapeHtml(card.title) + '</div>';
+  if (card.pantheon) html += '<div class="card-pantheon">' + escapeHtml(card.pantheon) + '</div>';
+  html += '<div class="divider" style="color:' + color + '"></div>';
+  html += '<div class="card-message">' + escapeHtml(card.message) + '</div>';
+  if (card.invitation) {
+    html += '<div class="card-invite"><b style="color:' + color + '">Her invitation</b>' + escapeHtml(card.invitation) + '</div>';
+  }
+  html += '<div class="card-num">No. ' + String(idx + 1).padStart(2, "0") + ' / ' + total + '</div>';
+  cardFront.innerHTML = html;
+}
+
+function draw() {
+  const pool = filtered();
+  if (!pool.length) return;
+  let pick;
+  do { pick = pool[Math.floor(Math.random() * pool.length)]; }
+  while (pool.length > 1 && pick.i === lastIndex);
+  lastIndex = pick.i;
+  currentDrawn = pick.c;
+  const total = allCards().length;
+
+  if (deckCard.classList.contains("revealed")) {
+    deckCard.classList.remove("revealed");
+    setTimeout(() => { renderFront(pick.c, pick.i, total); deckCard.classList.add("revealed"); }, 300);
+  } else {
+    renderFront(pick.c, pick.i, total);
+    deckCard.classList.add("revealed");
+  }
+  hint.textContent = "Draw again for another";
+  drawBtn.textContent = "Draw again";
+  reflectBtn.style.display = "inline-block";
+}
+
+deckCard.addEventListener("click", draw);
+deckCard.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); draw(); } });
+drawBtn.addEventListener("click", draw);
+
+// ---------- Filters ----------
+document.getElementById("filters").addEventListener("click", (e) => {
+  const btn = e.target.closest(".pill");
+  if (!btn) return;
+  document.querySelectorAll(".pill").forEach(p => p.classList.remove("active"));
+  btn.classList.add("active");
+  activeFilter = btn.dataset.filter;
+  lastIndex = -1;
+});
+
+// ---------- Gallery ----------
+const gallerySection = document.getElementById("gallerySection");
+const gallery = document.getElementById("gallery");
+const galleryBtn = document.getElementById("galleryBtn");
+
+function renderGallery() {
+  const userCount = loadUserCards().length;
+  const all = allCards();
+  const written = journaledKeySet();
+  document.getElementById("deckCount").textContent =
+    all.length + " cards" + (userCount ? "  \u00b7  " + userCount + " of them yours" : "");
+  gallery.innerHTML = all.map((c, i) => {
+    const isUser = i >= CARDS.length;
+    const isWritten = written.has(cardKey(c));
+    const color = EL_COLOR[c.element] || "var(--el-aether)";
+    const cls = "mini" + (isUser ? " user-card" : "") + (isWritten ? " journaled" : "");
+    let inner = '<div class="mel">' + escapeHtml(c.element || "Aether") + '</div>';
+    inner += '<div class="mname">' + escapeHtml(c.name) + '</div>';
+    if (c.title) inner += '<div class="mtitle">' + escapeHtml(c.title) + '</div>';
+    inner += '<div class="mtext">' + escapeHtml(c.message) + '</div>';
+    inner += '<div class="mnum">' + String(i + 1).padStart(2, "0") + '</div>';
+    if (isWritten) inner += '<div class="journaled-badge" title="You have written with her">&#10022;</div>';
+    return '<div class="' + cls + '" style="color:' + color + '" data-idx="' + i + '" tabindex="0">' + inner + '</div>';
+  }).join("");
+}
+
+function openFromMini(el) {
+  const idx = parseInt(el.dataset.idx, 10);
+  const card = allCards()[idx];
+  if (card) openReflect(card);
+}
+gallery.addEventListener("click", (e) => {
+  const mini = e.target.closest(".mini");
+  if (mini) openFromMini(mini);
+});
+gallery.addEventListener("keydown", (e) => {
+  const mini = e.target.closest(".mini");
+  if (mini && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); openFromMini(mini); }
+});
+
+galleryBtn.addEventListener("click", () => {
+  const showing = gallerySection.style.display !== "none";
+  if (showing) {
+    gallerySection.style.display = "none";
+    galleryBtn.textContent = "Browse full deck";
+  } else {
+    renderGallery();
+    gallerySection.style.display = "block";
+    galleryBtn.textContent = "Hide deck";
+    gallerySection.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+});
+
+// ---------- Add your own ----------
+const nameInput = document.getElementById("nameInput");
+const titleInput = document.getElementById("titleInput");
+const pantheonInput = document.getElementById("pantheonInput");
+const messageInput = document.getElementById("messageInput");
+const inviteInput = document.getElementById("inviteInput");
+const elementField = document.getElementById("elementField");
+const addNote = document.getElementById("addNote");
+
+let flashTimer;
+function flash(msg) {
+  addNote.textContent = msg;
+  clearTimeout(flashTimer);
+  flashTimer = setTimeout(() => { addNote.textContent = ""; }, 3400);
+}
+
+document.getElementById("addBtn").addEventListener("click", () => {
+  const name = nameInput.value.trim();
+  const message = messageInput.value.trim();
+  if (!name) { flash("Give her a name first."); return; }
+  if (!message) { flash("Write her message first."); return; }
+  const card = { name, message, element: elementField.value };
+  const t = titleInput.value.trim(); if (t) card.title = t;
+  const p = pantheonInput.value.trim(); if (p) card.pantheon = p;
+  const inv = inviteInput.value.trim(); if (inv) card.invitation = inv;
+  const mine = loadUserCards();
+  mine.push(card);
+  saveUserCards(mine);
+  nameInput.value = ""; titleInput.value = ""; pantheonInput.value = "";
+  messageInput.value = ""; inviteInput.value = "";
+  renderGallery();
+  flash(name + " is in the deck now.");
+});
+
+document.getElementById("clearMineBtn").addEventListener("click", async () => {
+  if (!loadUserCards().length) { flash("No cards of yours to remove."); return; }
+  if (!await safeConfirm("Remove all the cards you added? The original deck stays.")) return;
+  saveUserCards([]);
+  lastIndex = -1;
+  renderGallery();
+  flash("Your cards were removed.");
+});
+
+// ---------- Journal ----------
+const journalBtn = document.getElementById("journalBtn");
+const journalSection = document.getElementById("journalSection");
+const journalActions = document.getElementById("journalActions");
+const journalList = document.getElementById("journalList");
+const reflectModal = document.getElementById("reflectModal");
+const modalCardEl = document.getElementById("modalCard");
+const reflectInput = document.getElementById("reflectInput");
+const modalNote = document.getElementById("modalNote");
+const modalPast = document.getElementById("modalPast");
+let modalCard = null;
+
+function renderModalCardInner(card) {
+  const color = EL_COLOR[card.element] || "var(--el-aether)";
+  let html = '<div class="mc-name" style="color:' + color + '">' + escapeHtml(card.name) + '</div>';
+  if (card.title) html += '<div class="mc-title">' + escapeHtml(card.title) + '</div>';
+  html += '<div class="mc-text">' + escapeHtml(card.message) + '</div>';
+  if (card.invitation) html += '<div class="mc-invite">' + escapeHtml(card.invitation) + '</div>';
+  modalCardEl.style.color = color;
+  return html;
+}
+
+function renderModalPast() {
+  const list = entriesForKey(cardKey(modalCard));
+  if (!list.length) { modalPast.innerHTML = ""; return; }
+  modalPast.innerHTML = '<h4>What you have written with her before</h4>' + list.map(e =>
+    '<div class="past-entry"><button class="entry-del" data-id="' + e.id + '">Delete</button>' +
+    '<p>' + escapeHtml(e.body) + '</p><div class="pe-date">' + formatDate(e.ts) + '</div></div>'
+  ).join("");
+}
+
+function openReflect(card) {
+  modalCard = card;
+  modalCardEl.innerHTML = renderModalCardInner(card);
+  reflectInput.value = "";
+  modalNote.textContent = "";
+  renderModalPast();
+  reflectModal.classList.add("open");
+  setTimeout(() => reflectInput.focus(), 80);
+}
+
+function closeModal() { reflectModal.classList.remove("open"); modalCard = null; }
+
+reflectBtn.addEventListener("click", () => { if (currentDrawn) openReflect(currentDrawn); });
+document.getElementById("modalClose").addEventListener("click", closeModal);
+reflectModal.addEventListener("click", (e) => { if (e.target === reflectModal) closeModal(); });
+document.addEventListener("keydown", (e) => { if (e.key === "Escape" && reflectModal.classList.contains("open")) closeModal(); });
+
+function updateJournalBtn() {
+  const n = loadJournal().length;
+  journalBtn.textContent = n ? "My journal (" + n + ")" : "My journal";
+}
+
+document.getElementById("saveReflectBtn").addEventListener("click", () => {
+  const body = reflectInput.value.trim();
+  if (!body) { modalNote.textContent = "Write something first."; return; }
+  const j = loadJournal();
+  j.push({
+    id: uid(), key: cardKey(modalCard),
+    name: modalCard.name, cardTitle: modalCard.title || "",
+    element: modalCard.element || "Aether", message: modalCard.message,
+    invitation: modalCard.invitation || "",
+    body, ts: Date.now()
+  });
+  saveJournal(j);
+  reflectInput.value = "";
+  modalNote.textContent = "Saved to your journal.";
+  renderModalPast();
+  updateJournalBtn();
+  if (gallerySection.style.display !== "none") renderGallery();
+  if (journalSection.style.display !== "none") renderJournal();
+});
+
+modalPast.addEventListener("click", async (e) => {
+  const btn = e.target.closest(".entry-del");
+  if (!btn) return;
+  if (!await safeConfirm("Delete this journal entry?")) return;
+  deleteEntry(btn.dataset.id);
+  renderModalPast();
+  updateJournalBtn();
+  if (gallerySection.style.display !== "none") renderGallery();
+  if (journalSection.style.display !== "none") renderJournal();
+});
+
+function renderJournal() {
+  const j = loadJournal().sort((a, b) => b.ts - a.ts);
+  document.getElementById("journalCount").textContent =
+    j.length ? (j.length + (j.length === 1 ? " entry saved" : " entries saved")) : "";
+  journalActions.style.display = j.length ? "flex" : "none";
+  if (!j.length) {
+    journalList.innerHTML = '<div class="journal-empty">Nothing here yet. Draw a card or tap one in the deck, then write what comes up. It saves here, just for you.</div>';
+    return;
+  }
+  journalList.innerHTML = '<div class="journal-list">' + j.map(e => {
+    const color = EL_COLOR[e.element] || "var(--el-aether)";
+    const label = e.name + (e.cardTitle ? ", " + e.cardTitle : "");
+    return '<div class="j-entry"><button class="entry-del" data-id="' + e.id + '">Delete</button>' +
+      '<div class="j-card" style="color:' + color + '"><span class="j-el">' + escapeHtml(e.element) + '</span>' + escapeHtml(label) + '</div>' +
+      '<div class="j-body">' + escapeHtml(e.body) + '</div>' +
+      '<div class="j-date">' + formatDate(e.ts) + '</div></div>';
+  }).join("") + '</div>';
+}
+
+journalList.addEventListener("click", async (e) => {
+  const btn = e.target.closest(".entry-del");
+  if (!btn) return;
+  if (!await safeConfirm("Delete this journal entry?")) return;
+  deleteEntry(btn.dataset.id);
+  renderJournal();
+  updateJournalBtn();
+  if (gallerySection.style.display !== "none") renderGallery();
+});
+
+function exportJournal() {
+  const j = loadJournal().sort((a, b) => b.ts - a.ts);
+  if (!j.length) return;
+  const line = "------------------------------------------------------------";
+  let out = DECK_META.title + " \u00b7 Oracle Journal\n";
+  out += "Exported " + formatDate(Date.now()) + "\n";
+  out += j.length + (j.length === 1 ? " entry" : " entries") + "\n" + line + "\n\n";
+  out += j.map(e => {
+    let block = formatDate(e.ts) + "\n";
+    block += e.name + (e.cardTitle ? ", " + e.cardTitle : "") + "  (" + e.element + ")\n";
+    block += "Her message: " + e.message + "\n";
+    if (e.invitation) block += "Her invitation: " + e.invitation + "\n";
+    block += "\n" + e.body + "\n";
+    return block;
+  }).join("\n" + line + "\n\n");
+  out += "\n\n" + line + "\nMade for the Alchemist's AI Toolkit\nhttps://www.skool.com/soul-forged-founders/about\n";
+
+  const blob = new Blob([out], { type: "text/plain;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  const stamp = new Date().toISOString().slice(0, 10);
+  a.href = url;
+  a.download = "oracle-journal-" + stamp + ".txt";
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+document.getElementById("exportBtn").addEventListener("click", exportJournal);
+
+journalBtn.addEventListener("click", () => {
+  const showing = journalSection.style.display !== "none";
+  if (showing) {
+    journalSection.style.display = "none";
+    updateJournalBtn();
+  } else {
+    renderJournal();
+    journalSection.style.display = "block";
+    journalSection.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+});
+
+// ---------- Drifting motes ----------
+(function motes() {
+  const host = document.getElementById("motes");
+  const colors = ["var(--aqua)", "var(--magenta)", "var(--violet-lt)", "var(--gold)", "var(--leaf)"];
+  const N = 34;
+  for (let i = 0; i < N; i++) {
+    const m = document.createElement("div");
+    m.className = "mote";
+    m.style.left = Math.random() * 100 + "vw";
+    const dur = 11 + Math.random() * 14;
+    m.style.animationDuration = dur + "s";
+    m.style.animationDelay = (-Math.random() * dur) + "s";
+    m.style.setProperty("--drift", (Math.random() * 110 - 55) + "px");
+    const s = 2 + Math.random() * 2.5;
+    m.style.width = s + "px"; m.style.height = s + "px";
+    m.style.color = colors[Math.floor(Math.random() * colors.length)];
+    m.style.background = m.style.color;
+    host.appendChild(m);
+  }
+})();
+
+// ---------- Boot ----------
+initStorage().then(() => {
+  updateJournalBtn();
+});
+</script>
