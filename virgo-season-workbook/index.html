@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Virgo Season Handbook | Embracing Wholeness</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #F3F1EA; --bg2: #EBE9E0; --bg3: #E4E2D8; --bg-cool: #EFF0EA;
+  --ink: #2A2E26; --ink-dim: #4A5244; --ink-faint: #7A8272;
+  --moss: #6B7F5E; --moss-lt: #8FA080; --moss-dk: #4F6144;
+  --wheat: #C2A55A; --wheat-lt: #D4BE7E; --wheat-dk: #A38B40;
+  --mauve: #927E99; --mauve-lt: #B0A0B5; --mauve-dk: #745F7C;
+  --clay: #A8917B; --clay-lt: #C4B3A0; --clay-dk: #8A7460;
+  --serif: Georgia, 'Hoefler Text', 'Times New Roman', serif;
+  --sans: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --radius-sm: 8px; --radius-md: 14px; --radius-lg: 22px; --radius-pill: 30px;
+  --shadow-card: 0 2px 8px rgba(107,127,94,0.05), 0 8px 32px rgba(168,145,123,0.08);
+  --shadow-elevated: 0 4px 16px rgba(107,127,94,0.08), 0 16px 48px rgba(168,145,123,0.12);
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--sans);
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--ink);
+  background: linear-gradient(180deg, var(--bg) 0%, var(--bg2) 40%, var(--bg-cool) 100%);
+  min-height: 100vh;
+}
+
+/* ── Layout ── */
+
+.app-shell { display: flex; min-height: 100vh; }
+
+.sidebar {
+  width: 260px; min-width: 260px;
+  background: rgba(243,241,234,0.92);
+  backdrop-filter: blur(20px);
+  border-right: 1px solid rgba(107,127,94,0.1);
+  padding: 2rem 0;
+  display: flex; flex-direction: column;
+  position: fixed; top: 0; left: 0; bottom: 0;
+  z-index: 100; overflow-y: auto;
+}
+
+.sidebar-brand { padding: 0 1.5rem 1.5rem; border-bottom: 1px solid rgba(107,127,94,0.12); margin-bottom: 1rem; }
+.sidebar-brand-label { font-family: var(--sans); font-size: 0.7rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: var(--moss); margin-bottom: 0.35rem; }
+.sidebar-brand-title { font-family: var(--serif); font-size: 1.4rem; font-style: italic; font-weight: normal; color: var(--ink); line-height: 1.25; }
+.sidebar-brand-sub { font-family: var(--sans); font-size: 0.75rem; color: var(--ink-faint); margin-top: 0.25rem; font-weight: 500; }
+
+.sidebar nav { flex: 1; padding: 0.5rem 0; }
+
+.nav-item {
+  display: flex; align-items: center; gap: 0.75rem;
+  padding: 0.7rem 1.5rem;
+  font-family: var(--sans); font-size: 0.8rem; font-weight: 400;
+  color: var(--ink-dim);
+  cursor: pointer; border: none; background: none;
+  width: 100%; text-align: left;
+  transition: all 0.3s var(--ease);
+  position: relative; letter-spacing: 0.01em;
+}
+.nav-item::before {
+  content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+  background: linear-gradient(180deg, var(--moss), var(--wheat));
+  opacity: 0; border-radius: 0 2px 2px 0;
+  transition: opacity 0.3s var(--ease);
+}
+.nav-item:hover { color: var(--moss); background: rgba(107,127,94,0.04); }
+.nav-item.active { color: var(--moss); font-weight: 500; background: rgba(107,127,94,0.06); }
+.nav-item.active::before { opacity: 1; }
+.nav-icon { font-size: 1rem; width: 1.4rem; text-align: center; flex-shrink: 0; }
+
+.main-content { flex: 1; margin-left: 260px; padding: 3rem; max-width: 100%; overflow-x: hidden; }
+
+.page { display: none; max-width: 740px; margin: 0 auto; animation: fadeIn 0.5s var(--ease); }
+.page.active { display: block; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Typography ── */
+
+.section-label { font-family: var(--sans); font-size: 0.7rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: var(--moss); margin-bottom: 0.75rem; }
+h1 { font-family: var(--serif); font-size: 2.5rem; font-weight: normal; font-style: italic; letter-spacing: -0.02em; line-height: 1.2; color: var(--ink); margin-bottom: 1rem; }
+h2 { font-family: var(--serif); font-size: 1.875rem; font-style: italic; font-weight: normal; line-height: 1.3; color: var(--ink); margin-bottom: 1rem; }
+h3 { font-family: var(--serif); font-size: 1.375rem; font-weight: bold; line-height: 1.35; color: var(--ink); margin-bottom: 0.75rem; }
+p  { margin-bottom: 1rem; }
+
+/* ── Hero ── */
+
+.hero { text-align: center; padding: 3rem 0 2rem; }
+.hero-orb-container { position: relative; width: 160px; height: 160px; margin: 0 auto 2rem; }
+.hero-orb {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  width: 100px; height: 100px; border-radius: 50%;
+  background: radial-gradient(circle at 40% 40%, rgba(143,160,128,0.9) 0%, rgba(107,127,94,0.5) 40%, rgba(194,165,90,0.2) 70%, transparent 100%);
+  animation: breathe 6s var(--ease) infinite;
+  box-shadow: 0 0 40px rgba(107,127,94,0.2), 0 0 80px rgba(168,145,123,0.1);
+}
+.hero-orb-ring {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  width: 140px; height: 140px; border-radius: 50%;
+  border: 1px solid rgba(107,127,94,0.18);
+  animation: breathe 6s var(--ease) infinite; animation-delay: -0.5s;
+}
+@keyframes breathe {
+  0%, 100% { transform: translate(-50%, -50%) scale(1);    opacity: 0.7; }
+  50%      { transform: translate(-50%, -50%) scale(1.12); opacity: 1; }
+}
+.hero h1 { font-size: 2.8rem; margin-bottom: 0.5rem; }
+.hero-subtitle { font-family: var(--sans); font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--moss); font-weight: 600; margin-bottom: 0.5rem; }
+.hero-dates { font-family: var(--serif); font-size: 1.1rem; font-style: italic; color: var(--ink-dim); }
+
+/* ── Divider ── */
+
+.divider {
+  height: 1px; border: none; margin: 2.5rem 0;
+  background: linear-gradient(90deg, transparent 0%, rgba(107,127,94,0.15) 20%, rgba(194,165,90,0.2) 50%, rgba(168,145,123,0.15) 80%, transparent 100%);
+}
+
+/* ── Cards ── */
+
+.card {
+  background: rgba(243,241,234,0.75);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(107,127,94,0.12);
+  border-radius: var(--radius-lg);
+  padding: 1.75rem;
+  box-shadow: var(--shadow-card);
+  margin-bottom: 1.5rem;
+  transition: all 0.4s var(--ease);
+}
+.card:hover { box-shadow: var(--shadow-elevated); border-color: rgba(107,127,94,0.22); }
+.card-moss  { background: linear-gradient(135deg, rgba(107,127,94,0.08) 0%, rgba(243,241,234,0.8) 100%);  border-color: rgba(107,127,94,0.15); }
+.card-wheat { background: linear-gradient(135deg, rgba(194,165,90,0.08)  0%, rgba(243,241,234,0.8) 100%);  border-color: rgba(194,165,90,0.15); }
+.card-mauve { background: linear-gradient(135deg, rgba(146,126,153,0.08) 0%, rgba(243,241,234,0.8) 100%);  border-color: rgba(146,126,153,0.12); }
+.card-clay  { background: linear-gradient(135deg, rgba(168,145,123,0.08) 0%, rgba(243,241,234,0.8) 100%);  border-color: rgba(168,145,123,0.15); }
+.card h3 { color: var(--moss-dk); }
+
+/* ── Vibration rows ── */
+
+.vibration-row  { display: flex; gap: 1rem; margin-top: 1.5rem; flex-wrap: wrap; }
+.vibration-card { flex: 1; min-width: 260px; padding: 1.25rem; border-radius: var(--radius-md); text-align: center; }
+.vibration-card.higher { background: linear-gradient(135deg, rgba(107,127,94,0.1) 0%, rgba(194,165,90,0.06) 100%); border: 1px solid rgba(107,127,94,0.15); }
+.vibration-card.lower  { background: linear-gradient(135deg, rgba(168,145,123,0.08) 0%, rgba(146,126,153,0.06) 100%); border: 1px solid rgba(168,145,123,0.15); }
+.vibration-label { font-family: var(--sans); font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 600; margin-bottom: 0.5rem; }
+.vibration-card.higher .vibration-label { color: var(--moss-dk); }
+.vibration-card.lower  .vibration-label { color: var(--clay-dk); }
+.vibration-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; justify-content: center; }
+.vibration-tag  { font-family: var(--sans); font-size: 0.75rem; padding: 0.3rem 0.75rem; border-radius: var(--radius-pill); font-weight: 500; }
+.vibration-card.higher .vibration-tag { background: rgba(107,127,94,0.12); color: var(--moss-dk); }
+.vibration-card.lower  .vibration-tag { background: rgba(168,145,123,0.1);  color: var(--clay-dk); }
+
+/* ── Sign grid ── */
+
+.sign-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 1rem; margin: 1.5rem 0; }
+.sign-item { text-align: center; padding: 1rem; border-radius: var(--radius-md); background: rgba(107,127,94,0.04); border: 1px solid rgba(107,127,94,0.1); }
+.sign-item-icon  { font-size: 1.5rem; margin-bottom: 0.4rem; }
+.sign-item-label { font-family: var(--sans); font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-faint); }
+.sign-item-value { font-family: var(--serif); font-size: 1.05rem; font-weight: bold; color: var(--ink); }
+
+/* ── Mantra ── */
+
+.mantra-display { text-align: center; padding: 1.5rem; margin: 1.5rem 0; border-radius: var(--radius-lg); background: linear-gradient(135deg, rgba(107,127,94,0.06) 0%, rgba(194,165,90,0.06) 100%); border: 1px solid rgba(107,127,94,0.1); }
+.mantra-label { font-family: var(--sans); font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 0.5rem; }
+.mantra-text  { font-family: var(--serif); font-size: 1.8rem; font-style: italic; color: var(--moss); }
+
+/* ── Journal areas ── */
+
+.journal-area {
+  width: 100%; min-height: 120px; padding: 1.25rem;
+  font-family: var(--sans); font-size: 15px; line-height: 1.7;
+  color: var(--ink); background: rgba(243,241,234,0.8);
+  border: 1.5px solid rgba(107,127,94,0.15);
+  border-radius: var(--radius-md); resize: vertical;
+  transition: all 0.3s var(--ease);
+}
+.journal-area::placeholder { color: var(--clay); font-style: italic; }
+.journal-area:focus { outline: none; border-color: var(--moss); box-shadow: 0 0 0 3px rgba(107,127,94,0.1); }
+
+.save-indicator { font-family: var(--sans); font-size: 0.75rem; color: var(--moss); margin-top: 0.5rem; opacity: 0; transition: opacity 0.4s ease; }
+.save-indicator.visible { opacity: 1; }
+
+/* ── Prompts ── */
+
+.prompt-block    { margin-bottom: 1.75rem; }
+.prompt-question { font-family: var(--serif); font-size: 1.05rem; font-style: italic; color: var(--moss-dk); padding: 0.6rem 1rem; background: rgba(107,127,94,0.05); border-left: 3px solid var(--moss); border-radius: 0; margin-bottom: 0.75rem; }
+
+/* ── Appreciation entries ── */
+
+.appreciation-entry { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem; }
+.appreciation-num   { font-family: var(--serif); font-size: 1.1rem; font-style: italic; color: var(--clay); min-width: 1.5rem; text-align: center; }
+.appreciation-input {
+  flex: 1; padding: 0.6rem 1rem;
+  font-family: var(--sans); font-size: 15px; color: var(--ink);
+  background: rgba(243,241,234,0.6); border: none;
+  border-bottom: 1.5px solid rgba(107,127,94,0.2);
+  border-radius: 0; transition: all 0.3s var(--ease);
+}
+.appreciation-input::placeholder { color: var(--clay); font-style: italic; font-size: 0.85rem; }
+.appreciation-input:focus { outline: none; border-bottom-color: var(--moss); background: rgba(243,241,234,0.9); }
+
+/* ── Tarot spread ── */
+
+.spread-container { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; margin: 2rem 0; }
+
+.tarot-card {
+  position: relative; aspect-ratio: 2.5/3.5;
+  border-radius: var(--radius-lg); overflow: hidden;
+  cursor: pointer; transition: all 0.5s var(--ease);
+  border: 1px solid rgba(107,127,94,0.15);
+}
+.tarot-card::before {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(145deg, rgba(107,127,94,0.06) 0%, rgba(194,165,90,0.06) 50%, rgba(146,126,153,0.04) 100%);
+  background-size: 400% 400%; animation: holoShift 8s ease infinite; z-index: 1;
+}
+@keyframes holoShift { 0%, 100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
+
+.tarot-card-inner {
+  position: relative; z-index: 2;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  height: 100%; padding: 1.25rem 0.75rem; text-align: center;
+  background: linear-gradient(180deg, rgba(243,241,234,0.92) 0%, rgba(235,233,224,0.88) 50%, rgba(243,241,234,0.92) 100%);
+}
+.tarot-card-num   { font-family: var(--serif); font-size: 2rem; font-style: italic; color: var(--wheat); line-height: 1; margin-bottom: 0.5rem; }
+.tarot-card-label { font-family: var(--serif); font-size: 0.95rem; font-weight: bold; color: var(--ink); line-height: 1.3; }
+.tarot-card:hover { transform: translateY(-4px); box-shadow: 0 8px 32px rgba(107,127,94,0.15); border-color: var(--moss); }
+
+/* ── House grid ── */
+
+.house-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; margin: 1.5rem 0; }
+.house-item { padding: 1rem; border-radius: var(--radius-md); background: rgba(107,127,94,0.03); border: 1px solid rgba(107,127,94,0.1); transition: all 0.3s var(--ease); }
+.house-item:hover { border-color: rgba(107,127,94,0.2); background: rgba(107,127,94,0.06); }
+.house-num  { font-family: var(--serif); font-size: 1.4rem; font-style: italic; color: var(--wheat); margin-bottom: 0.25rem; }
+.house-name { font-family: var(--sans); font-size: 0.7rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--moss); margin-bottom: 0.35rem; }
+.house-desc { font-family: var(--sans); font-size: 0.82rem; color: var(--ink-dim); line-height: 1.5; }
+
+/* ── Affirmations ── */
+
+.affirmation { font-family: var(--serif); font-size: 1.15rem; font-style: italic; color: var(--moss-dk); padding: 0.75rem 0 0.75rem 1.25rem; border-left: 2px solid var(--wheat); margin-bottom: 1rem; line-height: 1.5; }
+
+/* ── Buttons ── */
+
+.btn-primary {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  font-family: var(--sans); font-size: 0.85rem; font-weight: 500; letter-spacing: 0.04em;
+  color: #FAFAF5; background: linear-gradient(135deg, var(--moss) 0%, var(--moss-dk) 100%);
+  border: none; border-radius: var(--radius-pill); padding: 0.8rem 2rem;
+  cursor: pointer; transition: all 0.4s var(--ease);
+  box-shadow: 0 4px 16px rgba(107,127,94,0.2); text-decoration: none;
+}
+.btn-primary:hover { background: linear-gradient(135deg, var(--moss-lt) 0%, var(--moss) 100%); box-shadow: 0 6px 24px rgba(107,127,94,0.3); transform: translateY(-1px); }
+
+.btn-ghost { display: inline-flex; align-items: center; gap: 0.4rem; font-family: var(--sans); font-size: 0.8rem; font-weight: 500; color: var(--ink-dim); background: none; border: none; padding: 0.5rem 0; cursor: pointer; transition: color 0.3s ease; }
+.btn-ghost:hover { color: var(--moss); }
+
+/* ── Callout ── */
+
+.callout-earth { background: linear-gradient(135deg, rgba(107,127,94,0.08) 0%, rgba(194,165,90,0.06) 50%, rgba(168,145,123,0.04) 100%); border: 1px solid rgba(107,127,94,0.15); border-radius: var(--radius-lg); padding: 2rem; margin: 1.5rem 0; text-align: center; }
+.callout-earth h3 { color: var(--moss-dk); font-family: var(--serif); font-size: 1.5rem; font-style: italic; }
+.callout-earth p  { color: var(--ink-dim); font-size: 0.9rem; }
+
+/* ── Quote ── */
+
+.quote-block { text-align: center; padding: 2rem; margin: 2rem 0; }
+.quote-text  { font-family: var(--serif); font-size: 1.5rem; font-style: italic; color: var(--ink); line-height: 1.4; margin-bottom: 0.5rem; }
+
+/* ── Download bar ── */
+
+.download-bar { background: linear-gradient(135deg, rgba(107,127,94,0.08) 0%, rgba(194,165,90,0.06) 100%); border: 1px solid rgba(107,127,94,0.15); border-radius: var(--radius-lg); padding: 1.5rem; text-align: center; margin: 2rem 0; }
+.download-bar p { font-size: 0.85rem; color: var(--ink-dim); margin-bottom: 0.75rem; }
+
+/* ── Footer ── */
+
+.footer { text-align: center; padding: 2.5rem 1.5rem 2rem; margin-top: 3rem; border-top: 1px solid rgba(107,127,94,0.1); }
+.footer-brand { font-family: var(--serif); font-size: 1.1rem; font-style: italic; color: var(--ink-dim); margin-bottom: 0.75rem; }
+.footer a { color: var(--moss); text-decoration: none; font-family: var(--sans); font-size: 0.8rem; font-weight: 500; }
+.footer a:hover { color: var(--moss-dk); }
+.footer-copy { font-family: var(--sans); font-size: 0.7rem; color: var(--ink-faint); margin-top: 0.75rem; }
+
+/* ── Particles ── */
+
+.leaf-container { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+
+/* ── Mobile ── */
+
+.mobile-header {
+  display: none; position: fixed; top: 0; left: 0; right: 0; height: 56px;
+  background: rgba(243,241,234,0.92); backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(107,127,94,0.1);
+  z-index: 200; align-items: center; padding: 0 1rem;
+}
+.hamburger { background: none; border: none; font-size: 1.5rem; color: var(--ink-dim); cursor: pointer; padding: 0.5rem; }
+.mobile-title { font-family: var(--serif); font-size: 1rem; font-style: italic; color: var(--ink); margin-left: 0.5rem; }
+.sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(42,46,38,0.3); z-index: 99; }
+
+@media (max-width: 768px) {
+  .mobile-header { display: flex; }
+  .sidebar { transform: translateX(-100%); transition: transform 0.3s var(--ease); z-index: 200; }
+  .sidebar.open { transform: translateX(0); }
+  .sidebar-overlay.open { display: block; }
+  .main-content { margin-left: 0; padding: 72px 1.25rem 2rem; }
+  h1 { font-size: 2rem; }
+  .hero h1 { font-size: 2.2rem; }
+  h2 { font-size: 1.5rem; }
+  .spread-container { grid-template-columns: repeat(2, 1fr); }
+  .vibration-row { flex-direction: column; }
+  .house-grid { grid-template-columns: 1fr; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+  .hero-orb { animation: none; opacity: 0.8; }
+}
+</style>
+</head>
+<body>
+
+<div class="leaf-container" id="leafContainer"></div>
+
+<div class="mobile-header">
+  <button class="hamburger" onclick="toggleSidebar()" aria-label="Menu">&#9776;</button>
+  <span class="mobile-title">Virgo Season Handbook</span>
+</div>
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+<div class="app-shell">
+
+<!-- ════ Sidebar ════ -->
+
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-brand">
+    <div class="sidebar-brand-label">Virgo Season</div>
+    <div class="sidebar-brand-title">Embracing Wholeness</div>
+    <div class="sidebar-brand-sub">Exploration &amp; Self-Worth</div>
+  </div>
+  <nav>
+    <button class="nav-item active" onclick="showPage('welcome')"><span class="nav-icon">&#10022;</span> Welcome</button>
+    <button class="nav-item" onclick="showPage('virgo-energy')"><span class="nav-icon">&#9793;</span> Virgo Energy</button>
+    <button class="nav-item" onclick="showPage('self-worth')"><span class="nav-icon">&#10047;</span> Self-Worth</button>
+    <button class="nav-item" onclick="showPage('intentions')"><span class="nav-icon">&#127807;</span> Intention Setting</button>
+    <button class="nav-item" onclick="showPage('who-am-i')"><span class="nav-icon">&#9733;</span> Who Am I?</button>
+    <button class="nav-item" onclick="showPage('house-focus')"><span class="nav-icon">&#9678;</span> Virgo by House</button>
+    <button class="nav-item" onclick="showPage('full-moon')"><span class="nav-icon">&#9681;</span> Full Moon in Pisces</button>
+    <button class="nav-item" onclick="showPage('journal')"><span class="nav-icon">&#9998;</span> Journal &amp; Affirmations</button>
+    <button class="nav-item" onclick="showPage('tarot')"><span class="nav-icon">&#10022;</span> Tarot Spread</button>
+  </nav>
+</aside>
+
+<!-- ════ Main Content ════ -->
+
+<main class="main-content">
+
+<!-- ──── Welcome ──── -->
+
+<div class="page active" id="page-welcome">
+  <div class="hero">
+    <div class="hero-orb-container">
+      <div class="hero-orb"></div>
+      <div class="hero-orb-ring"></div>
+    </div>
+    <div class="hero-subtitle">Virgo Season Handbook</div>
+    <h1>Embracing Wholeness</h1>
+    <div class="hero-dates">August 22 ~ September 22</div>
+  </div>
+
+  <div class="divider"></div>
+
+  <p style="font-size:1.05rem; text-align:center; max-width:600px; margin:0 auto 1.5rem;">From the fires of Leo Season, we enter the grounding energy of Virgo. Each zodiac sign brings us an array of vibrations and frequencies to work with in our daily lives.</p>
+
+  <p style="text-align:center; max-width:580px; margin:0 auto 1.5rem;">It does not matter if you do not have Virgo predominantly in your chart. You can still work with this energy to access and understand the parts of your personality that correlate with the frequency of Virgo. We all carry these frequencies within our energetic fields.</p>
+
+  <p style="text-align:center; max-width:580px; margin:0 auto 1.5rem;">Virgo is the sign of the goddess. This divinely feminine energy can teach us many things about our power to heal, grow, and align with our intuition. All beings carry this energy, and it does not matter what gender you were assigned at birth&mdash;you still hold the feminine energy of Virgo and can work with her gifts.</p>
+
+  <p style="text-align:center; max-width:580px; margin:0 auto 2rem;">This four-week Sun Season is the time to look at and develop these frequencies so they work for us instead of against us. Grab a journal and pen and let's get started.</p>
+
+  <div class="vibration-row">
+    <div class="vibration-card higher">
+      <div class="vibration-label">Higher Vibrations</div>
+      <div class="vibration-tags">
+        <span class="vibration-tag">Healthy Habits</span>
+        <span class="vibration-tag">Projects</span>
+        <span class="vibration-tag">Organization</span>
+        <span class="vibration-tag">Cleaning</span>
+        <span class="vibration-tag">Service</span>
+      </div>
+    </div>
+    <div class="vibration-card lower">
+      <div class="vibration-label">Lower Vibrations</div>
+      <div class="vibration-tags">
+        <span class="vibration-tag">Perfectionism</span>
+        <span class="vibration-tag">Insecurity</span>
+        <span class="vibration-tag">Self-Doubt</span>
+        <span class="vibration-tag">Anxiousness</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="footer-brand">Soul-Forged Founders</div>
+    <a href="https://www.skool.com/soul-forged-founders/about" target="_blank">Go to the Community &#8594;</a>
+    <div class="footer-copy">&copy; 2026 S Sink Coaching | Sunny Sink</div>
+  </div>
+</div>
+
+<!-- ──── Virgo Energy ──── -->
+
+<div class="page" id="page-virgo-energy">
+  <div class="section-label">A Deeper Look</div>
+  <h1>Virgo Energy</h1>
+
+  <div class="sign-grid">
+    <div class="sign-item"><div class="sign-item-icon">&#127793;</div><div class="sign-item-label">Element</div><div class="sign-item-value">Earth</div></div>
+    <div class="sign-item"><div class="sign-item-icon">&#10038;</div><div class="sign-item-label">Modality</div><div class="sign-item-value">Mutable</div></div>
+    <div class="sign-item"><div class="sign-item-icon">&#9791;</div><div class="sign-item-label">Ruler</div><div class="sign-item-value">Mercury</div></div>
+    <div class="sign-item"><div class="sign-item-icon">&#9728;</div><div class="sign-item-label">Season</div><div class="sign-item-value">Summer</div></div>
+    <div class="sign-item"><div class="sign-item-icon">&#10045;</div><div class="sign-item-label">Depiction</div><div class="sign-item-value">The Maiden</div></div>
+  </div>
+
+  <div class="mantra-display">
+    <div class="mantra-label">Mantra</div>
+    <div class="mantra-text">I Serve</div>
+  </div>
+
+  <div class="divider"></div>
+
+  <p>Virgo is a mutable earth sign that begins at the end of summer. This is the time when we begin to harvest the season's abundance. It's a time of sorting, organizing, and preparing for the cooler months to come.</p>
+
+  <p>Virgo is an energy of practical application, concentrating on how we work and organize our lives. Virgo is also connected to the body, encouraging attention to the body for optimal health and integration.</p>
+
+  <p>Virgo is ruled by Mercury, giving it a mental and communicative nature. As an earth sign, this mental energy is grounded, structured, and systematic. Because it's also mutable, there is a flexible nature for facing change that the other earth signs don't express. This combo leads to practical mental energy that knows how to refine what we have taken time to create in our physical lives.</p>
+
+  <p>Virgo unites the body and the mind and allows for conscious evolution through practical application that can see the highest spiritual expression of ourselves.</p>
+
+  <div class="card card-moss">
+    <h3>The Highest Expression</h3>
+    <p style="margin-bottom:0;">Virgo's true power is embodied in the harvest and reaping of seeds. Virgo encourages you to allow wisdom to move through you by coming from a place of centered awareness within. The highest expression of Virgo is using its wisdom, grounding energy, and practicality in service of all. Virgo is also a sign of healing.</p>
+  </div>
+
+  <div class="card" style="text-align:center;">
+    <div class="section-label">Personal Growth Theme</div>
+    <p style="font-family:var(--serif); font-size:1.2rem; font-style:italic; color:var(--moss); margin-bottom:0;">Healing and Self-Worth</p>
+  </div>
+
+  <div class="footer">
+    <div class="footer-brand">Soul-Forged Founders</div>
+    <a href="https://www.skool.com/soul-forged-founders/about" target="_blank">Go to the Community &#8594;</a>
+    <div class="footer-copy">&copy; 2026 S Sink Coaching | Sunny Sink</div>
+  </div>
+</div>
+
+<!-- ──── Self-Worth ──── -->
+
+<div class="page" id="page-self-worth">
+  <div class="section-label">Realizing Your Self-Worth</div>
+  <h1>You Are Worthy</h1>
+  <p style="font-size:1.05rem; margin-bottom:2rem;">Understand that you are worthy of Love, Acceptance, and Appreciation.</p>
+
+  <div class="card card-moss">
+    <h3>Recognize Your Worth</h3>
+    <p>We often recognize when the people around us aren't showing their love, acceptance, or appreciation in the way that we would like. But when you stop and reflect on your own love, acceptance, and appreciation of yourself, you may recognize that the lack of appreciation may be coming from how you view yourself.</p>
+    <p style="font-family:var(--serif); font-size:1.1rem; font-style:italic; color:var(--moss); margin-bottom:0;">It's time to declare your sense of worthiness. Know that you are vital to this world and that your energy brings something irreplaceable to the collective.</p>
+  </div>
+
+  <div class="card card-wheat">
+    <h3>You Don't Have to Earn It</h3>
+    <p>You may have been taught that your worthiness is dependent on something. For me, it was always how I looked and what I provided for others. But just know that this can come in many forms.</p>
+    <p style="margin-bottom:0;">You may be placing conditions on your worthiness based on how busy you are... how much money you have... your sense of success... how big your family is. There are so many conditions we place on our worthiness. During Virgo season, know that you don't have to do anything to "earn" your unique place in this world.</p>
+  </div>
+
+  <div class="card card-mauve">
+    <h3>Get to Know Yourself</h3>
+    <p>Our worth comes from knowing ourselves. We need to understand what makes us happy, what we are naturally good at, and how we make others feel. These things help us know our worth.</p>
+    <p style="margin-bottom:0;">Throughout Virgo Season, journal about who you are and what you like about yourself. This is not a list of accomplishments but rather a list of characteristics that define who you are. What do you offer the people around you? How are you unique? How do you overcome adversity? Reflect upon these questions each day and feel into your true essence.</p>
+  </div>
+
+  <div class="card card-clay">
+    <h3>Once and For All, Release Comparison</h3>
+    <p>Let go of comparison for good. You have your own unique DNA, your own unique fingerprint, and you are uniquely you as no one else can be. You are also connected to all other living energy, not just on this planet, but in the universe.</p>
+    <p style="font-family:var(--serif); font-size:1.1rem; font-style:italic; color:var(--moss); margin-bottom:0;">Celebrate the divinity inside of you. Embody the Goddess energy of Virgo season and understand that everyone else has that same divine energy.</p>
+  </div>
+
+  <div class="footer">
+    <div class="footer-brand">Soul-Forged Founders</div>
+    <a href="https://www.skool.com/soul-forged-founders/about" target="_blank">Go to the Community &#8594;</a>
+    <div class="footer-copy">&copy; 2026 S Sink Coaching | Sunny Sink</div>
+  </div>
+</div>
+
+<!-- ──── Intention Setting ──── -->
+
+<div class="page" id="page-intentions">
+  <div class="section-label">Virgo Intention Setting</div>
+  <h1>Bring Form to Your Visions</h1>
+
+  <p>Virgo holds the space for you to bring form and detail to your visions. It's time to become clear on your path ahead and know that you can build your dreams.</p>
+
+  <p style="font-family:var(--serif); font-size:1.1rem; font-style:italic; color:var(--moss); margin-bottom:1.5rem;">As you write your intentions, feel the power of your practices and rituals. It's the small things you do each day that become rituals in your life.</p>
+
+  <div class="card">
+    <div class="prompt-question">What routines and rituals are you ready to put into place to support your dream?</div>
+    <textarea class="journal-area" id="journal-intentions" placeholder="The routines I am ready to commit to..." oninput="autoSave('intentions')" style="min-height:200px;"></textarea>
+    <div class="save-indicator" id="save-intentions">&#10003; Saved</div>
+  </div>
+
+  <div class="footer">
+    <div class="footer-brand">Soul-Forged Founders</div>
+    <a href="https://www.skool.com/soul-forged-founders/about" target="_blank">Go to the Community &#8594;</a>
+    <div class="footer-copy">&copy; 2026 S Sink Coaching | Sunny Sink</div>
+  </div>
+</div>
+
+<!-- ──── Who Am I ──── -->
+
+<div class="page" id="page-who-am-i">
+  <div class="section-label">Activity</div>
+  <h1>Who Am I?</h1>
+
+  <p style="font-size:1.05rem; margin-bottom:0.5rem;">When was the last time you explored who YOU are? Or appreciated yourself for exactly who you are?</p>
+
+  <p style="font-family:var(--serif); font-size:1.1rem; font-style:italic; color:var(--moss); margin-bottom:2rem;">Remember that you are a perfectly imperfect work of progress. What are some of the characteristics you love about yourself?</p>
+
+  <div class="card card-moss" style="margin-top:1.5rem;">
+    <div id="appreciationList"></div>
+    <button class="btn-ghost" onclick="addEntry()" style="margin-top:0.5rem;">+ Add another</button>
+    <div class="save-indicator" id="save-appreciation">&#10003; Saved</div>
+  </div>
+
+  <div class="footer">
+    <div class="footer-brand">Soul-Forged Founders</div>
+    <a href="https://www.skool.com/soul-forged-founders/about" target="_blank">Go to the Community &#8594;</a>
+    <div class="footer-copy">&copy; 2026 S Sink Coaching | Sunny Sink</div>
+  </div>
+</div>
+
+<!-- ──── Virgo by House ──── -->
+
+<div class="page" id="page-house-focus">
+  <div class="section-label">Your Personal Focus</div>
+  <h1>Virgo by House</h1>
+
+  <p>Find where Virgo falls in your natal chart. That house tells you where this season's energy of service, healing, and refinement will be most active for you.</p>
+
+  <div class="house-grid">
+    <div class="house-item"><div class="house-num">1st</div><div class="house-name">Self &amp; Identity</div><div class="house-desc">Refining how you present yourself. Health routines. Self-improvement.</div></div>
+    <div class="house-item"><div class="house-num">2nd</div><div class="house-name">Values &amp; Resources</div><div class="house-desc">Organizing finances. Recognizing what you truly value.</div></div>
+    <div class="house-item"><div class="house-num">3rd</div><div class="house-name">Communication</div><div class="house-desc">Refining how you express ideas. Learning. Sibling connections.</div></div>
+    <div class="house-item"><div class="house-num">4th</div><div class="house-name">Home &amp; Roots</div><div class="house-desc">Organizing your living space. Healing family patterns.</div></div>
+    <div class="house-item"><div class="house-num">5th</div><div class="house-name">Creativity &amp; Joy</div><div class="house-desc">Perfecting a creative skill. Bringing structure to play.</div></div>
+    <div class="house-item"><div class="house-num">6th</div><div class="house-name">Health &amp; Service</div><div class="house-desc">Virgo's home house. Daily routines and wellness take center stage.</div></div>
+    <div class="house-item"><div class="house-num">7th</div><div class="house-name">Partnerships</div><div class="house-desc">Improving how you show up in relationships. Setting healthy standards.</div></div>
+    <div class="house-item"><div class="house-num">8th</div><div class="house-name">Transformation</div><div class="house-desc">Deep inner work. Healing old wounds. Shared resources.</div></div>
+    <div class="house-item"><div class="house-num">9th</div><div class="house-name">Expansion &amp; Wisdom</div><div class="house-desc">Refining your beliefs. Study and spiritual practice.</div></div>
+    <div class="house-item"><div class="house-num">10th</div><div class="house-name">Career &amp; Legacy</div><div class="house-desc">Bringing practical attention to your public role and purpose.</div></div>
+    <div class="house-item"><div class="house-num">11th</div><div class="house-name">Community &amp; Vision</div><div class="house-desc">Organizing your community involvement. Refining future goals.</div></div>
+    <div class="house-item"><div class="house-num">12th</div><div class="house-name">Spirituality &amp; Release</div><div class="house-desc">Healing the unseen. Serving through compassion and surrender.</div></div>
+  </div>
+
+  <div class="card">
+    <div class="prompt-question">Which house does Virgo occupy in your chart? What does this season's energy mean for that area of your life?</div>
+    <textarea class="journal-area" id="journal-house" placeholder="Virgo is in my ___ house, which means this season I am focusing on..." oninput="autoSave('house')"></textarea>
+    <div class="save-indicator" id="save-house">&#10003; Saved</div>
+  </div>
+
+  <div class="footer">
+    <div class="footer-brand">Soul-Forged Founders</div>
+    <a href="https://www.skool.com/soul-forged-founders/about" target="_blank">Go to the Community &#8594;</a>
+    <div class="footer-copy">&copy; 2026 S Sink Coaching | Sunny Sink</div>
+  </div>
+</div>
+
+<!-- ──── Full Moon in Pisces ──── -->
+
+<div class="page" id="page-full-moon">
+  <div class="section-label">Full Moon in Pisces</div>
+  <h1>Energies of Virgo + Pisces</h1>
+
+  <p>The Pisces Full Moon is a magical time with the potential for great healing and release. Pisces represents the vastness of the Universe and teaches us the interconnectedness of all beings.</p>
+
+  <p>Symbolized by the fish and ruled by Neptune, this sign inspires us to expand our dreams and feel our internal mysticism. This Full Moon is a time to embrace your most spiritual self and open your consciousness to the possibilities of the cosmos.</p>
+
+  <p style="font-family:var(--serif); font-size:1.1rem; font-style:italic; color:var(--moss); margin-bottom:1.5rem;">The Pisces Full Moon is a time to honor your intuition and the flow of your life. It's an opportunity to feel the true subtleties of your energy and know that magic lies in the depths of your being.</p>
+
+  <div class="vibration-row" style="margin-bottom:2rem;">
+    <div class="vibration-card higher">
+      <div class="vibration-label">Pisces Higher</div>
+      <div class="vibration-tags">
+        <span class="vibration-tag">Flow</span>
+        <span class="vibration-tag">Expanding Consciousness</span>
+        <span class="vibration-tag">Healing</span>
+        <span class="vibration-tag">Empathy</span>
+        <span class="vibration-tag">Intuition</span>
+        <span class="vibration-tag">Surrender</span>
+      </div>
+    </div>
+    <div class="vibration-card lower">
+      <div class="vibration-label">Pisces Lower</div>
+      <div class="vibration-tags">
+        <span class="vibration-tag">Unrealistic</span>
+        <span class="vibration-tag">Escapism</span>
+        <span class="vibration-tag">No Boundaries</span>
+      </div>
+    </div>
+  </div>
+
+  <h2>Full Moon Reflections</h2>
+
+  <div class="prompt-block">
+    <div class="prompt-question">What are some clues your energy gives you that it is open and needs some protection from the outside world?</div>
+    <textarea class="journal-area" id="journal-moon1" placeholder="I notice my energy is open when..." oninput="autoSave('moon1')"></textarea>
+    <div class="save-indicator" id="save-moon1">&#10003; Saved</div>
+  </div>
+
+  <div class="prompt-block">
+    <div class="prompt-question">What can you do to give yourself space to feel the deeper levels of your energetic system?</div>
+    <textarea class="journal-area" id="journal-moon2" placeholder="I can create space by..." oninput="autoSave('moon2')"></textarea>
+    <div class="save-indicator" id="save-moon2">&#10003; Saved</div>
+  </div>
+
+  <div class="prompt-block">
+    <div class="prompt-question">What helps you be more in the moment that is in front of you?</div>
+    <textarea class="journal-area" id="journal-moon3" placeholder="I feel most present when..." oninput="autoSave('moon3')"></textarea>
+    <div class="save-indicator" id="save-moon3">&#10003; Saved</div>
+  </div>
+
+  <div class="callout-earth">
+    <h3>Ask Yourself</h3>
+    <p style="font-family:var(--serif); font-size:1.15rem; font-style:italic;">"Are you embracing your most spiritual self?"</p>
+  </div>
+
+  <div class="footer">
+    <div class="footer-brand">Soul-Forged Founders</div>
+    <a href="https://www.skool.com/soul-forged-founders/about" target="_blank">Go to the Community &#8594;</a>
+    <div class="footer-copy">&copy; 2026 S Sink Coaching | Sunny Sink</div>
+  </div>
+</div>
+
+<!-- ──── Journal & Affirmations ──── -->
+
+<div class="page" id="page-journal">
+  <div class="section-label">Reflection</div>
+  <h1>Journal &amp; Affirmations</h1>
+  <p style="font-size:1.05rem; margin-bottom:2rem;">Deep reflection prompts for Virgo Season. Take your time with each one. There is no rush in becoming.</p>
+
+  <div class="prompt-block">
+    <div class="prompt-question">What daily routines and rituals can help you listen to your intuition and feel your gifts?</div>
+    <textarea class="journal-area" id="journal-p1" placeholder="The rituals that help me tune in are..." oninput="autoSave('p1')"></textarea>
+    <div class="save-indicator" id="save-p1">&#10003; Saved</div>
+  </div>
+
+  <div class="prompt-block">
+    <div class="prompt-question">What helps you align with your offering or gift to the world?</div>
+    <textarea class="journal-area" id="journal-p2" placeholder="I feel most aligned with my gift when..." oninput="autoSave('p2')"></textarea>
+    <div class="save-indicator" id="save-p2">&#10003; Saved</div>
+  </div>
+
+  <div class="prompt-block">
+    <div class="prompt-question">Do you feel ready to share your gift? What would it take to feel ready?</div>
+    <textarea class="journal-area" id="journal-p3" placeholder="To share my gift, I would need to..." oninput="autoSave('p3')"></textarea>
+    <div class="save-indicator" id="save-p3">&#10003; Saved</div>
+  </div>
+
+  <div class="prompt-block">
+    <div class="prompt-question">How can you be of service to others while also honoring your own needs and boundaries?</div>
+    <textarea class="journal-area" id="journal-p4" placeholder="I can serve others authentically by..." oninput="autoSave('p4')"></textarea>
+    <div class="save-indicator" id="save-p4">&#10003; Saved</div>
+  </div>
+
+  <div class="prompt-block">
+    <div class="prompt-question">What does wholeness feel like to you? Where in your life are you already whole?</div>
+    <textarea class="journal-area" id="journal-p5" placeholder="Wholeness feels like..." oninput="autoSave('p5')"></textarea>
+    <div class="save-indicator" id="save-p5">&#10003; Saved</div>
+  </div>
+
+  <div class="divider"></div>
+
+  <h2>Affirmations</h2>
+  <div class="affirmation">I am supported and protected by the Earth</div>
+  <div class="affirmation">I have the power to heal myself</div>
+  <div class="affirmation">I accept my imperfections &mdash; they make me real</div>
+  <div class="affirmation">I am worthy, I am enough, I am a Goddess</div>
+
+  <div class="quote-block">
+    <div class="quote-text">"Your value doesn't decrease based on someone else's ability to see your worth."</div>
+  </div>
+
+  <div class="footer">
+    <div class="footer-brand">Soul-Forged Founders</div>
+    <a href="https://www.skool.com/soul-forged-founders/about" target="_blank">Go to the Community &#8594;</a>
+    <div class="footer-copy">&copy; 2026 S Sink Coaching | Sunny Sink</div>
+  </div>
+</div>
+
+<!-- ──── Tarot Spread ──── -->
+
+<div class="page" id="page-tarot">
+  <div class="section-label">Sacred Practice</div>
+  <h1>Virgo Season Tarot Spread</h1>
+  <p>Pull six cards and place them in the positions below. Sit with each card and let its message land before moving to the next.</p>
+
+  <div class="spread-container">
+    <div class="tarot-card"><div class="tarot-card-inner"><div class="tarot-card-num">1</div><div class="tarot-card-label">Connect with My Intuition</div></div></div>
+    <div class="tarot-card"><div class="tarot-card-inner"><div class="tarot-card-num">2</div><div class="tarot-card-label">How Do I Heal Myself</div></div></div>
+    <div class="tarot-card"><div class="tarot-card-inner"><div class="tarot-card-num">3</div><div class="tarot-card-label">Lesson in Virgo Season</div></div></div>
+    <div class="tarot-card"><div class="tarot-card-inner"><div class="tarot-card-num">4</div><div class="tarot-card-label">What Is My Gift</div></div></div>
+    <div class="tarot-card"><div class="tarot-card-inner"><div class="tarot-card-num">5</div><div class="tarot-card-label">Trust My Worthiness</div></div></div>
+    <div class="tarot-card"><div class="tarot-card-inner"><div class="tarot-card-num">6</div><div class="tarot-card-label">How Do I Serve Others</div></div></div>
+  </div>
+
+  <div class="prompt-block">
+    <div class="prompt-question">Record the cards you pulled and the messages you received</div>
+    <textarea class="journal-area" id="journal-tarot" placeholder="Card 1 (Connect with My Intuition):&#10;Card 2 (How Do I Heal Myself):&#10;Card 3 (Lesson in Virgo Season):&#10;Card 4 (What Is My Gift):&#10;Card 5 (Trust My Worthiness):&#10;Card 6 (How Do I Serve Others):" oninput="autoSave('tarot')" style="min-height:200px;"></textarea>
+    <div class="save-indicator" id="save-tarot">&#10003; Saved</div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="download-bar">
+    <p>Download all your Virgo Season reflections, journal entries, appreciation list, and spread notes as one file.</p>
+    <button class="btn-primary" onclick="downloadAll()">&#11015; Download All My Reflections</button>
+  </div>
+
+  <div class="footer">
+    <div class="footer-brand">Soul-Forged Founders</div>
+    <a href="https://www.skool.com/soul-forged-founders/about" target="_blank">Go to the Community &#8594;</a>
+    <div class="footer-copy">&copy; 2026 S Sink Coaching | Sunny Sink</div>
+  </div>
+</div>
+
+</main>
+</div>
+
+<script>
+var PAGES = ['welcome','virgo-energy','self-worth','intentions','who-am-i','house-focus','full-moon','journal','tarot'];
+var KEYS  = ['intentions','house','moon1','moon2','moon3','p1','p2','p3','p4','p5','tarot'];
+
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(function(p) { p.classList.remove('active'); });
+  document.querySelectorAll('.nav-item').forEach(function(n) { n.classList.remove('active'); });
+  var pg = document.getElementById('page-' + id);
+  if (pg) pg.classList.add('active');
+  var i = PAGES.indexOf(id);
+  var ns = document.querySelectorAll('.nav-item');
+  if (i >= 0 && ns[i]) ns[i].classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('sidebarOverlay').classList.remove('open');
+}
+
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('sidebarOverlay').classList.toggle('open');
+}
+
+function autoSave(k) {
+  var el = document.getElementById('journal-' + k);
+  if (el) {
+    localStorage.setItem('virgo-' + k, el.value);
+    var ind = document.getElementById('save-' + k);
+    if (ind) {
+      ind.classList.add('visible');
+      clearTimeout(ind._t);
+      ind._t = setTimeout(function() { ind.classList.remove('visible'); }, 2000);
+    }
+  }
+}
+
+function loadAll() {
+  KEYS.forEach(function(k) {
+    var el = document.getElementById('journal-' + k);
+    var v = localStorage.getItem('virgo-' + k);
+    if (el && v) el.value = v;
+  });
+}
+
+/* ── Appreciation list ── */
+
+var appr = [];
+
+function loadAppr() {
+  var s = localStorage.getItem('virgo-appreciation');
+  if (s) { try { appr = JSON.parse(s); } catch(e) { appr = []; } }
+  if (!appr.length) appr = Array(10).fill('');
+  renderAppr();
+}
+
+function renderAppr() {
+  var c = document.getElementById('appreciationList');
+  c.innerHTML = '';
+  appr.forEach(function(v, i) {
+    var r = document.createElement('div');
+    r.className = 'appreciation-entry';
+    r.innerHTML = '<span class="appreciation-num">' + (i + 1) + '</span>' +
+      '<input type="text" class="appreciation-input" value="' + esc(v) + '" ' +
+      'placeholder="Something I love about who I am..." oninput="updAppr(' + i + ',this.value)">';
+    c.appendChild(r);
+  });
+}
+
+function updAppr(i, v) {
+  appr[i] = v;
+  localStorage.setItem('virgo-appreciation', JSON.stringify(appr));
+  var ind = document.getElementById('save-appreciation');
+  if (ind) {
+    ind.classList.add('visible');
+    clearTimeout(ind._t);
+    ind._t = setTimeout(function() { ind.classList.remove('visible'); }, 2000);
+  }
+}
+
+function addEntry() {
+  appr.push('');
+  localStorage.setItem('virgo-appreciation', JSON.stringify(appr));
+  renderAppr();
+  var ins = document.querySelectorAll('.appreciation-input');
+  if (ins.length) ins[ins.length - 1].focus();
+}
+
+function esc(s) {
+  var d = document.createElement('div');
+  d.textContent = s;
+  return d.innerHTML;
+}
+
+/* ── Download all reflections ── */
+
+function downloadAll() {
+  var L = [];
+  L.push('========================================');
+  L.push('  VIRGO SEASON REFLECTIONS');
+  L.push('  Embracing Wholeness: Exploration & Self-Worth');
+  L.push('========================================\n');
+
+  var secs = [
+    { t: 'INTENTION SETTING',   k: ['intentions'] },
+    { t: 'VIRGO BY HOUSE',      k: ['house'] },
+    { t: 'FULL MOON IN PISCES', k: ['moon1','moon2','moon3'] },
+    { t: 'JOURNAL PROMPTS',     k: ['p1','p2','p3','p4','p5'] },
+    { t: 'TAROT SPREAD NOTES',  k: ['tarot'] }
+  ];
+
+  var labels = {
+    intentions: 'Routines and rituals to support my dream',
+    house:      'My Virgo house focus',
+    moon1:      'Clues my energy is open and needs protection',
+    moon2:      'How I create space for deeper feeling',
+    moon3:      'What helps me stay present',
+    p1:         'Routines and rituals to listen to my intuition',
+    p2:         'Aligning with my offering or gift',
+    p3:         'Readiness to share my gift',
+    p4:         'Serving others while honoring my needs',
+    p5:         'What wholeness feels like',
+    tarot:      'Cards and messages received'
+  };
+
+  secs.forEach(function(s) {
+    L.push('--- ' + s.t + ' ---\n');
+    s.k.forEach(function(k) {
+      var v = localStorage.getItem('virgo-' + k) || '';
+      L.push(labels[k] + ':');
+      L.push(v || '(not yet written)');
+      L.push('');
+    });
+    L.push('');
+  });
+
+  L.push('--- THINGS I LOVE ABOUT WHO I AM ---\n');
+  var a = [];
+  try { a = JSON.parse(localStorage.getItem('virgo-appreciation') || '[]'); } catch(e) {}
+  if (a.length) { a.forEach(function(v, i) { if (v) L.push((i + 1) + '. ' + v); }); }
+  else { L.push('(not yet written)'); }
+
+  L.push('\n\n========================================');
+  L.push('  Soul-Forged Founders');
+  L.push('  skool.com/soul-forged-founders');
+  L.push('========================================');
+
+  var b = new Blob([L.join('\n')], { type: 'text/plain' });
+  var u = URL.createObjectURL(b);
+  var a2 = document.createElement('a');
+  a2.href = u;
+  a2.download = 'Virgo-Season-Reflections.txt';
+  document.body.appendChild(a2);
+  a2.click();
+  document.body.removeChild(a2);
+  URL.revokeObjectURL(u);
+}
+
+/* ── Falling leaves ── */
+
+function initLeaves() {
+  var c = document.getElementById('leafContainer');
+  var cols = [
+    'rgba(107,127,94,0.25)', 'rgba(143,160,128,0.2)',
+    'rgba(194,165,90,0.18)', 'rgba(168,145,123,0.2)',
+    'rgba(146,126,153,0.15)'
+  ];
+
+  var st = document.createElement('style');
+  st.textContent = '@keyframes ld { ' +
+    '0%   { transform: translateY(-20px) rotate(0)    translateX(0);    opacity: 0; } ' +
+    '10%  { opacity: 0.5; } ' +
+    '85%  { opacity: 0.35; } ' +
+    '100% { transform: translateY(105vh) rotate(180deg) translateX(40px); opacity: 0; } }';
+  document.head.appendChild(st);
+
+  function mk() {
+    var p = document.createElement('div');
+    var s = 4 + Math.random() * 7;
+    var cl = cols[Math.floor(Math.random() * cols.length)];
+    Object.assign(p.style, {
+      position: 'absolute',
+      width: s + 'px',
+      height: (s * 1.6) + 'px',
+      background: cl,
+      borderRadius: '50% 0 50% 50%',
+      left: Math.random() * 100 + '%',
+      top: '-15px',
+      opacity: '0',
+      pointerEvents: 'none',
+      animation: 'ld ' + (12 + Math.random() * 8) + 's ease-in-out forwards'
+    });
+    c.appendChild(p);
+    setTimeout(function() { p.remove(); }, 20000);
+  }
+
+  for (var i = 0; i < 6; i++) setTimeout(mk, Math.random() * 5000);
+  setInterval(mk, 3500 + Math.random() * 2000);
+}
+
+/* ── Init ── */
+
+document.addEventListener('DOMContentLoaded', function() {
+  loadAll();
+  loadAppr();
+  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) initLeaves();
+});
+</script>
+
+</body>
+</html>
