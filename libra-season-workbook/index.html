@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Libra Season Handbook | Harmony and Growth</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #FBF6EA; --bg2: #F5EEFB; --bg3: #EFE4F7; --bg-warm: #FBF3E0;
+  --ink: #2A1F3D; --ink-dim: #5A4A70; --ink-faint: #8D7EA5;
+  --violet-deep: #3D1F5C; --violet: #5B3A8B; --violet-lt: #8B72B8; --violet-dk: #2E1548;
+  --lavender: #B8A5D9; --lavender-lt: #D9C8EE; --lavender-bg: #EDE3F7;
+  --gold: #C89B3C; --gold-lt: #E8CE73; --gold-dk: #A67F26;
+  --blush: #F0DDD9; --blush-dk: #C99A8D;
+  --sage: #A8B8A0; --sage-dk: #7A8B72;
+  --serif: 'Cormorant Garamond', 'Hoefler Text', Georgia, serif;
+  --sans: 'Montserrat', system-ui, -apple-system, sans-serif;
+  --radius-sm: 8px; --radius-md: 14px; --radius-lg: 22px; --radius-pill: 30px;
+  --shadow-card: 0 2px 8px rgba(91,58,139,0.05), 0 8px 32px rgba(184,165,217,0.10);
+  --shadow-elevated: 0 4px 16px rgba(91,58,139,0.08), 0 16px 48px rgba(184,165,217,0.15);
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+}
+html { scroll-behavior: smooth; }
+body { font-family: var(--sans); font-size: 15px; line-height: 1.7; color: var(--ink); background: linear-gradient(180deg, var(--bg2) 0%, var(--bg3) 35%, var(--bg-warm) 100%); min-height: 100vh; }
+.app-shell { display: flex; min-height: 100vh; }
+.sidebar { width: 260px; min-width: 260px; background: rgba(251,246,234,0.9); backdrop-filter: blur(20px); border-right: 1px solid rgba(91,58,139,0.1); padding: 2rem 0; display: flex; flex-direction: column; position: fixed; top: 0; left: 0; bottom: 0; z-index: 100; overflow-y: auto; }
+.sidebar-brand { padding: 0 1.5rem 1.5rem; border-bottom: 1px solid rgba(184,165,217,0.25); margin-bottom: 1rem; }
+.sidebar-brand-label { font-family: var(--sans); font-size: 0.7rem; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; color: var(--violet); margin-bottom: 0.35rem; }
+.sidebar-brand-title { font-family: var(--serif); font-size: 1.4rem; font-style: italic; font-weight: 400; color: var(--violet-deep); line-height: 1.25; }
+.sidebar-brand-sub { font-family: var(--sans); font-size: 0.75rem; color: var(--ink-faint); margin-top: 0.25rem; font-weight: 500; }
+.sidebar nav { flex: 1; padding: 0.5rem 0; }
+.nav-item { display: flex; align-items: center; gap: 0.75rem; padding: 0.7rem 1.5rem; font-family: var(--sans); font-size: 0.8rem; font-weight: 400; color: var(--ink-dim); cursor: pointer; border: none; background: none; width: 100%; text-align: left; transition: all 0.3s var(--ease); position: relative; letter-spacing: 0.01em; }
+.nav-item::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: linear-gradient(180deg, var(--violet), var(--gold)); opacity: 0; border-radius: 0 2px 2px 0; transition: opacity 0.3s var(--ease); }
+.nav-item:hover { color: var(--violet); background: rgba(91,58,139,0.05); }
+.nav-item.active { color: var(--violet); font-weight: 500; background: rgba(91,58,139,0.07); }
+.nav-item.active::before { opacity: 1; }
+.nav-icon { font-size: 1rem; width: 1.4rem; text-align: center; flex-shrink: 0; }
+.main-content { flex: 1; margin-left: 260px; padding: 3rem; max-width: 100%; overflow-x: hidden; }
+.page { display: none; max-width: 740px; margin: 0 auto; animation: fadeIn 0.5s var(--ease); }
+.page.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+.section-label { font-family: var(--sans); font-size: 0.7rem; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; color: var(--violet); margin-bottom: 0.75rem; }
+h1 { font-family: var(--serif); font-size: 2.5rem; font-weight: 500; letter-spacing: -0.01em; line-height: 1.2; color: var(--violet-deep); margin-bottom: 1rem; }
+h2 { font-family: var(--serif); font-size: 1.875rem; font-style: italic; font-weight: 500; line-height: 1.3; color: var(--violet-deep); margin-bottom: 1rem; }
+h3 { font-family: var(--serif); font-size: 1.375rem; font-weight: 600; line-height: 1.35; color: var(--violet); margin-bottom: 0.75rem; }
+p { margin-bottom: 1rem; }
+.hero { text-align: center; padding: 3rem 0 2rem; }
+.hero-orb-container { position: relative; width: 180px; height: 180px; margin: 0 auto 2rem; }
+.hero-orb { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 110px; height: 110px; border-radius: 50%; background: radial-gradient(circle at 40% 40%, rgba(232,206,115,0.75) 0%, rgba(184,165,217,0.55) 40%, rgba(91,58,139,0.2) 75%, transparent 100%); animation: breathe 6s var(--ease) infinite; box-shadow: 0 0 40px rgba(184,165,217,0.35), 0 0 80px rgba(232,206,115,0.18); }
+.hero-orb-ring { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 155px; height: 155px; border-radius: 50%; border: 1px solid rgba(200,155,60,0.3); animation: breathe 6s var(--ease) infinite; animation-delay: -0.5s; }
+.hero-orb-ring-outer { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 175px; height: 175px; border-radius: 50%; border: 1px dashed rgba(184,165,217,0.35); animation: rotateSlow 40s linear infinite; }
+@keyframes breathe { 0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.8; } 50% { transform: translate(-50%, -50%) scale(1.12); opacity: 1; } }
+@keyframes rotateSlow { from { transform: translate(-50%, -50%) rotate(0); } to { transform: translate(-50%, -50%) rotate(360deg); } }
+.hero h1 { font-size: 2.9rem; margin-bottom: 0.6rem; font-style: italic; }
+.hero-subtitle { font-family: var(--sans); font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--violet); font-weight: 500; margin-bottom: 0.5rem; }
+.hero-dates { font-family: var(--serif); font-size: 1.15rem; font-style: italic; color: var(--gold-dk); }
+.divider { height: 1px; background: linear-gradient(90deg, transparent 0%, rgba(91,58,139,0.15) 20%, rgba(200,155,60,0.25) 50%, rgba(184,165,217,0.2) 80%, transparent 100%); border: none; margin: 2.5rem 0; }
+.card { background: rgba(251,246,234,0.75); backdrop-filter: blur(20px); border: 1px solid rgba(184,165,217,0.25); border-radius: var(--radius-lg); padding: 1.75rem; box-shadow: var(--shadow-card); margin-bottom: 1.5rem; transition: all 0.4s var(--ease); }
+.card:hover { box-shadow: var(--shadow-elevated); border-color: rgba(184,165,217,0.4); }
+.card-lavender { background: linear-gradient(135deg, rgba(217,200,238,0.25) 0%, rgba(251,246,234,0.85) 100%); border-color: rgba(184,165,217,0.3); }
+.card-violet { background: linear-gradient(135deg, rgba(91,58,139,0.08) 0%, rgba(251,246,234,0.85) 100%); border-color: rgba(91,58,139,0.15); }
+.card-gold { background: linear-gradient(135deg, rgba(232,206,115,0.15) 0%, rgba(251,246,234,0.85) 100%); border-color: rgba(200,155,60,0.25); }
+.card-blush { background: linear-gradient(135deg, rgba(240,221,217,0.3) 0%, rgba(251,246,234,0.85) 100%); border-color: rgba(201,154,141,0.2); }
+.card h3 { color: var(--violet); }
+.vibration-row { display: flex; gap: 1rem; margin-top: 1.5rem; flex-wrap: wrap; }
+.vibration-card { flex: 1; min-width: 260px; padding: 1.25rem; border-radius: var(--radius-md); text-align: center; }
+.vibration-card.higher { background: linear-gradient(135deg, rgba(232,206,115,0.15) 0%, rgba(184,165,217,0.10) 100%); border: 1px solid rgba(200,155,60,0.25); }
+.vibration-card.lower { background: linear-gradient(135deg, rgba(217,200,238,0.20) 0%, rgba(240,221,217,0.15) 100%); border: 1px solid rgba(184,165,217,0.25); }
+.vibration-label { font-family: var(--sans); font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 600; margin-bottom: 0.5rem; }
+.vibration-card.higher .vibration-label { color: var(--gold-dk); }
+.vibration-card.lower .vibration-label { color: var(--violet); }
+.vibration-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; justify-content: center; }
+.vibration-tag { font-family: var(--sans); font-size: 0.75rem; padding: 0.3rem 0.75rem; border-radius: var(--radius-pill); font-weight: 500; }
+.vibration-card.higher .vibration-tag { background: rgba(232,206,115,0.22); color: var(--gold-dk); }
+.vibration-card.lower .vibration-tag { background: rgba(184,165,217,0.22); color: var(--violet); }
+.sign-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 1rem; margin: 1.5rem 0; }
+.sign-item { text-align: center; padding: 1rem; border-radius: var(--radius-md); background: rgba(184,165,217,0.10); border: 1px solid rgba(184,165,217,0.18); }
+.sign-item-icon { font-size: 1.5rem; margin-bottom: 0.4rem; color: var(--gold-dk); }
+.sign-item-label { font-family: var(--sans); font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-faint); }
+.sign-item-value { font-family: var(--serif); font-size: 1.05rem; font-weight: 600; color: var(--violet-deep); }
+.mantra-display { text-align: center; padding: 1.75rem; margin: 1.5rem 0; border-radius: var(--radius-lg); background: linear-gradient(135deg, rgba(91,58,139,0.08) 0%, rgba(232,206,115,0.12) 100%); border: 1px solid rgba(91,58,139,0.12); }
+.mantra-label { font-family: var(--sans); font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 0.5rem; }
+.mantra-text { font-family: var(--serif); font-size: 1.9rem; font-style: italic; color: var(--violet); }
+.journal-area { width: 100%; min-height: 120px; padding: 1.25rem; font-family: var(--sans); font-size: 15px; line-height: 1.7; color: var(--ink); background: rgba(251,246,234,0.8); border: 1.5px solid rgba(184,165,217,0.3); border-radius: var(--radius-md); resize: vertical; transition: all 0.3s var(--ease); }
+.journal-area::placeholder { color: var(--lavender); font-style: italic; }
+.journal-area:focus { outline: none; border-color: var(--violet); box-shadow: 0 0 0 3px rgba(91,58,139,0.10); }
+.save-indicator { font-family: var(--sans); font-size: 0.75rem; color: var(--sage-dk); margin-top: 0.5rem; opacity: 0; transition: opacity 0.4s ease; }
+.save-indicator.visible { opacity: 1; }
+.prompt-block { margin-bottom: 1.75rem; }
+.prompt-question { font-family: var(--serif); font-size: 1.05rem; font-style: italic; color: var(--violet-deep); padding: 0.6rem 1rem; background: rgba(91,58,139,0.05); border-left: 3px solid var(--violet); border-radius: 0; margin-bottom: 0.75rem; }
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin: 1.5rem 0; }
+.value-entry, .task-entry { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.65rem; }
+.value-num { font-family: var(--serif); font-size: 1.1rem; font-style: italic; color: var(--gold-dk); min-width: 1.5rem; text-align: center; }
+.task-check { width: 18px; height: 18px; border: 1.5px solid rgba(184,165,217,0.5); border-radius: 4px; cursor: pointer; flex-shrink: 0; background: rgba(251,246,234,0.6); accent-color: var(--violet); }
+.value-input, .task-input { flex: 1; padding: 0.55rem 0.85rem; font-family: var(--sans); font-size: 14px; color: var(--ink); background: rgba(251,246,234,0.6); border: none; border-bottom: 1.5px solid rgba(184,165,217,0.35); transition: all 0.3s var(--ease); }
+.value-input::placeholder, .task-input::placeholder { color: var(--lavender); font-style: italic; font-size: 0.82rem; }
+.value-input:focus, .task-input:focus { outline: none; border-bottom-color: var(--violet); background: rgba(251,246,234,0.9); }
+.task-input.aligned { color: var(--gold-dk); font-weight: 500; }
+.peace-box { padding: 1.25rem; border-radius: var(--radius-md); margin-bottom: 1.25rem; border: 1px solid rgba(184,165,217,0.25); }
+.peace-box.brings { background: linear-gradient(135deg, rgba(232,206,115,0.10) 0%, rgba(184,165,217,0.06) 100%); }
+.peace-box.takes { background: linear-gradient(135deg, rgba(217,200,238,0.15) 0%, rgba(240,221,217,0.10) 100%); }
+.peace-box-label { font-family: var(--sans); font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 600; color: var(--violet); margin-bottom: 0.6rem; }
+.ritual-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 0.85rem; margin: 1.5rem 0; }
+.ritual-chip { padding: 0.9rem 1rem; border-radius: var(--radius-md); text-align: center; font-family: var(--serif); font-size: 1.05rem; font-weight: 500; color: var(--violet-deep); background: linear-gradient(135deg, rgba(232,206,115,0.20) 0%, rgba(217,200,238,0.15) 100%); border: 1px solid rgba(200,155,60,0.20); transition: all 0.3s var(--ease); }
+.ritual-chip:hover { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(184,165,217,0.20); }
+.spread-container { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; margin: 2rem 0; }
+.tarot-card { position: relative; aspect-ratio: 2.5/3.5; border-radius: var(--radius-lg); overflow: hidden; cursor: pointer; transition: all 0.5s var(--ease); border: 1px solid rgba(200,155,60,0.25); }
+.tarot-card::before { content: ''; position: absolute; inset: 0; background: linear-gradient(145deg, rgba(91,58,139,0.10) 0%, rgba(232,206,115,0.10) 50%, rgba(184,165,217,0.10) 100%); background-size: 400% 400%; animation: holoShift 8s ease infinite; z-index: 1; }
+@keyframes holoShift { 0%, 100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
+.tarot-card-inner { position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; padding: 1.25rem 0.75rem; text-align: center; background: linear-gradient(180deg, rgba(251,246,234,0.94) 0%, rgba(245,238,251,0.90) 50%, rgba(251,246,234,0.94) 100%); }
+.tarot-card-num { font-family: var(--serif); font-size: 2rem; font-style: italic; color: var(--gold); line-height: 1; margin-bottom: 0.5rem; }
+.tarot-card-label { font-family: var(--serif); font-size: 0.95rem; font-weight: 600; color: var(--violet-deep); line-height: 1.3; }
+.tarot-card:hover { transform: translateY(-4px); box-shadow: 0 8px 32px rgba(184,165,217,0.30); border-color: var(--gold); }
+.affirmation { font-family: var(--serif); font-size: 1.15rem; font-style: italic; color: var(--violet); padding: 0.75rem 0 0.75rem 1.25rem; border-left: 2px solid var(--gold); margin-bottom: 1rem; line-height: 1.5; }
+.btn-primary { display: inline-flex; align-items: center; gap: 0.5rem; font-family: var(--sans); font-size: 0.85rem; font-weight: 500; letter-spacing: 0.04em; color: #FBF6EA; background: linear-gradient(135deg, var(--violet) 0%, var(--violet-deep) 100%); border: none; border-radius: var(--radius-pill); padding: 0.8rem 2rem; cursor: pointer; transition: all 0.4s var(--ease); box-shadow: 0 4px 16px rgba(91,58,139,0.25); text-decoration: none; }
+.btn-primary:hover { background: linear-gradient(135deg, var(--violet-lt) 0%, var(--violet) 100%); box-shadow: 0 6px 24px rgba(91,58,139,0.35); transform: translateY(-1px); }
+.btn-ghost { display: inline-flex; align-items: center; gap: 0.4rem; font-family: var(--sans); font-size: 0.8rem; font-weight: 500; color: var(--ink-dim); background: none; border: none; padding: 0.5rem 0; cursor: pointer; transition: color 0.3s ease; }
+.btn-ghost:hover { color: var(--violet); }
+.callout-warm { background: linear-gradient(135deg, rgba(91,58,139,0.10) 0%, rgba(232,206,115,0.10) 50%, rgba(184,165,217,0.08) 100%); border: 1px solid rgba(91,58,139,0.18); border-radius: var(--radius-lg); padding: 2rem; margin: 1.5rem 0; text-align: center; }
+.callout-warm h3 { color: var(--violet-deep); font-family: var(--serif); font-size: 1.5rem; font-style: italic; }
+.callout-warm p { color: var(--ink-dim); font-size: 0.9rem; }
+.callout-warm .date-badge { display: inline-block; padding: 0.4rem 1rem; background: rgba(91,58,139,0.10); border: 1px solid rgba(91,58,139,0.20); border-radius: var(--radius-pill); font-family: var(--sans); font-size: 0.75rem; font-weight: 500; letter-spacing: 0.08em; color: var(--violet); margin-bottom: 1rem; }
+.quote-block { text-align: center; padding: 2rem; margin: 2rem 0; background: linear-gradient(135deg, rgba(217,200,238,0.20) 0%, rgba(232,206,115,0.10) 100%); border-radius: var(--radius-lg); border: 1px solid rgba(184,165,217,0.25); }
+.quote-text { font-family: var(--serif); font-size: 1.5rem; font-style: italic; color: var(--violet-deep); line-height: 1.4; margin-bottom: 0.5rem; }
+.quote-attr { font-family: var(--sans); font-size: 0.8rem; letter-spacing: 0.08em; color: var(--gold-dk); font-weight: 500; }
+.download-bar { background: linear-gradient(135deg, rgba(232,206,115,0.15) 0%, rgba(184,165,217,0.15) 100%); border: 1px solid rgba(200,155,60,0.25); border-radius: var(--radius-lg); padding: 1.5rem; text-align: center; margin: 2rem 0; }
+.download-bar p { font-size: 0.85rem; color: var(--ink-dim); margin-bottom: 0.75rem; }
+.footer { text-align: center; padding: 2.5rem 1.5rem 2rem; margin-top: 3rem; border-top: 1px solid rgba(184,165,217,0.20); }
+.footer-brand { font-family: var(--serif); font-size: 1.1rem; font-style: italic; color: var(--violet); margin-bottom: 0.75rem; }
+.footer a { color: var(--violet); text-decoration: none; font-family: var(--sans); font-size: 0.8rem; font-weight: 500; }
+.footer a:hover { color: var(--violet-deep); }
+.footer-copy { font-family: var(--sans); font-size: 0.7rem; color: var(--ink-faint); margin-top: 0.75rem; }
+.petal-container { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+.mobile-header { display: none; position: fixed; top: 0; left: 0; right: 0; height: 56px; background: rgba(251,246,234,0.92); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(184,165,217,0.15); z-index: 200; align-items: center; padding: 0 1rem; }
+.hamburger { background: none; border: none; font-size: 1.5rem; color: var(--violet); cursor: pointer; padding: 0.5rem; }
+.mobile-title { font-family: var(--serif); font-size: 1rem; font-style: italic; color: var(--violet-deep); margin-left: 0.5rem; }
+.sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(42,31,61,0.3); z-index: 99; }
+@media (max-width: 768px) {
+  .mobile-header { display: flex; }
+  .sidebar { transform: translateX(-100%); transition: transform 0.3s var(--ease); z-index: 200; }
+  .sidebar.open { transform: translateX(0); }
+  .sidebar-overlay.open { display: block; }
+  .main-content { margin-left: 0; padding: 72px 1.25rem 2rem; }
+  h1 { font-size: 2rem; } .hero h1 { font-size: 2.2rem; } h2 { font-size: 1.5rem; }
+  .spread-container { grid-template-columns: repeat(2, 1fr); }
+  .vibration-row { flex-direction: column; }
+  .two-col { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; } .hero-orb { animation: none; opacity: 0.8; } .hero-orb-ring-outer { animation: none; } }
+</style>
+</head>
+<body>
+<div class="petal-container" id="petalContainer"></div>
+<div class="mobile-header"><button class="hamburger" onclick="toggleSidebar()" aria-label="Menu">&#9776;</button><span class="mobile-title">Libra Season Handbook</span></div>
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+<div class="app-shell">
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-brand"><div class="sidebar-brand-label">Libra Season</div><div class="sidebar-brand-title">Harmony and Growth</div><div class="sidebar-brand-sub">Cultivating Healthy Relationships</div></div>
+  <nav>
+    <button class="nav-item active" onclick="showPage('welcome')"><span class="nav-icon">&#9906;</span> Welcome</button>
+    <button class="nav-item" onclick="showPage('libra-energy')"><span class="nav-icon">&#9906;</span> Libra Energy</button>
+    <button class="nav-item" onclick="showPage('relationships')"><span class="nav-icon">&#9825;</span> Healthy Relationships</button>
+    <button class="nav-item" onclick="showPage('balance')"><span class="nav-icon">&#9878;</span> Harmony &amp; Balance</button>
+    <button class="nav-item" onclick="showPage('peace')"><span class="nav-icon">&#9774;</span> Peace Exercise</button>
+    <button class="nav-item" onclick="showPage('equinox')"><span class="nav-icon">&#127810;</span> Fall Equinox</button>
+    <button class="nav-item" onclick="showPage('full-moon')"><span class="nav-icon">&#9681;</span> Full Moon in Aries</button>
+    <button class="nav-item" onclick="showPage('journal')"><span class="nav-icon">&#9998;</span> Journal &amp; Affirmations</button>
+    <button class="nav-item" onclick="showPage('tarot')"><span class="nav-icon">&#10022;</span> Tarot Spread</button>
+  </nav>
+</aside>
+<main class="main-content">
+<div class="page active" id="page-welcome">
+  <div class="hero"><div class="hero-orb-container"><div class="hero-orb-ring-outer"></div><div class="hero-orb-ring"></div><div class="hero-orb"></div></div><div class="hero-subtitle">Libra Season Handbook</div><h1>Harmony and Growth</h1><div class="hero-dates">September 23 ~ October 22</div></div>
+  <div class="divider"></div>
+  <p style="font-size:1.05rem; text-align:center; max-width:600px; margin:0 auto 1.5rem;">Libra Season represents a new start. As a cardinal sign, this energy generates new vibrations for us to harness and use to create the changes we want in our lives.</p>
+  <p style="text-align:center; max-width:600px; margin:0 auto 1.5rem;">Each astrological energy is an evolution of the one before. Virgo Season taught us to accept our imperfections and understand the value of our self-worth. Libra Season builds on that and seeks to extend it to our partnerships. Once we can accept our own imperfections, we are in a place to accept other people's imperfections too.</p>
+  <p style="text-align:center; max-width:600px; margin:0 auto 1.5rem;">When we know our true self-worth, we can better stand our ground in conflict and find a peaceful resolution that preserves our integrity. We also can attract partners into our lives who reflect our self-worth and can help us on a journey of self-discovery.</p>
+  <p style="text-align:center; max-width:600px; margin:0 auto 2rem;">This season is ultimately an opportunity to look at the relationships in your life and understand them on a new level. Which ones are serving you? Which ones are limiting you? Relationships can be complicated and messy, and they also bring you into an energetic vibration you could not get to alone.</p>
+  <div class="vibration-row"><div class="vibration-card higher"><div class="vibration-label">Higher Vibrations</div><div class="vibration-tags"><span class="vibration-tag">Balance</span><span class="vibration-tag">Fairness</span><span class="vibration-tag">Justice</span><span class="vibration-tag">Partnership</span><span class="vibration-tag">Harmony</span><span class="vibration-tag">Cooperation</span></div></div><div class="vibration-card lower"><div class="vibration-label">Lower Vibrations</div><div class="vibration-tags"><span class="vibration-tag">Disconnect</span><span class="vibration-tag">Judgement</span><span class="vibration-tag">Selfishness</span><span class="vibration-tag">Lack of empathy</span></div></div></div>
+  <div class="callout-warm" style="margin-top:2rem;"><h3>Grab a journal and pen, and let's get started.</h3><p style="margin-bottom:0;">Move through the pages at your own pace. Everything you write here saves to your device.</p></div>
+  <div class="footer"><div class="footer-brand">The Alchemist's AI Toolkit</div><a href="https://www.skool.com/soul-forged-founders/classroom/5e4056f3" target="_blank">Open the classroom inside Soul-Forged Founders &#8594;</a><div class="footer-copy">&copy; 2026 S Sink Coaching | Sunny Sink</div></div>
+</div>
+<div class="page" id="page-libra-energy">
+  <div class="section-label">A Deeper Look</div><h1>Libra Energy</h1>
+  <div class="sign-grid"><div class="sign-item"><div class="sign-item-icon">&#128168;</div><div class="sign-item-label">Element</div><div class="sign-item-value">Air</div></div><div class="sign-item"><div class="sign-item-icon">&#9670;</div><div class="sign-item-label">Modality</div><div class="sign-item-value">Cardinal</div></div><div class="sign-item"><div class="sign-item-icon">&#9792;</div><div class="sign-item-label">Ruler</div><div class="sign-item-value">Venus</div></div><div class="sign-item"><div class="sign-item-icon">&#127810;</div><div class="sign-item-label">Season</div><div class="sign-item-value">Fall</div></div><div class="sign-item"><div class="sign-item-icon">&#9878;</div><div class="sign-item-label">Depiction</div><div class="sign-item-value">The Scales</div></div></div>
+  <div class="mantra-display"><div class="mantra-label">Mantra</div><div class="mantra-text">I Balance</div></div>
+  <div class="divider"></div>
+  <p>Libra is a cardinal air sign that opens the fall season. There is a sense of slowing down and taking a moment of rest and appreciation for what the last season gave us.</p>
+  <p>There is also a cooperation with nature happening. Each of us is needed to bring in the harvest and see that it is properly stored. Libra is a sign of cooperation and balance.</p>
+  <p>Ruled by Venus, Libra wants to create beauty and luxury through relationships, balance, and creativity. Libra encourages harmonious relationships that are mutually beneficial and fair.</p>
+  <p>Libra can be considered a turning point in the year. It is the midpoint in the zodiac, when we transition from being primarily focused on our own personal growth to a more community focus. Libra teaches us of karma and that what we reap, we will sow.</p>
+  <div class="card card-violet"><h3>The Highest Expression</h3><p style="margin-bottom:0;">The highest expression of Libra is one that balances the higher soul with the incarnated personality. It seeks fairness and right relationships by allowing all sides and voices to be heard and considered.</p></div>
+  <div class="card" style="text-align:center;"><div class="section-label">Personal Growth Theme</div><p style="font-family:var(--serif); font-size:1.2rem; font-style:italic; color:var(--violet); margin-bottom:0;">Cultivating Balance, Fairness, and Healthy Relationships</p></div>
+  <div class="footer"><div class="footer-brand">The Alchemist's AI Toolkit</div><a href="https://www.skool.com/soul-forged-founders/classroom/5e4056f3" target="_blank">Open the classroom inside Soul-Forged Founders &#8594;</a><div class="footer-copy">&copy; 2026 S Sink Coaching | Sunny Sink</div></div>
+</div>
+<div class="page" id="page-relationships">
+  <div class="section-label">The Work of Libra Season</div><h1>Cultivating Healthy Relationships</h1>
+  <p style="font-size:1.05rem; margin-bottom:2rem;">Five practices to build relationships that grow with you rather than around you.</p>
+  <div class="card card-lavender"><h3>Being Honest</h3><p>Healthy relationships need open, honest communication. Without it, the relationship will struggle. Be mindful of how you can balance kindness and compassion with honesty. Sometimes being honest can come across as unkind.</p><p style="margin-bottom:0;">Balancing compassion with honesty helps the relationship grow. Without compassion, the other person may become defensive. Try to see things through their eyes and remember they may not see it as you do, yet. Take your time to communicate, and try to understand their perspective.</p></div>
+  <div class="card card-gold"><h3>Managing Expectations</h3><p style="margin-bottom:0;">Putting unreasonable expectations on others leads to disappointment. You will have many people in your life &mdash; all with very different roles and relationships to you. Some are your soul mates and always will be. Others may be acquaintances and never anything more. Understanding these differences helps you manage expectations and save you from being hurt down the road.</p></div>
+  <div class="card card-violet"><h3>How to Grow Together</h3><p style="margin-bottom:0;">As time goes by, we and those around us change and evolve. This is good. Growing together helps maintain and improve the relationship instead of growing apart. To sustain healthy relationships, flexibility is key. As each person changes and evolves into other versions of themselves, find ways to support their growth. Talk about how you can support each other so the transition is seamless.</p></div>
+  <div class="card card-blush"><h3>When a Relationship Comes to an End</h3><p style="margin-bottom:0;">Letting go of a relationship is sometimes the healthiest thing to do. Relationships sometimes just run their course, and that's natural. When they do, know that you have the freedom to walk away if that feels right for you. You don't need to justify your decision, but it's compassionate to let them know that you are doing so.</p></div>
+  <div class="card card-lavender"><h3>Giving Your Appreciation</h3><p style="margin-bottom:0;">We all love to feel appreciated, so don't forget to tell the people in your life every day how grateful you are for the ways they make your life happier. Set this as an intention. It's easily overlooked.</p></div>
+  <div class="footer"><div class="footer-brand">The Alchemist's AI Toolkit</div><a href="https://www.skool.com/soul-forged-founders/classroom/5e4056f3" target="_blank">Open the classroom inside Soul-Forged Founders &#8594;</a><div class="footer-copy">&copy; 2026 S Sink Coaching | Sunny Sink</div></div>
+</div>
+<div class="page" id="page-balance">
+  <div class="section-label">Exercise</div><h1>Creating Harmony &amp; Balance</h1>
+  <p style="font-size:1rem; margin-bottom:1.5rem;">Notice what pulls at your time. Then notice which pulls belong there. When your regular tasks line up with your values, balance stops feeling like a struggle.</p>
+  <div class="two-col">
+    <div class="card card-violet" style="padding:1.25rem;">
+      <div class="section-label" style="margin-bottom:0.5rem;">Step 1</div>
+      <h3 style="font-size:1.15rem;">Your Top 5 Values</h3>
+      <p style="font-size:0.85rem; color:var(--ink-faint); margin-bottom:1rem;">E.g. Generosity, Service, Freedom, Authenticity, Family, Presence, Creativity, Growth.</p>
+      <div id="valuesList"></div>
+    </div>
+    <div class="card card-gold" style="padding:1.25rem;">
+      <div class="section-label" style="margin-bottom:0.5rem;">Step 2</div>
+      <h3 style="font-size:1.15rem;">Regular Tasks You Complete</h3>
+      <p style="font-size:0.85rem; color:var(--ink-faint); margin-bottom:1rem;">The everyday tasks that fill your week. Big and small.</p>
+      <div id="tasksList"></div>
+      <button class="btn-ghost" onclick="addTask()" style="margin-top:0.25rem;">+ Add another task</button>
+    </div>
+  </div>
+  <div class="card card-lavender">
+    <div class="section-label" style="margin-bottom:0.5rem;">Step 3</div>
+    <h3 style="font-size:1.15rem;">Circle the tasks that align with your values</h3>
+    <p style="font-size:0.85rem; color:var(--ink-faint); margin-bottom:1rem;">Tick each task above that reflects a value on the left. The ticked ones will highlight in gold.</p>
+    <div class="prompt-question" style="margin-top:1.5rem;">How can you delegate or let go of the tasks you didn't tick?</div>
+    <textarea class="journal-area" id="journal-delegate" placeholder="The tasks I could hand off or release are..." oninput="autoSave('delegate')"></textarea>
+    <div class="save-indicator" id="save-delegate">&#10003; Saved</div>
+  </div>
+  <div class="footer"><div class="footer-brand">The Alchemist's AI Toolkit</div><a href="https://www.skool.com/soul-forged-founders/classroom/5e4056f3" target="_blank">Open the classroom inside Soul-Forged Founders &#8594;</a><div class="footer-copy">&copy; 2026 S Sink Coaching | Sunny Sink</div></div>
+</div>
+<div class="page" id="page-peace">
+  <div class="section-label">Exercise</div><h1>Peace Exercise</h1>
+  <p style="font-size:1.05rem; margin-bottom:2rem;">Peace is not something you find later. It is something you protect now. Name what feeds it and what steals it, and boundaries become obvious.</p>
+  <div class="peace-box brings"><div class="peace-box-label">Things that bring me peace</div><textarea class="journal-area" id="journal-peace-brings" placeholder="Morning light, slow coffee, a quiet room, walks with... " oninput="autoSave('peace-brings')" style="min-height:140px; background:rgba(251,246,234,0.9); border-color:rgba(200,155,60,0.25);"></textarea><div class="save-indicator" id="save-peace-brings">&#10003; Saved</div></div>
+  <div class="peace-box takes"><div class="peace-box-label">Things that take my peace</div><textarea class="journal-area" id="journal-peace-takes" placeholder="The news scroll, that group chat, saying yes when I mean no..." oninput="autoSave('peace-takes')" style="min-height:140px; background:rgba(251,246,234,0.9); border-color:rgba(184,165,217,0.30);"></textarea><div class="save-indicator" id="save-peace-takes">&#10003; Saved</div></div>
+  <div class="prompt-block"><div class="prompt-question">How can you create better boundaries around the things that take your peace?</div><textarea class="journal-area" id="journal-peace-bounds" placeholder="One boundary I'm ready to hold this season..." oninput="autoSave('peace-bounds')"></textarea><div class="save-indicator" id="save-peace-bounds">&#10003; Saved</div></div>
+  <div class="footer"><div class="footer-brand">The Alchemist's AI Toolkit</div><a href="https://www.skool.com/soul-forged-founders/classroom/5e4056f3" target="_blank">Open the classroom inside Soul-Forged Founders &#8594;</a><div class="footer-copy">&copy; 2026 S Sink Coaching | Sunny Sink</div></div>
+</div>
+<div class="page" id="page-equinox">
+  <div class="section-label">The Turning of the Wheel</div><h1>Fall Equinox</h1>
+  <div class="callout-warm"><span class="date-badge">SEPTEMBER 22</span><h3>The Balance of Light and Dark</h3><p>The doorway into fall &mdash; day and night in equal measure</p></div>
+  <p>Fall brings our attention inward to appreciate what is about to be harvested, internally and externally. The crops reach their full potential and nature sheds her leaves. It is a time of detoxification. Plants let go of what they no longer need, animals begin to hibernate, and we spend more time indoors as the sun sets earlier and earlier.</p>
+  <p>The cycle begins again in spring and continues, showing us that nothing is permanent in nature, but many things are predictable.</p>
+  <h2 style="margin-top:2rem;">Rituals for the Nourishing Fall Energy</h2>
+  <div class="ritual-grid">
+    <div class="ritual-chip">Walk in the Sun</div>
+    <div class="ritual-chip">Set Intentions</div>
+    <div class="ritual-chip">Create a Burn List</div>
+    <div class="ritual-chip">List Your Accomplishments</div>
+    <div class="ritual-chip">Gather with Friends</div>
+    <div class="ritual-chip">Write Affirmations</div>
+    <div class="ritual-chip">Build an Altar</div>
+  </div>
+  <div class="prompt-block" style="margin-top:1.5rem;"><div class="prompt-question">What are you ready to harvest, and what are you ready to let go of?</div><textarea class="journal-area" id="journal-equinox" placeholder="What has grown ripe this year... What I am ready to release..." oninput="autoSave('equinox')"></textarea><div class="save-indicator" id="save-equinox">&#10003; Saved</div></div>
+  <div class="footer"><div class="footer-brand">The Alchemist's AI Toolkit</div><a href="https://www.skool.com/soul-forged-founders/classroom/5e4056f3" target="_blank">Open the classroom inside Soul-Forged Founders &#8594;</a><div class="footer-copy">&copy; 2026 S Sink Coaching | Sunny Sink</div></div>
+</div>
+<div class="page" id="page-full-moon">
+  <div class="section-label">Full Moon in Aries</div><h1>Energies of Libra + Aries</h1>
+  <p>Aries brings us the opportunity to burn away anything blocking our path forward. This Full Moon is a time to align with your inner power and feel your courage to overcome any obstacle. It is also a time to align with your passions.</p>
+  <p>Aries guides us on the mission to find our soul's purpose. Finding this path takes commitment, motivation, and fearlessness. Our life path is not always an easy journey. This Full Moon is here to help you walk a little farther on it with more confidence than you've ever felt before.</p>
+  <p>This Aries Full Moon is the time to look at how the boundaries in your relationships may be weak. If anger often arises in your relationships, ask yourself if there are things you need to say that you may be avoiding. Ask yourself why you are avoiding them. Then think of how you can calmly and constructively state your needs in a way that reinforces your boundaries and dissipates your frustration.</p>
+  <div class="vibration-row" style="margin-bottom:2rem;"><div class="vibration-card higher"><div class="vibration-label">Aries Higher</div><div class="vibration-tags"><span class="vibration-tag">Courage</span><span class="vibration-tag">Determination</span><span class="vibration-tag">Stamina</span><span class="vibration-tag">Drive</span></div></div><div class="vibration-card lower"><div class="vibration-label">Aries Lower</div><div class="vibration-tags"><span class="vibration-tag">Selfishness</span><span class="vibration-tag">Anger</span><span class="vibration-tag">Frustration</span></div></div></div>
+  <h2>Full Moon Reflections</h2>
+  <div class="prompt-block"><div class="prompt-question">What activities give you energy? Which drain you?</div><textarea class="journal-area" id="journal-moon1" placeholder="I feel most alive when... I feel depleted when..." oninput="autoSave('moon1')"></textarea><div class="save-indicator" id="save-moon1">&#10003; Saved</div></div>
+  <div class="prompt-block"><div class="prompt-question">What types of adversity help you grow? Every dream has challenges. Our true purpose brings us challenges that propel our evolution and, in the end, help us along our path.</div><textarea class="journal-area" id="journal-moon2" placeholder="The kind of hard that has grown me is..." oninput="autoSave('moon2')"></textarea><div class="save-indicator" id="save-moon2">&#10003; Saved</div></div>
+  <div class="prompt-block"><div class="prompt-question">What do you become completely absorbed in? What captures your full attention and makes it feel like time no longer exists?</div><textarea class="journal-area" id="journal-moon3" placeholder="I lose track of time when..." oninput="autoSave('moon3')"></textarea><div class="save-indicator" id="save-moon3">&#10003; Saved</div></div>
+  <div class="callout-warm" style="margin-top:2rem;"><h3>To Do on the Full Moon</h3><p style="font-family:var(--serif); font-size:1.15rem; font-style:italic; color:var(--violet); margin-bottom:0;">Ask yourself: "Are there things I need to say that I may be avoiding?"</p></div>
+  <div class="footer"><div class="footer-brand">The Alchemist's AI Toolkit</div><a href="https://www.skool.com/soul-forged-founders/classroom/5e4056f3" target="_blank">Open the classroom inside Soul-Forged Founders &#8594;</a><div class="footer-copy">&copy; 2026 S Sink Coaching | Sunny Sink</div></div>
+</div>
+<div class="page" id="page-journal">
+  <div class="section-label">Reflection</div><h1>Journal &amp; Affirmations</h1>
+  <p style="font-size:1.05rem; margin-bottom:2rem;">Sit with each prompt. There is no rush in becoming.</p>
+  <div class="prompt-block"><div class="prompt-question">What relationships do you keep cultivating throughout your life in order to heal?</div><textarea class="journal-area" id="journal-p1" placeholder="The relationships I keep returning to are..." oninput="autoSave('p1')"></textarea><div class="save-indicator" id="save-p1">&#10003; Saved</div></div>
+  <div class="prompt-block"><div class="prompt-question">What does a healthy relationship feel like?</div><textarea class="journal-area" id="journal-p2" placeholder="A healthy relationship feels like..." oninput="autoSave('p2')"></textarea><div class="save-indicator" id="save-p2">&#10003; Saved</div></div>
+  <div class="prompt-block"><div class="prompt-question">Do you have a healthy relationship with yourself?</div><textarea class="journal-area" id="journal-p3" placeholder="My relationship with myself right now is..." oninput="autoSave('p3')"></textarea><div class="save-indicator" id="save-p3">&#10003; Saved</div></div>
+  <div class="divider"></div>
+  <h2>Affirmations</h2>
+  <div class="affirmation">I trust that everything is unfolding as it's meant to be.</div>
+  <div class="affirmation">I am capable of making good decisions.</div>
+  <div class="affirmation">I am present. I am centered. I am calm.</div>
+  <div class="affirmation">Peace is always a breath away.</div>
+  <div class="quote-block"><div class="quote-text">"Connection is the energy that is created between people when they feel seen, heard, and valued."</div><div class="quote-attr">Bren&eacute; Brown</div></div>
+  <div class="footer"><div class="footer-brand">The Alchemist's AI Toolkit</div><a href="https://www.skool.com/soul-forged-founders/classroom/5e4056f3" target="_blank">Open the classroom inside Soul-Forged Founders &#8594;</a><div class="footer-copy">&copy; 2026 S Sink Coaching | Sunny Sink</div></div>
+</div>
+<div class="page" id="page-tarot">
+  <div class="section-label">Sacred Practice</div><h1>Libra Season Tarot Spread</h1>
+  <p>Pull six cards and place them in the positions below. Sit with each one and let its message land before moving to the next.</p>
+  <div class="spread-container">
+    <div class="tarot-card"><div class="tarot-card-inner"><div class="tarot-card-num">1</div><div class="tarot-card-label">Lesson in Libra Season</div></div></div>
+    <div class="tarot-card"><div class="tarot-card-inner"><div class="tarot-card-num">2</div><div class="tarot-card-label">Which Relationships to Walk Away From</div></div></div>
+    <div class="tarot-card"><div class="tarot-card-inner"><div class="tarot-card-num">3</div><div class="tarot-card-label">How to Keep an Open Mind</div></div></div>
+    <div class="tarot-card"><div class="tarot-card-inner"><div class="tarot-card-num">4</div><div class="tarot-card-label">Finding Balance</div></div></div>
+    <div class="tarot-card"><div class="tarot-card-inner"><div class="tarot-card-num">5</div><div class="tarot-card-label">Cultivating Healthy Relationships</div></div></div>
+    <div class="tarot-card"><div class="tarot-card-inner"><div class="tarot-card-num">6</div><div class="tarot-card-label">Gratitude This Season</div></div></div>
+  </div>
+  <div class="prompt-block"><div class="prompt-question">Record the cards you pulled and the messages you received</div><textarea class="journal-area" id="journal-tarot" placeholder="Card 1 (Lesson in Libra Season):&#10;Card 2 (Which Relationships to Walk Away From):&#10;Card 3 (How to Keep an Open Mind):&#10;Card 4 (Finding Balance):&#10;Card 5 (Cultivating Healthy Relationships):&#10;Card 6 (Gratitude This Season):" oninput="autoSave('tarot')" style="min-height:200px;"></textarea><div class="save-indicator" id="save-tarot">&#10003; Saved</div></div>
+  <div class="divider"></div>
+  <div class="download-bar"><p>Download all your Libra Season reflections, journal entries, values, tasks, and spread notes as one file.</p><button class="btn-primary" onclick="downloadAll()">&#11015; Download All My Reflections</button></div>
+  <div class="footer"><div class="footer-brand">The Alchemist's AI Toolkit</div><a href="https://www.skool.com/soul-forged-founders/classroom/5e4056f3" target="_blank">Open the classroom inside Soul-Forged Founders &#8594;</a><div class="footer-copy">&copy; 2026 S Sink Coaching | Sunny Sink</div></div>
+</div>
+</main>
+</div>
+<script>
+var PAGES=['welcome','libra-energy','relationships','balance','peace','equinox','full-moon','journal','tarot'];
+var KEYS=['delegate','peace-brings','peace-takes','peace-bounds','equinox','moon1','moon2','moon3','p1','p2','p3','tarot'];
+function showPage(id){document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active')});document.querySelectorAll('.nav-item').forEach(function(n){n.classList.remove('active')});var pg=document.getElementById('page-'+id);if(pg)pg.classList.add('active');var i=PAGES.indexOf(id);var ns=document.querySelectorAll('.nav-item');if(i>=0&&ns[i])ns[i].classList.add('active');window.scrollTo({top:0,behavior:'smooth'});document.getElementById('sidebar').classList.remove('open');document.getElementById('sidebarOverlay').classList.remove('open')}
+function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open');document.getElementById('sidebarOverlay').classList.toggle('open')}
+function autoSave(k){var el=document.getElementById('journal-'+k);if(el){localStorage.setItem('libra-'+k,el.value);var ind=document.getElementById('save-'+k);if(ind){ind.classList.add('visible');clearTimeout(ind._t);ind._t=setTimeout(function(){ind.classList.remove('visible')},2000)}}}
+function loadAll(){KEYS.forEach(function(k){var el=document.getElementById('journal-'+k);var v=localStorage.getItem('libra-'+k);if(el&&v)el.value=v})}
+var values=[]; var tasks=[];
+function loadValues(){var s=localStorage.getItem('libra-values');if(s){try{values=JSON.parse(s)}catch(e){values=[]}}if(!values.length)values=Array(5).fill('');renderValues()}
+function renderValues(){var c=document.getElementById('valuesList');c.innerHTML='';values.forEach(function(v,i){var r=document.createElement('div');r.className='value-entry';r.innerHTML='<span class="value-num">'+(i+1)+'</span><input type="text" class="value-input" value="'+esc(v)+'" placeholder="A value that guides you..." oninput="updValue('+i+',this.value)">';c.appendChild(r)})}
+function updValue(i,v){values[i]=v;localStorage.setItem('libra-values',JSON.stringify(values))}
+function loadTasks(){var s=localStorage.getItem('libra-tasks');if(s){try{tasks=JSON.parse(s)}catch(e){tasks=[]}}if(!tasks.length)tasks=Array(8).fill(null).map(function(){return{text:'',aligned:false}});renderTasks()}
+function renderTasks(){var c=document.getElementById('tasksList');c.innerHTML='';tasks.forEach(function(t,i){var r=document.createElement('div');r.className='task-entry';r.innerHTML='<input type="checkbox" class="task-check" '+(t.aligned?'checked':'')+' onchange="updTaskAligned('+i+',this.checked)" title="Aligns with a value"><input type="text" class="task-input '+(t.aligned?'aligned':'')+'" value="'+esc(t.text)+'" placeholder="A regular task you do..." oninput="updTaskText('+i+',this.value)">';c.appendChild(r)})}
+function updTaskText(i,v){tasks[i].text=v;localStorage.setItem('libra-tasks',JSON.stringify(tasks))}
+function updTaskAligned(i,v){tasks[i].aligned=v;localStorage.setItem('libra-tasks',JSON.stringify(tasks));renderTasks()}
+function addTask(){tasks.push({text:'',aligned:false});localStorage.setItem('libra-tasks',JSON.stringify(tasks));renderTasks();var ins=document.querySelectorAll('#tasksList .task-input');if(ins.length)ins[ins.length-1].focus()}
+function esc(s){var d=document.createElement('div');d.textContent=s;return d.innerHTML}
+async function downloadAll(){var L=[];L.push('========================================');L.push('  LIBRA SEASON REFLECTIONS');L.push('  Harmony and Growth: Cultivating Healthy Relationships');L.push('========================================\n');
+var vlines=[];values.forEach(function(v,i){if(v)vlines.push((i+1)+'. '+v)});
+L.push('--- MY TOP VALUES ---\n');if(vlines.length){L.push(vlines.join('\n'))}else{L.push('(not yet written)')}L.push('');
+L.push('--- REGULAR TASKS (ticked = aligned with values) ---\n');var tlines=[];tasks.forEach(function(t){if(t.text)tlines.push((t.aligned?'[x] ':'[ ] ')+t.text)});if(tlines.length){L.push(tlines.join('\n'))}else{L.push('(not yet written)')}L.push('');
+var secs=[{t:'DELEGATING OR RELEASING',k:['delegate']},{t:'PEACE EXERCISE',k:['peace-brings','peace-takes','peace-bounds']},{t:'FALL EQUINOX',k:['equinox']},{t:'FULL MOON REFLECTIONS',k:['moon1','moon2','moon3']},{t:'JOURNAL PROMPTS',k:['p1','p2','p3']},{t:'TAROT SPREAD NOTES',k:['tarot']}];
+var labels={delegate:'How I can delegate or release',
+'peace-brings':'Things that bring me peace',
+'peace-takes':'Things that take my peace',
+'peace-bounds':'Boundaries I am creating',
+equinox:'What I am harvesting and releasing',
+moon1:'Activities that give energy vs. drain',
+moon2:'Adversity that helps me grow',
+moon3:'What I become absorbed in',
+p1:'Relationships I cultivate to heal',
+p2:'What a healthy relationship feels like',
+p3:'My relationship with myself',
+tarot:'Cards and messages received'};
+secs.forEach(function(s){L.push('--- '+s.t+' ---\n');s.k.forEach(function(k){var v=localStorage.getItem('libra-'+k)||'';L.push(labels[k]+':');L.push(v||'(not yet written)');L.push('')});L.push('')});
+L.push('========================================');L.push('  Soul-Forged Founders');L.push('  https://www.skool.com/soul-forged-founders/about');L.push('========================================');
+var txt=L.join('\n');try{var dl=await (window.claude&&claude.use?claude.use('downloads'):null);if(dl){await dl.save({filename:'Libra-Season-Reflections.txt',data:txt});return}}catch(e){if(e&&e.code==='declined')return;}
+var b=new Blob([txt],{type:'text/plain'});var u=URL.createObjectURL(b);var a2=document.createElement('a');a2.href=u;a2.download='Libra-Season-Reflections.txt';document.body.appendChild(a2);a2.click();document.body.removeChild(a2);URL.revokeObjectURL(u)}
+function initFeathers(){var c=document.getElementById('petalContainer');var cols=['rgba(184,165,217,0.55)','rgba(232,206,115,0.50)','rgba(139,114,184,0.45)','rgba(217,200,238,0.55)','rgba(200,155,60,0.45)'];var st=document.createElement('style');st.textContent='@keyframes fd{0%{transform:translateY(-40px) translateX(0) rotate(-15deg);opacity:0}8%{opacity:0.85}25%{transform:translateY(25vh) translateX(35px) rotate(15deg)}50%{transform:translateY(50vh) translateX(-25px) rotate(-10deg)}75%{transform:translateY(75vh) translateX(30px) rotate(20deg);opacity:0.7}100%{transform:translateY(108vh) translateX(-10px) rotate(-8deg);opacity:0}}';document.head.appendChild(st);function mk(){var p=document.createElement('div');var w=10+Math.random()*8;var h=w*3.2;var cl=cols[Math.floor(Math.random()*cols.length)];var svg='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 64" width="'+w+'" height="'+h+'"><path d="M10 2 C 14 10, 16 22, 15 36 C 14 46, 12 54, 10 62 C 8 54, 6 46, 5 36 C 4 22, 6 10, 10 2 Z" fill="'+cl+'"/><line x1="10" y1="4" x2="10" y2="60" stroke="'+cl.replace(/[\d.]+\)$/,'0.9)')+'" stroke-width="0.6"/></svg>';Object.assign(p.style,{position:'absolute',width:w+'px',height:h+'px',left:Math.random()*100+'%',top:'-40px',opacity:'0',pointerEvents:'none',animation:'fd '+(14+Math.random()*10)+'s ease-in-out forwards'});p.innerHTML=svg;c.appendChild(p);setTimeout(function(){p.remove()},26000)}for(var i=0;i<6;i++)setTimeout(mk,Math.random()*6000);setInterval(mk,4200+Math.random()*2500)}
+document.addEventListener('DOMContentLoaded',function(){loadAll();loadValues();loadTasks();if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches)initFeathers()});
+</script>
+</body>
+</html>
