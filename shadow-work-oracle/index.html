@@ -472,7 +472,7 @@ footer a:hover { color: var(--flame-lt); }
     <div id="journalList"></div>
   </section>
 
-  <footer>Made for the <a href="https://www.skool.com/soul-forged-founders/about" target="_blank" rel="noopener">Alchemist's AI Toolkit</a></footer>
+  <footer>Made for <a href="../">High Priestess Tarot School</a></footer>
 </div>
 
 <div class="overlay" id="reflectModal">
@@ -861,7 +861,7 @@ function journalText() {
   let out = DECK_META.title + " Journal\nCopied " + formatDate(Date.now()) + "\n" + line + "\n\n";
   out += j.map(e => formatDate(e.ts) + "\n" + TYPE_LABEL[e.cardType] + ": " + e.cardName + (e.forClient ? " (client session)" : "") +
     "\n" + e.cardText + "\n\n" + e.body + "\n").join("\n" + line + "\n\n");
-  return out + "\n" + line + "\nMade for the Alchemist's AI Toolkit\nhttps://www.skool.com/soul-forged-founders/about\n";
+  return out + "\n" + line + "\nMade for High Priestess Tarot School\nhttps://sunnysink.github.io/hpts/\n";
 }
 $("copyBtn").addEventListener("click", () => {
   const text = journalText(), box = $("copyBox");

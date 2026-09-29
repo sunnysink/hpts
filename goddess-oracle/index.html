@@ -826,7 +826,7 @@ body {
     <div id="journalList"></div>
   </div>
 
-  <div class="footer">Made for the <a href="https://www.skool.com/soul-forged-founders/about" target="_blank" rel="noopener">Alchemist's AI Toolkit</a></div>
+  <div class="footer">Made for <a href="../">High Priestess Tarot School</a></div>
 
   <div class="modal-overlay" id="reflectModal">
     <div class="modal" role="dialog" aria-modal="true" aria-label="Write with this goddess">
@@ -1362,7 +1362,7 @@ function exportJournal() {
     block += "\n" + e.body + "\n";
     return block;
   }).join("\n" + line + "\n\n");
-  out += "\n\n" + line + "\nMade for the Alchemist's AI Toolkit\nhttps://www.skool.com/soul-forged-founders/about\n";
+  out += "\n\n" + line + "\nMade for High Priestess Tarot School\nhttps://sunnysink.github.io/hpts/\n";
 
   const blob = new Blob([out], { type: "text/plain;charset=utf-8" });
   const url = URL.createObjectURL(blob);

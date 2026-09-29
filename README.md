@@ -12,7 +12,8 @@ The GitHub Pages site lists everything at the root:
 | `index.html` | The Library — the index page that links to every artifact |
 | `archetypal-path/` | The Archetypal Path, a pathworking journey through the 22 Major Arcana |
 | `peace-love-balance-spreads/` | Peace, Love & Balance four-card spreads |
-| `sacred-inimacy-spreads/` | Sacred Intimacy four-card spreads |
+| `sacred-intimacy-spreads/` | Sacred Intimacy four-card spreads |
+| `shadow-work-oracle/` | Shadow Work Deck, journal prompts and affirmations |
 | `goddess-oracle/` | She Speaks, the goddess oracle deck |
 | `virgo-season-workbook/` | Virgo Season Workbook |
 | `libra-season-workbook/` | Libra Season Workbook |
