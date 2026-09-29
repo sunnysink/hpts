@@ -1,0 +1,421 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Scorpio Season Handbook</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  color-scheme: light;
+  --bg: #FBF4EE; --bg2: #F8EAE7; --bg3: #F2DEDC; --bg-warm: #FAEFE6;
+  --ink: #2E1519; --ink-dim: #5E3A40; --ink-faint: #97737A;
+  --wine-deep: #4A0F1C; --wine: #7A1F2E; --wine-lt: #A8485A; --wine-dk: #33090F;
+  --rose: #D98F95; --rose-lt: #EDC5C4; --rose-bg: #F6E1DF;
+  --gold: #C89B3C; --gold-lt: #E8CE73; --gold-dk: #A67F26;
+  --blush: #F3DAD2; --blush-dk: #C27F6F;
+  --sage: #A8B8A0; --sage-dk: #7A8B72;
+  --serif: 'Cormorant Garamond', 'Hoefler Text', Georgia, serif;
+  --sans: 'Montserrat', system-ui, -apple-system, sans-serif;
+  --radius-sm: 8px; --radius-md: 14px; --radius-lg: 22px; --radius-pill: 30px;
+  --shadow-card: 0 2px 8px rgba(122,31,46,0.05), 0 8px 32px rgba(217,143,149,0.10);
+  --shadow-elevated: 0 4px 16px rgba(122,31,46,0.08), 0 16px 48px rgba(217,143,149,0.15);
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+}
+html { scroll-behavior: smooth; }
+body { font-family: var(--sans); font-size: 15px; line-height: 1.7; color: var(--ink); background: linear-gradient(180deg, var(--bg2) 0%, var(--bg3) 35%, var(--bg-warm) 100%); min-height: 100vh; }
+.app-shell { display: flex; min-height: 100vh; }
+.sidebar { width: 260px; min-width: 260px; background: rgba(251,244,238,0.9); backdrop-filter: blur(20px); border-right: 1px solid rgba(122,31,46,0.1); padding: 2rem 0; display: flex; flex-direction: column; position: fixed; top: 0; left: 0; bottom: 0; z-index: 100; overflow-y: auto; }
+.sidebar-brand { padding: 0 1.5rem 1.5rem; border-bottom: 1px solid rgba(217,143,149,0.25); margin-bottom: 1rem; }
+.sidebar-brand-label { font-family: var(--sans); font-size: 0.7rem; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; color: var(--wine); margin-bottom: 0.35rem; }
+.sidebar-brand-title { font-family: var(--serif); font-size: 1.4rem; font-style: italic; font-weight: 400; color: var(--wine-deep); line-height: 1.25; }
+.sidebar-brand-sub { font-family: var(--sans); font-size: 0.75rem; color: var(--ink-faint); margin-top: 0.25rem; font-weight: 500; }
+.sidebar nav { flex: 1; padding: 0.5rem 0; }
+.nav-item { display: flex; align-items: center; gap: 0.75rem; padding: 0.7rem 1.5rem; font-family: var(--sans); font-size: 0.8rem; font-weight: 400; color: var(--ink-dim); cursor: pointer; border: none; background: none; width: 100%; text-align: left; transition: all 0.3s var(--ease); position: relative; letter-spacing: 0.01em; }
+.nav-item::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: linear-gradient(180deg, var(--wine), var(--gold)); opacity: 0; border-radius: 0 2px 2px 0; transition: opacity 0.3s var(--ease); }
+.nav-item:hover { color: var(--wine); background: rgba(122,31,46,0.05); }
+.nav-item.active { color: var(--wine); font-weight: 500; background: rgba(122,31,46,0.07); }
+.nav-item.active::before { opacity: 1; }
+.nav-icon { font-size: 1rem; width: 1.4rem; text-align: center; flex-shrink: 0; }
+.main-content { flex: 1; margin-left: 260px; padding: 3rem; max-width: 100%; overflow-x: hidden; }
+.page { display: none; max-width: 740px; margin: 0 auto; animation: fadeIn 0.5s var(--ease); }
+.page.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+.section-label { font-family: var(--sans); font-size: 0.7rem; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; color: var(--wine); margin-bottom: 0.75rem; }
+h1 { font-family: var(--serif); font-size: 2.5rem; font-weight: 500; letter-spacing: -0.01em; line-height: 1.2; color: var(--wine-deep); margin-bottom: 1rem; }
+h2 { font-family: var(--serif); font-size: 1.875rem; font-style: italic; font-weight: 500; line-height: 1.3; color: var(--wine-deep); margin-bottom: 1rem; }
+h3 { font-family: var(--serif); font-size: 1.375rem; font-weight: 600; line-height: 1.35; color: var(--wine); margin-bottom: 0.75rem; }
+p { margin-bottom: 1rem; }
+.hero { text-align: center; padding: 3rem 0 2rem; }
+.hero-orb-container { position: relative; width: 180px; height: 180px; margin: 0 auto 2rem; }
+.hero-orb { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 110px; height: 110px; border-radius: 50%; background: radial-gradient(circle at 40% 40%, rgba(232,206,115,0.75) 0%, rgba(217,143,149,0.55) 40%, rgba(122,31,46,0.2) 75%, transparent 100%); animation: breathe 6s var(--ease) infinite; box-shadow: 0 0 40px rgba(217,143,149,0.35), 0 0 80px rgba(232,206,115,0.18); }
+.hero-orb-ring { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 155px; height: 155px; border-radius: 50%; border: 1px solid rgba(200,155,60,0.3); animation: breathe 6s var(--ease) infinite; animation-delay: -0.5s; }
+.hero-orb-ring-outer { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 175px; height: 175px; border-radius: 50%; border: 1px dashed rgba(217,143,149,0.35); animation: rotateSlow 40s linear infinite; }
+@keyframes breathe { 0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.8; } 50% { transform: translate(-50%, -50%) scale(1.12); opacity: 1; } }
+@keyframes rotateSlow { from { transform: translate(-50%, -50%) rotate(0); } to { transform: translate(-50%, -50%) rotate(360deg); } }
+.hero h1 { font-size: 2.9rem; margin-bottom: 0.6rem; font-style: italic; }
+.hero-subtitle { font-family: var(--sans); font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--wine); font-weight: 500; margin-bottom: 0.5rem; }
+.hero-dates { font-family: var(--serif); font-size: 1.15rem; font-style: italic; color: var(--gold-dk); }
+.divider { height: 1px; background: linear-gradient(90deg, transparent 0%, rgba(122,31,46,0.15) 20%, rgba(200,155,60,0.25) 50%, rgba(217,143,149,0.2) 80%, transparent 100%); border: none; margin: 2.5rem 0; }
+.card { background: rgba(251,244,238,0.75); backdrop-filter: blur(20px); border: 1px solid rgba(217,143,149,0.25); border-radius: var(--radius-lg); padding: 1.75rem; box-shadow: var(--shadow-card); margin-bottom: 1.5rem; transition: all 0.4s var(--ease); }
+.card:hover { box-shadow: var(--shadow-elevated); border-color: rgba(217,143,149,0.4); }
+.card-rose { background: linear-gradient(135deg, rgba(237,197,196,0.25) 0%, rgba(251,244,238,0.85) 100%); border-color: rgba(217,143,149,0.3); }
+.card-wine { background: linear-gradient(135deg, rgba(122,31,46,0.08) 0%, rgba(251,244,238,0.85) 100%); border-color: rgba(122,31,46,0.15); }
+.card-gold { background: linear-gradient(135deg, rgba(232,206,115,0.15) 0%, rgba(251,244,238,0.85) 100%); border-color: rgba(200,155,60,0.25); }
+.card-blush { background: linear-gradient(135deg, rgba(240,221,217,0.3) 0%, rgba(251,244,238,0.85) 100%); border-color: rgba(201,154,141,0.2); }
+.card h3 { color: var(--wine); }
+.vibration-row { display: flex; gap: 1rem; margin-top: 1.5rem; flex-wrap: wrap; }
+.vibration-card { flex: 1; min-width: 260px; padding: 1.25rem; border-radius: var(--radius-md); text-align: center; }
+.vibration-card.higher { background: linear-gradient(135deg, rgba(232,206,115,0.15) 0%, rgba(217,143,149,0.10) 100%); border: 1px solid rgba(200,155,60,0.25); }
+.vibration-card.lower { background: linear-gradient(135deg, rgba(237,197,196,0.20) 0%, rgba(240,221,217,0.15) 100%); border: 1px solid rgba(217,143,149,0.25); }
+.vibration-label { font-family: var(--sans); font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 600; margin-bottom: 0.5rem; }
+.vibration-card.higher .vibration-label { color: var(--gold-dk); }
+.vibration-card.lower .vibration-label { color: var(--wine); }
+.vibration-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; justify-content: center; }
+.vibration-tag { font-family: var(--sans); font-size: 0.75rem; padding: 0.3rem 0.75rem; border-radius: var(--radius-pill); font-weight: 500; }
+.vibration-card.higher .vibration-tag { background: rgba(232,206,115,0.22); color: var(--gold-dk); }
+.vibration-card.lower .vibration-tag { background: rgba(217,143,149,0.22); color: var(--wine); }
+.sign-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 1rem; margin: 1.5rem 0; }
+.sign-item { text-align: center; padding: 1rem; border-radius: var(--radius-md); background: rgba(217,143,149,0.10); border: 1px solid rgba(217,143,149,0.18); }
+.sign-item-icon { font-size: 1.5rem; margin-bottom: 0.4rem; color: var(--gold-dk); }
+.sign-item-label { font-family: var(--sans); font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-faint); }
+.sign-item-value { font-family: var(--serif); font-size: 1.05rem; font-weight: 600; color: var(--wine-deep); }
+.mantra-display { text-align: center; padding: 1.75rem; margin: 1.5rem 0; border-radius: var(--radius-lg); background: linear-gradient(135deg, rgba(122,31,46,0.08) 0%, rgba(232,206,115,0.12) 100%); border: 1px solid rgba(122,31,46,0.12); }
+.mantra-label { font-family: var(--sans); font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 0.5rem; }
+.mantra-text { font-family: var(--serif); font-size: 1.9rem; font-style: italic; color: var(--wine); }
+.journal-area { width: 100%; min-height: 120px; padding: 1.25rem; font-family: var(--sans); font-size: 15px; line-height: 1.7; color: var(--ink); background: rgba(251,244,238,0.8); border: 1.5px solid rgba(217,143,149,0.3); border-radius: var(--radius-md); resize: vertical; transition: all 0.3s var(--ease); }
+.journal-area::placeholder { color: var(--rose); font-style: italic; }
+.journal-area:focus { outline: none; border-color: var(--wine); box-shadow: 0 0 0 3px rgba(122,31,46,0.10); }
+.save-indicator { font-family: var(--sans); font-size: 0.75rem; color: var(--sage-dk); margin-top: 0.5rem; opacity: 0; transition: opacity 0.4s ease; }
+.save-indicator.visible { opacity: 1; }
+.prompt-block { margin-bottom: 1.75rem; }
+.prompt-question { font-family: var(--serif); font-size: 1.05rem; font-style: italic; color: var(--wine-deep); padding: 0.6rem 1rem; background: rgba(122,31,46,0.05); border-left: 3px solid var(--wine); border-radius: 0; margin-bottom: 0.75rem; }
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin: 1.5rem 0; }
+.value-entry, .task-entry { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.65rem; }
+.value-num { font-family: var(--serif); font-size: 1.1rem; font-style: italic; color: var(--gold-dk); min-width: 1.5rem; text-align: center; }
+.task-check { width: 18px; height: 18px; border: 1.5px solid rgba(217,143,149,0.5); border-radius: 4px; cursor: pointer; flex-shrink: 0; background: rgba(251,244,238,0.6); accent-color: var(--wine); }
+.value-input, .task-input { flex: 1; padding: 0.55rem 0.85rem; font-family: var(--sans); font-size: 14px; color: var(--ink); background: rgba(251,244,238,0.6); border: none; border-bottom: 1.5px solid rgba(217,143,149,0.35); transition: all 0.3s var(--ease); }
+.value-input::placeholder, .task-input::placeholder { color: var(--rose); font-style: italic; font-size: 0.82rem; }
+.value-input:focus, .task-input:focus { outline: none; border-bottom-color: var(--wine); background: rgba(251,244,238,0.9); }
+.task-input.aligned { color: var(--gold-dk); font-weight: 500; }
+.peace-box { padding: 1.25rem; border-radius: var(--radius-md); margin-bottom: 1.25rem; border: 1px solid rgba(217,143,149,0.25); }
+.peace-box.brings { background: linear-gradient(135deg, rgba(232,206,115,0.10) 0%, rgba(217,143,149,0.06) 100%); }
+.peace-box.takes { background: linear-gradient(135deg, rgba(237,197,196,0.15) 0%, rgba(240,221,217,0.10) 100%); }
+.peace-box-label { font-family: var(--sans); font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 600; color: var(--wine); margin-bottom: 0.6rem; }
+.ritual-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 0.85rem; margin: 1.5rem 0; }
+.ritual-chip { padding: 0.9rem 1rem; border-radius: var(--radius-md); text-align: center; font-family: var(--serif); font-size: 1.05rem; font-weight: 500; color: var(--wine-deep); background: linear-gradient(135deg, rgba(232,206,115,0.20) 0%, rgba(237,197,196,0.15) 100%); border: 1px solid rgba(200,155,60,0.20); transition: all 0.3s var(--ease); }
+.ritual-chip:hover { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(217,143,149,0.20); }
+.spread-container { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; margin: 2rem 0; }
+.tarot-card { position: relative; aspect-ratio: 2.5/3.5; border-radius: var(--radius-lg); overflow: hidden; cursor: pointer; transition: all 0.5s var(--ease); border: 1px solid rgba(200,155,60,0.25); }
+.tarot-card::before { content: ''; position: absolute; inset: 0; background: linear-gradient(145deg, rgba(122,31,46,0.10) 0%, rgba(232,206,115,0.10) 50%, rgba(217,143,149,0.10) 100%); background-size: 400% 400%; animation: holoShift 8s ease infinite; z-index: 1; }
+@keyframes holoShift { 0%, 100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
+.tarot-card-inner { position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; padding: 1.25rem 0.75rem; text-align: center; background: linear-gradient(180deg, rgba(251,244,238,0.94) 0%, rgba(248,234,231,0.90) 50%, rgba(251,244,238,0.94) 100%); }
+.tarot-card-num { font-family: var(--serif); font-size: 2rem; font-style: italic; color: var(--gold); line-height: 1; margin-bottom: 0.5rem; }
+.tarot-card-label { font-family: var(--serif); font-size: 0.95rem; font-weight: 600; color: var(--wine-deep); line-height: 1.3; }
+.tarot-card:hover { transform: translateY(-4px); box-shadow: 0 8px 32px rgba(217,143,149,0.30); border-color: var(--gold); }
+.affirmation { font-family: var(--serif); font-size: 1.15rem; font-style: italic; color: var(--wine); padding: 0.75rem 0 0.75rem 1.25rem; border-left: 2px solid var(--gold); margin-bottom: 1rem; line-height: 1.5; }
+.btn-primary { display: inline-flex; align-items: center; gap: 0.5rem; font-family: var(--sans); font-size: 0.85rem; font-weight: 500; letter-spacing: 0.04em; color: #FBF4EE; background: linear-gradient(135deg, var(--wine) 0%, var(--wine-deep) 100%); border: none; border-radius: var(--radius-pill); padding: 0.8rem 2rem; cursor: pointer; transition: all 0.4s var(--ease); box-shadow: 0 4px 16px rgba(122,31,46,0.25); text-decoration: none; }
+.btn-primary:hover { background: linear-gradient(135deg, var(--wine-lt) 0%, var(--wine) 100%); box-shadow: 0 6px 24px rgba(122,31,46,0.35); transform: translateY(-1px); }
+.btn-ghost { display: inline-flex; align-items: center; gap: 0.4rem; font-family: var(--sans); font-size: 0.8rem; font-weight: 500; color: var(--ink-dim); background: none; border: none; padding: 0.5rem 0; cursor: pointer; transition: color 0.3s ease; }
+.btn-ghost:hover { color: var(--wine); }
+.callout-warm { background: linear-gradient(135deg, rgba(122,31,46,0.10) 0%, rgba(232,206,115,0.10) 50%, rgba(217,143,149,0.08) 100%); border: 1px solid rgba(122,31,46,0.18); border-radius: var(--radius-lg); padding: 2rem; margin: 1.5rem 0; text-align: center; }
+.callout-warm h3 { color: var(--wine-deep); font-family: var(--serif); font-size: 1.5rem; font-style: italic; }
+.callout-warm p { color: var(--ink-dim); font-size: 0.9rem; }
+.callout-warm .date-badge { display: inline-block; padding: 0.4rem 1rem; background: rgba(122,31,46,0.10); border: 1px solid rgba(122,31,46,0.20); border-radius: var(--radius-pill); font-family: var(--sans); font-size: 0.75rem; font-weight: 500; letter-spacing: 0.08em; color: var(--wine); margin-bottom: 1rem; }
+.quote-block { text-align: center; padding: 2rem; margin: 2rem 0; background: linear-gradient(135deg, rgba(237,197,196,0.20) 0%, rgba(232,206,115,0.10) 100%); border-radius: var(--radius-lg); border: 1px solid rgba(217,143,149,0.25); }
+.quote-text { font-family: var(--serif); font-size: 1.5rem; font-style: italic; color: var(--wine-deep); line-height: 1.4; margin-bottom: 0.5rem; }
+.quote-attr { font-family: var(--sans); font-size: 0.8rem; letter-spacing: 0.08em; color: var(--gold-dk); font-weight: 500; }
+.download-bar { background: linear-gradient(135deg, rgba(232,206,115,0.15) 0%, rgba(217,143,149,0.15) 100%); border: 1px solid rgba(200,155,60,0.25); border-radius: var(--radius-lg); padding: 1.5rem; text-align: center; margin: 2rem 0; }
+.download-bar p { font-size: 0.85rem; color: var(--ink-dim); margin-bottom: 0.75rem; }
+.footer { text-align: center; padding: 2.5rem 1.5rem 2rem; margin-top: 3rem; border-top: 1px solid rgba(217,143,149,0.20); }
+.footer-brand { font-family: var(--serif); font-size: 1.1rem; font-style: italic; color: var(--wine); margin-bottom: 0.75rem; }
+.footer a { color: var(--wine); text-decoration: none; font-family: var(--sans); font-size: 0.8rem; font-weight: 500; }
+.footer a:hover { color: var(--wine-deep); }
+.footer-copy { font-family: var(--sans); font-size: 0.7rem; color: var(--ink-faint); margin-top: 0.75rem; }
+.petal-container { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+.mobile-header { display: none; position: fixed; top: 0; left: 0; right: 0; height: 56px; background: rgba(251,244,238,0.92); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(217,143,149,0.15); z-index: 200; align-items: center; padding: 0 1rem; }
+.hamburger { background: none; border: none; font-size: 1.5rem; color: var(--wine); cursor: pointer; padding: 0.5rem; }
+.mobile-title { font-family: var(--serif); font-size: 1rem; font-style: italic; color: var(--wine-deep); margin-left: 0.5rem; }
+.sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(46,21,25,0.3); z-index: 99; }
+@media (max-width: 768px) {
+  .mobile-header { display: flex; }
+  .sidebar { transform: translateX(-100%); transition: transform 0.3s var(--ease); z-index: 200; }
+  .sidebar.open { transform: translateX(0); }
+  .sidebar-overlay.open { display: block; }
+  .main-content { margin-left: 0; padding: 72px 1.25rem 2rem; }
+  h1 { font-size: 2rem; } .hero h1 { font-size: 2.2rem; } h2 { font-size: 1.5rem; }
+  .spread-container { grid-template-columns: repeat(2, 1fr); }
+  .vibration-row { flex-direction: column; }
+  .two-col { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; } .hero-orb { animation: none; opacity: 0.8; } .hero-orb-ring-outer { animation: none; } }
+
+.spread-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin: 2rem 0; }
+.spread-side { display: grid; grid-template-columns: 1fr 1fr; gap: 0.85rem; width: 100%; max-width: 300px; justify-self: center; }
+.spread-side-title { grid-column: 1 / -1; text-align: center; font-family: var(--sans); font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 600; color: var(--wine); }
+.spread-side .tarot-card.center { grid-column: 1 / -1; width: calc(50% - 0.425rem); justify-self: center; }
+.step-card { position: relative; }
+.step-label { font-family: var(--sans); font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 600; color: var(--gold-dk); margin-bottom: 0.35rem; }
+.step-list { margin: 0 0 1rem 1.1rem; }
+.step-list li { margin-bottom: 0.3rem; }
+.line-input { width: 100%; padding: 0.55rem 0.85rem; font-family: var(--sans); font-size: 14px; color: var(--ink); background: rgba(251,244,238,0.6); border: none; border-bottom: 1.5px solid rgba(217,143,149,0.45); transition: all 0.3s var(--ease); }
+.line-input::placeholder { color: var(--rose); font-style: italic; font-size: 0.82rem; }
+.line-input:focus, .task-check:focus-visible, .nav-item:focus-visible, .btn-primary:focus-visible, .btn-ghost:focus-visible { outline: 2px solid var(--wine); outline-offset: 2px; }
+.line-row { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.65rem; }
+.line-row label.tag { font-family: var(--serif); font-size: 1rem; font-style: italic; color: var(--gold-dk); min-width: 4.5rem; }
+.ouch { display: flex; align-items: center; gap: 0.3rem; font-size: 0.72rem; color: var(--ink-faint); white-space: nowrap; }
+.ouch input { accent-color: var(--wine); }
+.dream-entry { border-top: 1px solid rgba(217,143,149,0.3); padding-top: 1rem; margin-top: 1rem; }
+.dream-entry:first-child { border-top: none; margin-top: 0; padding-top: 0; }
+.dream-date { font-family: var(--sans); font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold-dk); font-weight: 600; }
+.dream-entry dt { font-family: var(--serif); font-style: italic; color: var(--wine); margin-top: 0.5rem; }
+.dream-entry dd { white-space: pre-wrap; margin: 0; font-size: 0.9rem; }
+.dream-actions { display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; margin-top: 0.75rem; }
+.confirm-row { display: inline-flex; gap: 0.75rem; align-items: center; font-size: 0.8rem; color: var(--wine); }
+@media (max-width: 768px) { .spread-wrap { grid-template-columns: 1fr; } .main-content { padding-left: 16px; padding-right: 16px; } }
+h1, h2, h3 { text-wrap: balance; }
+</style></head><body>
+<div class="petal-container" id="petalContainer"></div>
+<div class="mobile-header"><button class="hamburger" onclick="toggleSidebar()" aria-label="Menu">&#9776;</button><span class="mobile-title">Scorpio Season Handbook</span></div>
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+<div class="app-shell">
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-brand"><div class="sidebar-brand-label">Scorpio Season</div><div class="sidebar-brand-title">Unleash Your Inner Power</div><div class="sidebar-brand-sub">Through Shadow Work</div></div>
+  <nav>
+    <button class="nav-item active" onclick="showPage('welcome')"><span class="nav-icon">&#9807;</span> Welcome</button>
+    <button class="nav-item" onclick="showPage('scorpio-energy')"><span class="nav-icon">&#9807;</span> Scorpio Energy</button>
+    <button class="nav-item" onclick="showPage('shadows')"><span class="nav-icon">&#9790;</span> Own Your Shadows</button>
+    <button class="nav-item" onclick="showPage('find-belief')"><span class="nav-icon">&#9906;</span> Finding the Belief</button>
+    <button class="nav-item" onclick="showPage('explore-belief')"><span class="nav-icon">&#9906;</span> Exploring the Belief</button>
+    <button class="nav-item" onclick="showPage('release-belief')"><span class="nav-icon">&#9906;</span> Releasing the Belief</button>
+    <button class="nav-item" onclick="showPage('dreams')"><span class="nav-icon">&#10038;</span> Dream Journal</button>
+    <button class="nav-item" onclick="showPage('samhain')"><span class="nav-icon">&#127810;</span> Samhain</button>
+    <button class="nav-item" onclick="showPage('full-moon')"><span class="nav-icon">&#9681;</span> Full Moon in Taurus</button>
+    <button class="nav-item" onclick="showPage('journal')"><span class="nav-icon">&#9998;</span> Journal &amp; Affirmations</button>
+    <button class="nav-item" onclick="showPage('tarot')"><span class="nav-icon">&#10022;</span> Tarot Spread</button>
+  </nav>
+</aside>
+<main class="main-content">
+<div class="page active" id="page-welcome">
+  <div class="hero"><div class="hero-orb-container"><div class="hero-orb-ring-outer"></div><div class="hero-orb-ring"></div><div class="hero-orb"></div></div><div class="hero-subtitle">Scorpio Season Handbook</div><h1>Unleash Your Inner Power Through Shadow Work</h1><div class="hero-dates">October 23 ~ November 21</div></div>
+  <div class="divider"></div>
+  <p style="font-size:1.05rem; text-align:center; max-width:600px; margin:0 auto 1.5rem;">Scorpio Season is a magical time that brings us the opportunity to face our deepest shadows, accept them, and grow with them instead of away from them. This season teaches us how to become our own shamans, alchemists, and psychologists as we travel to the deepest layers of our beings.</p>
+  <p style="text-align:center; max-width:600px; margin:0 auto 1.5rem;">As the Sun sits in the energy of Scorpio, it brings us the courage to face our whole selves and a willingness to face our hidden truths. Scorpio reveals, and those revelations can be life-changing. Scorpio inspires us to do the work on ourselves needed for personal growth and evolution.</p>
+  <p style="text-align:center; max-width:600px; margin:0 auto 1.5rem;">This season asks us to see and accept truths about ourselves we would rather ignore. Scorpio teaches us that we are strong, resilient, and intuitive. We can face anything about ourselves or others, and we can survive even our hardest days.</p>
+  <p style="text-align:center; max-width:600px; margin:0 auto 2rem;">As we begin this new season, take the calmness and balance you found in Libra and hold on to it. It is from this place of inner harmony that you can truly begin the work Scorpio Season offers. Return to your breath and your body when you need to, and remember that you have the power to return to peace, no matter how turbulent the waters around you become.</p>
+  <div class="vibration-row"><div class="vibration-card higher"><div class="vibration-label">Higher Vibrations</div><div class="vibration-tags"><span class="vibration-tag">Transformative</span><span class="vibration-tag">Determined</span><span class="vibration-tag">Realistic</span></div></div><div class="vibration-card lower"><div class="vibration-label">Lower Vibrations</div><div class="vibration-tags"><span class="vibration-tag">Obsessive</span><span class="vibration-tag">Vindictive</span><span class="vibration-tag">Emotional roller coaster</span></div></div></div>
+  <div class="callout-warm" style="margin-top:2rem;"><h3>Grab a journal and pen, and let's get started.</h3><p style="margin-bottom:0;">Move through the pages at your own pace. Everything you write here saves to your device.</p></div>
+  <div class="footer"><div class="footer-brand">The Alchemist's AI Toolkit</div><a href="https://www.skool.com/soul-forged-founders/classroom/5e4056f3" target="_blank">Open the classroom inside Soul-Forged Founders &#8594;</a><div class="footer-copy">&copy; 2026 S Sink Coaching | Sunny Sink</div></div>
+</div>
+
+<div class="page" id="page-scorpio-energy">
+  <div class="section-label">A Deeper Look</div><h1>Scorpio Energy</h1>
+  <div class="sign-grid"><div class="sign-item"><div class="sign-item-icon">&#128167;</div><div class="sign-item-label">Element</div><div class="sign-item-value">Water</div></div><div class="sign-item"><div class="sign-item-icon">&#9670;</div><div class="sign-item-label">Modality</div><div class="sign-item-value">Fixed</div></div><div class="sign-item"><div class="sign-item-icon">&#9794;</div><div class="sign-item-label">Rulers</div><div class="sign-item-value">Mars &amp; Pluto</div></div><div class="sign-item"><div class="sign-item-icon">&#127810;</div><div class="sign-item-label">Season</div><div class="sign-item-value">Fall</div></div><div class="sign-item"><div class="sign-item-icon">&#9807;</div><div class="sign-item-label">Depiction</div><div class="sign-item-value">The Scorpion</div></div></div>
+  <div class="mantra-display"><div class="mantra-label">Mantra</div><div class="mantra-text">I Transform</div></div>
+  <div class="divider"></div>
+  <p>The fixed water sign Scorpio begins its season mid autumn, as the days get shorter and colder. The trees and foliage fade and die as they release their leaves back to the earth.</p>
+  <p>In the same way, Scorpio season takes us into our inner depths and draws us deep within to explore what we need to understand and release about the past season, as we move toward the end of the year and the beginning of the next. Scorpio is a deeply emotional and intimate sign that can get to the bottom of things and understand where transformation needs to take place for higher expression.</p>
+  <p>Scorpio is a seeker of truth and revealer of secrets. A fixed sign, Scorpio represents a very determined and at times insatiable aspect of the water element. Scorpio is deep, intriguing, passionate, and oftentimes a bit wild. Scorpio is also easily hurt and can shut down toward those it feels have done it wrong. It can also be deeply honest and seeks to bring out the truth about situations.</p>
+  <p>Mars and Pluto rule Scorpio. Mars takes us toward the light of the Sun with a masculine force of forward motion and confidence. Pluto's transformative force takes us deep into the underworld aspects of ourselves.</p>
+  <p>Scorpio teaches us the value of transformation through the ego death. When you allow old paradigms and ways of being to die within, you can be reborn into a newer and more conscious version of yourself.</p>
+  <div class="card card-wine"><h3>The Highest Expression</h3><p style="margin-bottom:0;">Scorpio's highest goal is to transform the lower aspects of the personality into the higher aspects of the soul, creating an integrated being.</p></div>
+  <div class="card" style="text-align:center;"><div class="section-label">Personal Growth Theme</div><p style="font-family:var(--serif); font-size:1.2rem; font-style:italic; color:var(--wine); margin-bottom:0;">Shadow Work</p></div>
+  <div class="footer"><div class="footer-brand">The Alchemist's AI Toolkit</div><a href="https://www.skool.com/soul-forged-founders/classroom/5e4056f3" target="_blank">Open the classroom inside Soul-Forged Founders &#8594;</a><div class="footer-copy">&copy; 2026 S Sink Coaching | Sunny Sink</div></div>
+</div>
+
+<div class="page" id="page-shadows">
+  <div class="section-label">The Work of Scorpio Season</div><h1>Tips for Working with Your Shadows</h1>
+  <p style="font-size:1.05rem; margin-bottom:2rem;">Five ways in, for facing your hidden shadows and growing with them.</p>
+  <div class="card card-rose"><h3>Own &amp; Accept Your Shadows</h3><p style="margin-bottom:0;">Owning and accepting our shadows helps us evolve and grow. When we leave them unacknowledged, they often interrupt our daily lives and relationships and get in the way of our dreams, our wants, and our needs. Live true, authentic, and with acceptance of yourself.</p></div>
+  <div class="card card-gold"><h3>Look at Your Dreams</h3><p style="margin-bottom:0;">Our shadows may present themselves in our dreams as we sleep. We don't always remember them, so it helps to keep a dream journal. Recall your dream and write down what happens and how you feel in it. Are there recurring patterns? What are they telling you? Do they reveal anything about yourself? The Dream Journal page in this handbook is ready for you.</p></div>
+  <div class="card card-wine"><h3>Judgements</h3><p style="margin-bottom:0;">How we judge others is often a mirror of what we dislike about ourselves. It's hard to accept, and perhaps that is why shadow work can be a difficult process. When someone triggers you, embrace the chance to work through the shadow that has shown up. Have a silent conversation with them: imagine talking to them, ask them questions, and wait to see what response comes to you. What is being reflected back to you? What did you learn about yourself?</p></div>
+  <div class="card card-blush"><h3>Triggers</h3><p>Triggers are the emotions we feel when a particular situation or experience leaves us feeling sad, angry, or anxious. A trigger could also be an event, a person, or even a location. Working out your triggers will lead you to your shadows. Look for them when an emotion or physical sensation feels difficult or just "not right."</p><p style="margin-bottom:0;">When you are faced with your shadow, remember that your shadow doesn't belong to the present situation. The present is simply triggering your shadow so that it can be noticed.</p></div>
+  <div class="card card-rose"><h3>Feel Your Emotions</h3><p style="margin-bottom:0;">Allow yourself to really feel your emotions. It's tempting to send them away, because they are often painful and can bring shame with them. Have compassion for yourself. You are human, with many emotions to work through each day. Knowing your emotions and acknowledging them will help you transform them.</p></div>
+  <div class="prompt-block" style="margin-top:1.5rem;"><div class="prompt-question">Who or what triggered you recently, and what might it be reflecting back to you?</div><textarea class="journal-area" id="journal-trigger" data-key="trigger" placeholder="What happened... how I felt in my body... what it might be showing me..."></textarea><div class="save-indicator" id="save-trigger">&#10003; Saved</div></div>
+  <div class="footer"><div class="footer-brand">The Alchemist's AI Toolkit</div><a href="https://www.skool.com/soul-forged-founders/classroom/5e4056f3" target="_blank">Open the classroom inside Soul-Forged Founders &#8594;</a><div class="footer-copy">&copy; 2026 S Sink Coaching | Sunny Sink</div></div>
+</div>
+
+<div class="page" id="page-find-belief">
+  <div class="section-label">Exercise, Part 1 of 3</div><h1>Finding the Limiting Belief</h1>
+  <p style="font-size:1rem; margin-bottom:1.5rem;">Optional. If you already know the belief you want to shift, skip ahead to Exploring the Belief.</p>
+  <div class="card card-wine step-card"><div class="step-label">Step 1</div><h3>Recognize the pattern you want to shift</h3><p>Is there a pattern that keeps showing up for you? Something you'd like to shift, that still hangs on after you've tried to shift it many times? It could be a coping mechanism, not setting strong boundaries, or trying to control your environment or others.</p><p style="font-size:0.9rem; color:var(--ink-faint);">Tune into the pattern you want to change this season.</p><textarea class="journal-area" id="journal-pattern" data-key="pattern" placeholder="The pattern that keeps showing up for me is..."></textarea><div class="save-indicator" id="save-pattern">&#10003; Saved</div></div>
+  <div class="card card-gold step-card"><div class="step-label">Step 2</div><h3>Explore possible beliefs</h3><p>List four things someone may need to believe to have the experience of this pattern. Then mark the most "ouchie" one, the belief you most want to explore further.</p>
+    <div id="beliefList"></div>
+  </div>
+  <div class="card card-rose step-card"><div class="step-label">Step 3</div><h3>Narrow down to one base belief</h3><p>With your ouchie belief in hand, work through this question sequence.</p>
+    <div class="prompt-question">What does someone have to believe about others or the world to have that experience?</div><input type="text" class="line-input" id="journal-base1" data-key="base1" placeholder="Belief 1..."><div class="save-indicator" id="save-base1">&#10003; Saved</div>
+    <div class="prompt-question" style="margin-top:1rem;">What does someone have to believe about others or the world to have the experience of Belief 1?</div><input type="text" class="line-input" id="journal-base2" data-key="base2" placeholder="Belief 2..."><div class="save-indicator" id="save-base2">&#10003; Saved</div>
+    <div class="prompt-question" style="margin-top:1rem;">What does someone have to believe about themselves to have the experience of Belief 1?</div><input type="text" class="line-input" id="journal-base3" data-key="base3" placeholder="Belief 3..."><div class="save-indicator" id="save-base3">&#10003; Saved</div>
+    <div class="prompt-question" style="margin-top:1rem;">What are the feelings associated with these beliefs? Which one feels most like the pattern in Step 1?</div><textarea class="journal-area" id="journal-base-feel" data-key="base-feel" placeholder="The belief that feels most like my pattern is..."></textarea><div class="save-indicator" id="save-base-feel">&#10003; Saved</div>
+  </div>
+  <div class="card card-blush step-card"><div class="step-label">Step 4</div><h3>Feel the feelings of this belief</h3><p>What feelings or emotions go along with this belief? Is it something you experience more often than you'd like in your life?</p><textarea class="journal-area" id="journal-feel-belief" data-key="feel-belief" placeholder="When I hold this belief, I feel..."></textarea><div class="save-indicator" id="save-feel-belief">&#10003; Saved</div></div>
+  <div class="footer"><div class="footer-brand">The Alchemist's AI Toolkit</div><a href="https://www.skool.com/soul-forged-founders/classroom/5e4056f3" target="_blank">Open the classroom inside Soul-Forged Founders &#8594;</a><div class="footer-copy">&copy; 2026 S Sink Coaching | Sunny Sink</div></div>
+</div>
+
+<div class="page" id="page-explore-belief">
+  <div class="section-label">Exercise, Part 2 of 3</div><h1>Exploring the Limiting Belief</h1>
+  <div class="card card-wine step-card"><div class="step-label">Step 1</div><h3>Question the belief</h3><ul class="step-list"><li>Is it true?</li><li>How did it help you?</li><li>Did it help you cope with trauma?</li><li>Did it help you feel safe?</li></ul><textarea class="journal-area" id="journal-question" data-key="question" placeholder="When I question this belief..."></textarea><div class="save-indicator" id="save-question">&#10003; Saved</div></div>
+  <div class="card card-gold step-card"><div class="step-label">Step 2</div><h3>Find evidence that the belief is not true</h3><p>Challenge your belief. Write down all the reasons it may not be true. If you feel stuck, ask a trusted friend, therapist, or other support for their opinion about the belief.</p><textarea class="journal-area" id="journal-evidence" data-key="evidence" placeholder="Reasons this belief may not be true..."></textarea><div class="save-indicator" id="save-evidence">&#10003; Saved</div></div>
+  <div class="card card-rose step-card"><div class="step-label">Step 3</div><h3>Create a negative association with this belief</h3><ul class="step-list"><li>What has this belief caused you to experience in the past?</li><li>What would this belief cost you in the future?</li><li>What would the impact of this belief be if you keep it alive?</li></ul><textarea class="journal-area" id="journal-cost" data-key="cost" placeholder="This belief has cost me... It would cost me..."></textarea><div class="save-indicator" id="save-cost">&#10003; Saved</div></div>
+  <div class="card card-blush step-card"><div class="step-label">Step 4</div><h3>Replace the belief</h3><p>Choose a healthier belief. It could be a totally new belief or an opposite, positive one. Think empowering.</p>
+    <input type="text" class="line-input" id="journal-new-belief" data-key="new-belief" placeholder="My new belief..."><div class="save-indicator" id="save-new-belief">&#10003; Saved</div>
+    <div class="prompt-question" style="margin-top:1rem;">How would your life change if you adopt this new belief?</div><textarea class="journal-area" id="journal-new-life" data-key="new-life" placeholder="If I believed this, my life would..."></textarea><div class="save-indicator" id="save-new-life">&#10003; Saved</div>
+    <div class="prompt-question" style="margin-top:1rem;">Write some affirmations around your new belief</div><textarea class="journal-area" id="journal-new-affirm" data-key="new-affirm" placeholder="I am... I have... I choose..."></textarea><div class="save-indicator" id="save-new-affirm">&#10003; Saved</div>
+  </div>
+  <div class="footer"><div class="footer-brand">The Alchemist's AI Toolkit</div><a href="https://www.skool.com/soul-forged-founders/classroom/5e4056f3" target="_blank">Open the classroom inside Soul-Forged Founders &#8594;</a><div class="footer-copy">&copy; 2026 S Sink Coaching | Sunny Sink</div></div>
+</div>
+
+<div class="page" id="page-release-belief">
+  <div class="section-label">Exercise, Part 3 of 3</div><h1>Releasing the Limiting Belief</h1>
+  <div class="card card-wine step-card"><div class="step-label">Step 1</div><h3>Journal around the belief</h3><ul class="step-list"><li>When is the first time you remember believing this?</li><li>What other situations confirmed this belief for you?</li><li>How did it make you feel?</li><li>What did this belief make you believe about yourself?</li></ul><textarea class="journal-area" id="journal-origin" data-key="origin" placeholder="The first time I remember believing this..." style="min-height:160px;"></textarea><div class="save-indicator" id="save-origin">&#10003; Saved</div></div>
+  <div class="card card-gold step-card"><div class="step-label">Step 2</div><h3>Let go of your belief</h3><p style="font-style:italic; color:var(--ink-faint);">Lead with your intuition.</p>
+    <p><strong>Create a comfortable environment.</strong> Candles, smudge, an altar, soothing music.</p>
+    <p><strong>Feel the feelings associated with the belief.</strong> Read back your journal entry, bring up the painful memory, let yourself feel that feeling.</p>
+    <p style="margin-bottom:0;"><strong>Release the feeling and the belief.</strong> Burn your journal entry, bury it, or return it to the earth in another way.</p>
+  </div>
+  <div class="card card-rose step-card"><div class="step-label">Step 3</div><h3>Call in the new belief and feelings</h3><p>Immediately after releasing, choose the new belief and feel the feelings of it. Tune into it with all your senses.</p>
+    <div class="line-row"><label class="tag" for="journal-sense1">See</label><input type="text" class="line-input" id="journal-sense1" data-key="sense1" placeholder="What will you see now that you believe this?"></div>
+    <div class="line-row"><label class="tag" for="journal-sense2">Hear</label><input type="text" class="line-input" id="journal-sense2" data-key="sense2" placeholder="What will you hear now that you believe this?"></div>
+    <div class="line-row"><label class="tag" for="journal-sense3">Touch, taste, smell</label><input type="text" class="line-input" id="journal-sense3" data-key="sense3" placeholder="What will you touch, taste, and smell?"></div>
+    <div class="line-row"><label class="tag" for="journal-sense4">Think</label><input type="text" class="line-input" id="journal-sense4" data-key="sense4" placeholder="What thoughts will you think?"></div>
+    <div class="line-row"><label class="tag" for="journal-sense5">Believe</label><input type="text" class="line-input" id="journal-sense5" data-key="sense5" placeholder="What else may you believe about yourself from this place?"></div>
+    <p style="font-family:var(--serif); font-style:italic; font-size:1.1rem; color:var(--wine); margin:1rem 0 0;">Fill yourself up with all these feelings, thoughts, and ideas.</p>
+  </div>
+  <div class="footer"><div class="footer-brand">The Alchemist's AI Toolkit</div><a href="https://www.skool.com/soul-forged-founders/classroom/5e4056f3" target="_blank">Open the classroom inside Soul-Forged Founders &#8594;</a><div class="footer-copy">&copy; 2026 S Sink Coaching | Sunny Sink</div></div>
+</div>
+
+<div class="page" id="page-dreams">
+  <div class="section-label">Shadows in Sleep</div><h1>Dream Journal</h1>
+  <p style="font-size:1.05rem; margin-bottom:1.5rem;">Write your dream down as soon as you wake. Save each one, and the patterns start to show across the season.</p>
+  <div class="card card-rose">
+    <div class="prompt-block"><div class="prompt-question">What happened in your dream?</div><textarea class="journal-area" id="journal-dream-what" data-key="dream-what" placeholder="I was..."></textarea></div>
+    <div class="prompt-block"><div class="prompt-question">Who was present in your dream?</div><input type="text" class="line-input" id="journal-dream-who" data-key="dream-who" placeholder="People, animals, figures..."></div>
+    <div class="prompt-block"><div class="prompt-question">What emotions did you feel?</div><input type="text" class="line-input" id="journal-dream-feel" data-key="dream-feel" placeholder="Fear, relief, longing..."></div>
+    <div class="prompt-block" style="margin-bottom:0;"><div class="prompt-question">My interpretation &amp; final thoughts</div><textarea class="journal-area" id="journal-dream-mean" data-key="dream-mean" placeholder="I think this dream is showing me..."></textarea></div>
+    <div class="dream-actions"><button class="btn-primary" onclick="saveDream()">Save this dream</button><span class="save-indicator" id="save-dream">&#10003; Dream saved below</span></div>
+  </div>
+  <h2 style="margin-top:2rem;">My Dreams This Season</h2>
+  <div class="card" id="dreamList"></div>
+  <div class="footer"><div class="footer-brand">The Alchemist's AI Toolkit</div><a href="https://www.skool.com/soul-forged-founders/classroom/5e4056f3" target="_blank">Open the classroom inside Soul-Forged Founders &#8594;</a><div class="footer-copy">&copy; 2026 S Sink Coaching | Sunny Sink</div></div>
+</div>
+
+<div class="page" id="page-samhain">
+  <div class="section-label">The Turning of the Wheel</div><h1>Welcome Samhain</h1>
+  <div class="callout-warm"><span class="date-badge">OCTOBER 31 ~ NOVEMBER 1</span><h3>Summer's End</h3><p>A festival of the dead, and for many, the spiritual new year</p></div>
+  <p>As October turns to November, thousands of Witches, Wiccans, Druids, and other Pagans across America, Canada, Europe, and elsewhere observe the sacred time of Samhain. Samhain is a festival of the Dead. Meaning "Summer's End" and pronounced saah-win or saa-ween, Samhain celebrates the end of the harvest and the start of the coldest half of the year.</p>
+  <p>For many practitioners, myself included, Samhain is also the beginning of the spiritual new year.</p>
+  <h2 style="margin-top:2rem;">Samhain Rituals</h2>
+  <p>Rituals to help you tap into the end of the harvest and usher in the coldest half of the year.</p>
+  <div class="ritual-grid">
+    <div class="ritual-chip">Connect with Ancestors</div>
+    <div class="ritual-chip">Kindle a Bonfire</div>
+    <div class="ritual-chip">Tarot Reading</div>
+    <div class="ritual-chip">Pause &amp; Reflect</div>
+    <div class="ritual-chip">Take Nature Walks</div>
+    <div class="ritual-chip">Feasting</div>
+    <div class="ritual-chip">Dancing</div>
+  </div>
+  <div class="prompt-block" style="margin-top:1.5rem;"><div class="prompt-question">Which ancestors will you honor this Samhain, and what do you want to carry into the new year?</div><textarea class="journal-area" id="journal-samhain" data-key="samhain" placeholder="I honor... I carry forward..."></textarea><div class="save-indicator" id="save-samhain">&#10003; Saved</div></div>
+  <div class="footer"><div class="footer-brand">The Alchemist's AI Toolkit</div><a href="https://www.skool.com/soul-forged-founders/classroom/5e4056f3" target="_blank">Open the classroom inside Soul-Forged Founders &#8594;</a><div class="footer-copy">&copy; 2026 S Sink Coaching | Sunny Sink</div></div>
+</div>
+
+<div class="page" id="page-full-moon">
+  <div class="section-label">Full Moon in Taurus</div><h1>Energies of Scorpio + Taurus</h1>
+  <p>As the Full Moon rises in Taurus, feel it soften you. Feel it hold you and become a container for the immense emotions stirred by Scorpio. Feel into the comfort of the present moment, and let the Taurus energy ease any emotions brought to the surface this season.</p>
+  <p>This is a time to pause, connect with your body, connect with nature, and find stillness within. It's a time to reflect on everything you've learned so far in your journey and be with yourself in this moment. Taurus brings in peaceful vibrations that let you process the work you're doing and the growth you're experiencing.</p>
+  <p>Taurus encourages us to follow our instinct and trust it. If we are unhappy in a relationship, it's time to leave. If we want to take a trip, it's time to book it. If we feel overwhelmed, it's time to slow down. No discussion about any of it, just straightforward answers free of drama. Feel this simplicity take over the Full Moon and let it bring you some peace.</p>
+  <div class="vibration-row" style="margin-bottom:2rem;"><div class="vibration-card higher"><div class="vibration-label">Taurus Higher</div><div class="vibration-tags"><span class="vibration-tag">Reliable</span><span class="vibration-tag">Hard-working</span><span class="vibration-tag">Grounded</span><span class="vibration-tag">Luxurious</span><span class="vibration-tag">Focused</span></div></div><div class="vibration-card lower"><div class="vibration-label">Taurus Lower</div><div class="vibration-tags"><span class="vibration-tag">Lazy</span><span class="vibration-tag">Indulgent</span><span class="vibration-tag">Stubborn</span></div></div></div>
+  <h2>Full Moon Reflections</h2>
+  <div class="prompt-block"><div class="prompt-question">How can you take more time to appreciate what you already have?</div><textarea class="journal-area" id="journal-moon1" data-key="moon1" placeholder="What I already have that I want to savor..."></textarea><div class="save-indicator" id="save-moon1">&#10003; Saved</div></div>
+  <div class="prompt-block"><div class="prompt-question">What containers allow you to process information? To process feelings? To ground your energy?</div><textarea class="journal-area" id="journal-moon2" data-key="moon2" placeholder="I process best when..."></textarea><div class="save-indicator" id="save-moon2">&#10003; Saved</div></div>
+  <div class="prompt-block"><div class="prompt-question">What helps you connect with nature and feel still in your body, mind, and spirit? How can you add more of this into your life?</div><textarea class="journal-area" id="journal-moon3" data-key="moon3" placeholder="I feel still when..."></textarea><div class="save-indicator" id="save-moon3">&#10003; Saved</div></div>
+  <div class="callout-warm" style="margin-top:2rem;"><h3>To Do on the Full Moon</h3><p style="font-family:var(--serif); font-size:1.15rem; font-style:italic; color:var(--wine); margin-bottom:0;">Ask yourself: "What are my instincts telling me?"</p></div>
+  <div class="footer"><div class="footer-brand">The Alchemist's AI Toolkit</div><a href="https://www.skool.com/soul-forged-founders/classroom/5e4056f3" target="_blank">Open the classroom inside Soul-Forged Founders &#8594;</a><div class="footer-copy">&copy; 2026 S Sink Coaching | Sunny Sink</div></div>
+</div>
+
+<div class="page" id="page-journal">
+  <div class="section-label">Reflection</div><h1>Journal &amp; Affirmations</h1>
+  <p style="font-size:1.05rem; margin-bottom:2rem;">Sit with each prompt. Let what's hidden come up in its own time.</p>
+  <div class="prompt-block"><div class="prompt-question">What are your biggest fears, and how do they control you?</div><textarea class="journal-area" id="journal-p1" data-key="p1" placeholder="My biggest fears are..."></textarea><div class="save-indicator" id="save-p1">&#10003; Saved</div></div>
+  <div class="prompt-block"><div class="prompt-question">How can you transform your fears into trust?</div><textarea class="journal-area" id="journal-p2" data-key="p2" placeholder="I can turn this fear into trust by..."></textarea><div class="save-indicator" id="save-p2">&#10003; Saved</div></div>
+  <div class="prompt-block"><div class="prompt-question">What transformations are you ready for in your life, and what will they heal?</div><textarea class="journal-area" id="journal-p3" data-key="p3" placeholder="I am ready to transform..."></textarea><div class="save-indicator" id="save-p3">&#10003; Saved</div></div>
+  <div class="divider"></div>
+  <h2>Affirmations</h2>
+  <div class="affirmation">My emotions empower and strengthen me.</div>
+  <div class="affirmation">I have the power to transform my situation into a better one.</div>
+  <div class="affirmation">I know that peace is at the core of my being.</div>
+  <div class="affirmation">I am transformed and renewed by the magic and the mystery that is now and eternal.</div>
+  <div class="quote-block"><div class="quote-text">"Shadow work is the path of the heart warrior."</div><div class="quote-attr">Carl Jung</div></div>
+  <div class="footer"><div class="footer-brand">The Alchemist's AI Toolkit</div><a href="https://www.skool.com/soul-forged-founders/classroom/5e4056f3" target="_blank">Open the classroom inside Soul-Forged Founders &#8594;</a><div class="footer-copy">&copy; 2026 S Sink Coaching | Sunny Sink</div></div>
+</div>
+
+<div class="page" id="page-tarot">
+  <div class="section-label">Sacred Practice</div><h1>Scorpio Season Tarot Spread</h1>
+  <p>Pull eight cards, four for your dark shadow and four for your light shadow. Sit with each one and let its message land before moving to the next.</p>
+  <div class="spread-wrap">
+    <div class="spread-side">
+      <div class="spread-side-title">Dark Shadow</div>
+      <div class="tarot-card center"><div class="tarot-card-inner"><div class="tarot-card-num">1</div><div class="tarot-card-label">Dark Shadow</div></div></div>
+      <div class="tarot-card"><div class="tarot-card-inner"><div class="tarot-card-num">2</div><div class="tarot-card-label">Lesson</div></div></div>
+      <div class="tarot-card"><div class="tarot-card-inner"><div class="tarot-card-num">3</div><div class="tarot-card-label">Release</div></div></div>
+      <div class="tarot-card center"><div class="tarot-card-inner"><div class="tarot-card-num">4</div><div class="tarot-card-label">Step Into Power</div></div></div>
+    </div>
+    <div class="spread-side">
+      <div class="spread-side-title">Light Shadow</div>
+      <div class="tarot-card center"><div class="tarot-card-inner"><div class="tarot-card-num">5</div><div class="tarot-card-label">Light Shadow</div></div></div>
+      <div class="tarot-card"><div class="tarot-card-inner"><div class="tarot-card-num">6</div><div class="tarot-card-label">Lesson</div></div></div>
+      <div class="tarot-card"><div class="tarot-card-inner"><div class="tarot-card-num">7</div><div class="tarot-card-label">Release</div></div></div>
+      <div class="tarot-card center"><div class="tarot-card-inner"><div class="tarot-card-num">8</div><div class="tarot-card-label">Step Into Power</div></div></div>
+    </div>
+  </div>
+  <div class="prompt-block"><div class="prompt-question">Record the cards you pulled and the messages you received</div><textarea class="journal-area" id="journal-tarot" data-key="tarot" placeholder="Card 1 (Dark Shadow):&#10;Card 2 (Lesson):&#10;Card 3 (Release):&#10;Card 4 (Step Into Power):&#10;Card 5 (Light Shadow):&#10;Card 6 (Lesson):&#10;Card 7 (Release):&#10;Card 8 (Step Into Power):" style="min-height:240px;"></textarea><div class="save-indicator" id="save-tarot">&#10003; Saved</div></div>
+  <div class="divider"></div>
+  <div class="download-bar"><p>Download all your Scorpio Season reflections, belief work, dreams, and spread notes as one file.</p><button class="btn-primary" onclick="downloadAll()">&#11015; Download All My Reflections</button></div>
+  <div class="footer"><div class="footer-brand">The Alchemist's AI Toolkit</div><a href="https://www.skool.com/soul-forged-founders/classroom/5e4056f3" target="_blank">Open the classroom inside Soul-Forged Founders &#8594;</a><div class="footer-copy">&copy; 2026 S Sink Coaching | Sunny Sink</div></div>
+</div>
+</main>
+</div>
+<script>
+var PAGES=['welcome','scorpio-energy','shadows','find-belief','explore-belief','release-belief','dreams','samhain','full-moon','journal','tarot'];
+var P='scorpio-';
+function lsGet(k){try{return localStorage.getItem(P+k)}catch(e){return null}}
+function lsSet(k,v){try{localStorage.setItem(P+k,v)}catch(e){}}
+function showPage(id){document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active')});document.querySelectorAll('.nav-item').forEach(function(n){n.classList.remove('active')});var pg=document.getElementById('page-'+id);if(pg)pg.classList.add('active');var i=PAGES.indexOf(id);var ns=document.querySelectorAll('.nav-item');if(i>=0&&ns[i])ns[i].classList.add('active');window.scrollTo({top:0,behavior:'smooth'});document.getElementById('sidebar').classList.remove('open');document.getElementById('sidebarOverlay').classList.remove('open')}
+function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open');document.getElementById('sidebarOverlay').classList.toggle('open')}
+function flash(id){var ind=document.getElementById(id);if(ind){ind.classList.add('visible');clearTimeout(ind._t);ind._t=setTimeout(function(){ind.classList.remove('visible')},2000)}}
+function bindFields(){document.querySelectorAll('[data-key]').forEach(function(el){var k=el.getAttribute('data-key');var v=lsGet(k);if(v)el.value=v;el.addEventListener('input',function(){lsSet(k,el.value);flash('save-'+k)})})}
+function esc(s){var d=document.createElement('div');d.textContent=s==null?'':s;return d.innerHTML}
+var beliefs=[];var ouchie=-1;
+function loadBeliefs(){try{beliefs=JSON.parse(lsGet('beliefs')||'[]')}catch(e){beliefs=[]}if(!Array.isArray(beliefs)||beliefs.length!==4)beliefs=['','','',''];ouchie=parseInt(lsGet('ouchie')||'-1',10);renderBeliefs()}
+function renderBeliefs(){var c=document.getElementById('beliefList');c.innerHTML='';beliefs.forEach(function(b,i){var r=document.createElement('div');r.className='line-row';r.innerHTML='<span class="value-num">'+(i+1)+'</span><input type="text" class="line-input'+(i===ouchie?' ouchie-on':'')+'" id="belief-'+i+'" value="'+esc(b)+'" placeholder="Someone with this pattern might believe..." style="'+(i===ouchie?'color:var(--wine);font-weight:500;':'')+'"><label class="ouch"><input type="radio" name="ouchie" id="ouch-'+i+'" '+(i===ouchie?'checked':'')+'> Ouchie</label>';c.appendChild(r);r.querySelector('.line-input').addEventListener('input',function(e){beliefs[i]=e.target.value;lsSet('beliefs',JSON.stringify(beliefs))});r.querySelector('input[type=radio]').addEventListener('change',function(){ouchie=i;lsSet('ouchie',String(i));renderBeliefs()})})}
+var dreams=[];
+function loadDreams(){try{dreams=JSON.parse(lsGet('dreams')||'[]')}catch(e){dreams=[]}if(!Array.isArray(dreams))dreams=[];renderDreams()}
+function renderDreams(){var c=document.getElementById('dreamList');if(!dreams.length){c.innerHTML='<p style="margin:0; color:var(--ink-faint); font-style:italic;">Your saved dreams will collect here, newest first.</p>';return}c.innerHTML='';dreams.forEach(function(d,i){var e=document.createElement('div');e.className='dream-entry';e.innerHTML='<div class="dream-date">'+esc(d.date)+'</div><dl>'+(d.what?'<dt>What happened</dt><dd>'+esc(d.what)+'</dd>':'')+(d.who?'<dt>Who was present</dt><dd>'+esc(d.who)+'</dd>':'')+(d.feel?'<dt>Emotions</dt><dd>'+esc(d.feel)+'</dd>':'')+(d.mean?'<dt>My interpretation</dt><dd>'+esc(d.mean)+'</dd>':'')+'</dl><div class="dream-actions"><button class="btn-ghost" data-del="'+i+'">Delete this dream</button></div>';c.appendChild(e)});c.querySelectorAll('[data-del]').forEach(function(b){b.addEventListener('click',function(){askDelete(b)})})}
+function askDelete(btn){var i=+btn.getAttribute('data-del');var box=btn.parentNode;box.innerHTML='<span class="confirm-row">Delete this dream for good? <button class="btn-ghost" style="color:var(--wine);font-weight:600;">Delete</button><button class="btn-ghost">Keep it</button></span>';var bs=box.querySelectorAll('button');bs[0].onclick=function(){dreams.splice(i,1);lsSet('dreams',JSON.stringify(dreams));renderDreams()};bs[1].onclick=renderDreams}
+function saveDream(){var f={what:'dream-what',who:'dream-who',feel:'dream-feel',mean:'dream-mean'};var d={date:new Date().toLocaleDateString(undefined,{weekday:'long',month:'long',day:'numeric',year:'numeric'})};var any=false;Object.keys(f).forEach(function(k){var el=document.getElementById('journal-'+f[k]);d[k]=el.value.trim();if(d[k])any=true});if(!any)return;dreams.unshift(d);lsSet('dreams',JSON.stringify(dreams));Object.keys(f).forEach(function(k){document.getElementById('journal-'+f[k]).value='';lsSet(f[k],'')});renderDreams();flash('save-dream')}
+async function downloadAll(){var L=[];L.push('========================================');L.push('  SCORPIO SEASON REFLECTIONS');L.push('  Unleash Your Inner Power Through Shadow Work');L.push('========================================\n');
+function sec(t,items){L.push('--- '+t+' ---\n');items.forEach(function(it){var v=lsGet(it[0])||'';L.push(it[1]+':');L.push(v||'(not yet written)');L.push('')});L.push('')}
+sec('OWN YOUR SHADOWS',[['trigger','A recent trigger and what it reflects']]);
+L.push('--- FINDING THE LIMITING BELIEF ---\n');sec2(['pattern','The pattern I want to shift']);
+L.push('Possible beliefs:');beliefs.forEach(function(b,i){if(b)L.push((i+1)+'. '+b+(i===ouchie?'  (ouchie)':''))});if(!beliefs.some(function(b){return b}))L.push('(not yet written)');L.push('');
+[['base1','Belief 1'],['base2','Belief 2'],['base3','Belief 3'],['base-feel','The belief that feels most like my pattern'],['feel-belief','Feelings of this belief']].forEach(sec2);L.push('');
+sec('EXPLORING THE LIMITING BELIEF',[['question','Questioning the belief'],['evidence','Evidence it is not true'],['cost','What it has cost and would cost'],['new-belief','My new belief'],['new-life','How my life would change'],['new-affirm','Affirmations for my new belief']]);
+sec('RELEASING THE LIMITING BELIEF',[['origin','Where the belief began'],['sense1','What I will see'],['sense2','What I will hear'],['sense3','What I will touch, taste, and smell'],['sense4','What I will think'],['sense5','What else I believe about myself']]);
+L.push('--- DREAM JOURNAL ---\n');if(!dreams.length)L.push('(no dreams saved yet)\n');dreams.slice().reverse().forEach(function(d){L.push(d.date);if(d.what)L.push('What happened: '+d.what);if(d.who)L.push('Who was present: '+d.who);if(d.feel)L.push('Emotions: '+d.feel);if(d.mean)L.push('My interpretation: '+d.mean);L.push('')});L.push('');
+sec('SAMHAIN',[['samhain','Ancestors I honor and what I carry forward']]);
+sec('FULL MOON IN TAURUS',[['moon1','Appreciating what I already have'],['moon2','Containers that help me process and ground'],['moon3','What helps me feel still']]);
+sec('JOURNAL PROMPTS',[['p1','My biggest fears and how they control me'],['p2','Transforming fear into trust'],['p3','Transformations I am ready for']]);
+sec('TAROT SPREAD NOTES',[['tarot','Cards and messages received']]);
+L.push('========================================');L.push('  Soul-Forged Founders');L.push('  https://www.skool.com/soul-forged-founders/about');L.push('========================================');
+function sec2(it){var v=lsGet(it[0])||'';L.push(it[1]+':');L.push(v||'(not yet written)');L.push('')}
+var txt=L.join('\n');try{var dl=await (window.claude&&claude.use?claude.use('downloads'):null);if(dl){await dl.save({filename:'Scorpio-Season-Reflections.txt',data:txt});return}}catch(e){if(e&&e.code==='declined')return;}
+var b=new Blob([txt],{type:'text/plain'});var u=URL.createObjectURL(b);var a2=document.createElement('a');a2.href=u;a2.download='Scorpio-Season-Reflections.txt';document.body.appendChild(a2);a2.click();document.body.removeChild(a2);URL.revokeObjectURL(u)}
+function initPetals(){var c=document.getElementById('petalContainer');var cols=[['#7A1F2E','#B23A4C'],['#9E2A3F','#D25A6A'],['#B8475A','#E68A93'],['#C96B78','#F0B3B5'],['#5E1422','#9E2A3F']];var st=document.createElement('style');st.textContent='@keyframes pf{0%{transform:translateY(-50px) translateX(0) rotate(0deg) rotateX(0deg);opacity:0}8%{opacity:0.9}30%{transform:translateY(30vh) translateX(40px) rotate(110deg) rotateX(140deg)}55%{transform:translateY(55vh) translateX(-20px) rotate(200deg) rotateX(260deg)}80%{transform:translateY(80vh) translateX(35px) rotate(290deg) rotateX(380deg);opacity:0.75}100%{transform:translateY(108vh) translateX(5px) rotate(340deg) rotateX(450deg);opacity:0}}';document.head.appendChild(st);var n=0;function mk(){var p=document.createElement('div');var w=18+Math.random()*14;var h=w*1.1;var cl=cols[Math.floor(Math.random()*cols.length)];var id='pg'+(n++);var svg='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 44" width="'+w+'" height="'+h+'"><defs><radialGradient id="'+id+'" cx="45%" cy="70%" r="75%"><stop offset="0%" stop-color="'+cl[1]+'"/><stop offset="100%" stop-color="'+cl[0]+'"/></radialGradient></defs><path d="M20 42 C 8 36, 1 26, 3 14 C 4 6, 10 1, 15 3 C 17 4, 19 6, 20 8 C 21 6, 23 4, 25 3 C 30 1, 36 6, 37 14 C 39 26, 32 36, 20 42 Z" fill="url(#'+id+')" opacity="0.82"/><path d="M20 40 C 19 30, 19 20, 20 10" stroke="'+cl[0]+'" stroke-opacity="0.35" stroke-width="0.7" fill="none"/></svg>';Object.assign(p.style,{position:'absolute',width:w+'px',height:h+'px',left:Math.random()*100+'%',top:'-50px',opacity:'0',pointerEvents:'none',animation:'pf '+(13+Math.random()*9)+'s ease-in-out forwards'});p.innerHTML=svg;c.appendChild(p);setTimeout(function(){p.remove()},24000)}for(var i=0;i<7;i++)setTimeout(mk,Math.random()*6000);setInterval(mk,3600+Math.random()*2000)}
+document.addEventListener('DOMContentLoaded',function(){bindFields();loadBeliefs();loadDreams();if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches)initPetals()});
+</script>
+</body></html>
+
+</body></html>
