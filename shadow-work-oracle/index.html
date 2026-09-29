@@ -1,0 +1,961 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Shadow Work Deck</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=IM+Fell+English+SC&family=Alegreya+Sans:ital,wght@0,400;0,500;0,700;1,400&display=swap">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  color-scheme: dark;
+  --night: #060a09;
+  --forest: #0d1613;
+  --bark: #030605;
+  --moss: #5f7f52;
+  --moss-dim: #3a4f35;
+  --mist: #9fb8ae;
+  --moon: #c9694a;
+  --moon-lt: #e08b67;
+  --flame: #f3c56e;
+  --flame-lt: #ffe2a3;
+  --ink: #ede5d3;
+  --ink-dim: #b3bdb2;
+  --ink-faint: #75857b;
+  --surface: rgba(12, 20, 17, 0.84);
+  --surface-2: rgba(18, 29, 24, 0.9);
+  --line: rgba(159, 184, 174, 0.18);
+  --line-warm: rgba(243, 197, 110, 0.32);
+  --display: 'IM Fell English', 'Iowan Old Style', Georgia, serif;
+  --caps: 'IM Fell English SC', 'Iowan Old Style', Georgia, serif;
+  --sans: 'Alegreya Sans', 'Gill Sans', system-ui, sans-serif;
+  --arch: 18px;
+  --arch-sm: 14px;
+}
+
+html, body { min-height: 100%; }
+body {
+  font-family: var(--sans);
+  font-size: 17px;
+  background: var(--night);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* ---------- Atmosphere ---------- */
+#grove { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+.fog {
+  position: fixed; left: -20%; right: -20%; height: 42vh; z-index: 1; pointer-events: none;
+  background: radial-gradient(ellipse at center, rgba(159,184,174,0.10) 0%, transparent 65%);
+  animation: drift 38s ease-in-out infinite alternate;
+}
+.fog-1 { top: 22vh; }
+.fog-2 { bottom: -8vh; animation-duration: 52s; animation-direction: alternate-reverse; opacity: 0.8; }
+@keyframes drift { from { transform: translateX(-6%); } to { transform: translateX(6%); } }
+
+#motes { position: fixed; inset: 0; z-index: 1; pointer-events: none; overflow: hidden; }
+.mote {
+  position: absolute; bottom: -10px; border-radius: 50%;
+  background: var(--flame-lt);
+  box-shadow: 0 0 8px 2px rgba(243,197,110,0.55);
+  opacity: 0; animation: float linear infinite;
+}
+@keyframes float {
+  0% { transform: translate(0, 0); opacity: 0; }
+  15% { opacity: 0.7; }
+  85% { opacity: 0.35; }
+  100% { transform: translate(var(--drift, 20px), -80vh); opacity: 0; }
+}
+
+.wrap { position: relative; z-index: 2; max-width: 900px; margin: 0 auto; padding-inline: 16px; padding-block: 0 4.5rem; }
+
+/* ---------- Header ---------- */
+header { text-align: center; padding-top: clamp(150px, 26vh, 230px); }
+.eyebrow {
+  font-family: var(--caps); font-size: 0.95rem; letter-spacing: 0.22em;
+  color: var(--moon-lt); margin-bottom: 0.4rem;
+}
+h1 {
+  font-family: var(--display); font-weight: 400;
+  font-size: clamp(2.7rem, 9vw, 5rem); line-height: 1; text-wrap: balance;
+  color: var(--ink);
+  text-shadow: 0 0 40px rgba(201,105,74,0.35), 0 2px 0 rgba(0,0,0,0.6);
+  letter-spacing: 0.02em;
+}
+.subtitle {
+  font-family: var(--display); font-style: italic;
+  font-size: 1.28rem; line-height: 1.45; color: var(--ink-dim);
+  max-width: 34em; margin: 1rem auto 0; text-wrap: balance;
+}
+
+/* ---------- Controls ---------- */
+.controls { display: flex; flex-wrap: wrap; justify-content: center; gap: 1.4rem 2rem; margin-top: 2.4rem; }
+.group { display: flex; flex-direction: column; align-items: center; gap: 0.5rem; }
+.group-label { font-family: var(--caps); font-size: 0.82rem; letter-spacing: 0.18em; color: var(--ink-faint); }
+.pills { display: flex; gap: 0.4rem; flex-wrap: wrap; justify-content: center; }
+.pill {
+  font-family: var(--sans); font-size: 0.9rem; font-weight: 500;
+  color: var(--ink-dim); background: rgba(6,10,9,0.6);
+  border: 1px solid var(--line); border-radius: 999px;
+  padding: 0.45rem 1rem; cursor: pointer; transition: color .2s, border-color .2s, background .2s;
+}
+.pill:hover { color: var(--ink); border-color: var(--mist); }
+.pill[aria-pressed="true"] { color: var(--night); background: var(--flame); border-color: var(--flame); }
+.pill:focus-visible, .btn:focus-visible, .mini:focus-visible, .deck-card:focus-visible, .spread-card:focus-visible {
+  outline: 2px solid var(--flame); outline-offset: 3px;
+}
+
+/* ---------- Draw stage ---------- */
+.stage { display: flex; flex-direction: column; align-items: center; margin-top: 2.6rem; }
+.deck-card { width: 320px; max-width: 100%; aspect-ratio: 5 / 7.8; perspective: 1400px; cursor: pointer; background: none; border: 0; color: inherit; font: inherit; }
+.flipper { position: relative; width: 100%; height: 100%; transition: transform .9s cubic-bezier(.4,0,.2,1); transform-style: preserve-3d; }
+.deck-card.revealed .flipper { transform: rotateY(180deg); }
+.deck-card:not(.revealed):hover .flipper { transform: translateY(-6px); }
+.face {
+  position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden;
+  border-radius: var(--arch); overflow: hidden; display: flex; flex-direction: column;
+}
+.back {
+  background:
+    radial-gradient(circle at 50% 49%, rgba(201,105,74,0.22), transparent 45%),
+    linear-gradient(180deg, #0f1a16 0%, #050807 100%);
+  border: 1px solid var(--line-warm);
+  box-shadow: 0 30px 70px -24px rgba(0,0,0,0.9), inset 0 0 70px rgba(0,0,0,0.7);
+  align-items: center; justify-content: center;
+}
+.back svg { width: 100%; height: 100%; display: block; }
+
+.front {
+  transform: rotateY(180deg);
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(201,105,74,0.16), transparent 55%),
+    linear-gradient(180deg, #111d18 0%, #080d0b 100%);
+  border: 1px solid var(--line-warm);
+  box-shadow: 0 30px 70px -24px rgba(0,0,0,0.9);
+  padding: 3.2rem 1.7rem 2.6rem;
+  align-items: center; justify-content: center; text-align: center; gap: 0.2rem;
+}
+.front::after {
+  content: ""; position: absolute; inset: 9px; border-radius: 11px;
+  border: 1px solid rgba(243,197,110,0.14); pointer-events: none;
+}
+.card-type { position: absolute; top: 1.6rem; left: 0; right: 0; font-family: var(--caps); font-size: 0.85rem; letter-spacing: 0.22em; }
+.front.shadow .card-type { color: var(--moon-lt); }
+.front.lantern .card-type { color: var(--flame); }
+.card-sigil { width: 34px; height: 34px; margin-bottom: 0.5rem; }
+.card-name { font-family: var(--display); font-size: 1.75rem; line-height: 1.1; color: var(--ink); margin-bottom: 0.8rem; text-wrap: balance; }
+.card-text { font-family: var(--display); font-size: 1.3rem; line-height: 1.35; color: var(--ink); text-wrap: pretty; }
+.front.shadow .card-text { font-family: var(--sans); font-size: 1.05rem; line-height: 1.5; color: var(--ink-dim); }
+.card-for { font-family: var(--caps); font-size: 0.8rem; letter-spacing: 0.14em; color: var(--mist); margin-bottom: 0.35rem; }
+.card-num { position: absolute; bottom: 1.3rem; left: 0; right: 0; font-family: var(--caps); font-size: 0.8rem; letter-spacing: 0.16em; color: var(--ink-faint); font-variant-numeric: tabular-nums; }
+.reflected-mark { position: absolute; bottom: 1.3rem; right: 1.6rem; font-family: var(--caps); font-size: 0.78rem; color: var(--flame); }
+
+.hint { margin-top: 1.2rem; font-family: var(--caps); font-size: 0.85rem; letter-spacing: 0.16em; color: var(--ink-faint); min-height: 1.2rem; }
+
+.btn-row { display: flex; gap: 0.7rem; flex-wrap: wrap; justify-content: center; margin-top: 1.3rem; }
+.btn {
+  font-family: var(--sans); font-size: 0.98rem; font-weight: 500;
+  padding: 0.7rem 1.4rem; border-radius: 999px; cursor: pointer;
+  border: 1px solid transparent; transition: transform .2s, box-shadow .2s, color .2s, border-color .2s;
+}
+.btn-primary { color: #1a0f06; background: linear-gradient(180deg, var(--flame-lt), var(--flame)); box-shadow: 0 8px 28px -10px rgba(243,197,110,0.7); font-weight: 700; }
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 34px -10px rgba(243,197,110,0.85); }
+.btn-ghost { color: var(--ink-dim); background: rgba(6,10,9,0.55); border-color: var(--line); }
+.btn-ghost:hover { color: var(--ink); border-color: var(--mist); }
+.btn-small { font-size: 0.85rem; padding: 0.4rem 0.9rem; }
+
+/* ---------- Spread ---------- */
+.spread { margin-top: 3rem; }
+.spread-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 1.5rem; }
+.spread-slot { display: flex; flex-direction: column; align-items: center; gap: 0.6rem; }
+.slot-label { text-align: center; }
+.slot-label b { display: block; font-family: var(--caps); font-weight: 400; font-size: 1rem; letter-spacing: 0.16em; color: var(--flame); }
+.slot-label span { font-family: var(--display); font-style: italic; font-size: 0.98rem; color: var(--ink-dim); }
+.spread-card {
+  width: 100%; min-height: 250px; text-align: center; cursor: pointer; color: inherit; font: inherit;
+  background: linear-gradient(180deg, #111d18 0%, #080d0b 100%);
+  border: 1px solid var(--line-warm); border-radius: var(--arch-sm);
+  padding: 1.6rem 1rem 1.4rem; display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+  transition: transform .2s, border-color .2s;
+}
+.spread-card:hover { transform: translateY(-4px); border-color: var(--flame); }
+.spread-card .s-name { font-family: var(--display); font-size: 1.25rem; line-height: 1.15; }
+.spread-card .s-text { font-size: 0.95rem; line-height: 1.45; color: var(--ink-dim); }
+.spread-card.lantern .s-text { font-family: var(--display); font-size: 1.05rem; color: var(--ink); }
+
+/* ---------- Sections ---------- */
+.section-head { text-align: center; margin-top: 4.5rem; }
+.section-head h2 { font-family: var(--display); font-weight: 400; font-size: 2.3rem; line-height: 1.1; text-wrap: balance; }
+.section-head p { color: var(--ink-dim); margin-top: 0.4rem; }
+
+.howto { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.6rem; margin-top: 1.8rem; }
+.howto h3 { font-family: var(--caps); font-weight: 400; font-size: 1.1rem; letter-spacing: 0.12em; color: var(--flame); margin-bottom: 0.4rem; }
+.howto p { color: var(--ink-dim); line-height: 1.55; font-size: 1rem; }
+.care {
+  margin: 2rem auto 0; max-width: 40em; text-align: center;
+  font-family: var(--display); font-style: italic; font-size: 1.1rem; line-height: 1.5; color: var(--mist);
+}
+
+.gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 1rem; margin-top: 1.6rem; }
+.mini {
+  position: relative; text-align: center; cursor: pointer; color: inherit; font: inherit;
+  background: var(--surface); border: 1px solid var(--line);
+  border-radius: var(--arch-sm); padding: 1.6rem 1rem 1.8rem;
+  display: flex; flex-direction: column; align-items: center; gap: 0.35rem;
+  transition: transform .2s, border-color .2s;
+}
+.mini:hover { transform: translateY(-4px); border-color: var(--flame); }
+.mini.user-card { border-style: dashed; }
+.mini.reflected { border-color: var(--line-warm); }
+.mini .mtype { font-family: var(--caps); font-size: 0.78rem; letter-spacing: 0.18em; }
+.mini.shadow .mtype { color: var(--moon-lt); }
+.mini.lantern .mtype { color: var(--flame); }
+.mini .mname { font-family: var(--display); font-size: 1.2rem; line-height: 1.15; }
+.mini .mtext { font-size: 0.92rem; line-height: 1.45; color: var(--ink-dim); }
+.mini.lantern .mtext { font-family: var(--display); font-size: 1.02rem; color: var(--ink); }
+.mini .mnum { position: absolute; bottom: 0.6rem; left: 0; right: 0; font-family: var(--caps); font-size: 0.72rem; color: var(--ink-faint); font-variant-numeric: tabular-nums; }
+.mini .mbadge { position: absolute; top: 0.9rem; right: 1.1rem; color: var(--flame); font-size: 0.9rem; }
+.tap-hint { text-align: center; font-family: var(--caps); font-size: 0.85rem; letter-spacing: 0.12em; color: var(--ink-faint); margin-top: 0.6rem; }
+
+/* ---------- Forms ---------- */
+.panel { margin-top: 2.4rem; background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 1.7rem 1.5rem; }
+.panel h3 { font-family: var(--display); font-weight: 400; font-size: 1.6rem; margin-bottom: 0.3rem; }
+.panel .help { color: var(--ink-dim); line-height: 1.5; margin-bottom: 1.2rem; font-size: 0.98rem; }
+.fields { display: grid; gap: 1rem; }
+.row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.field label { display: block; font-family: var(--caps); font-size: 0.85rem; letter-spacing: 0.14em; color: var(--mist); margin-bottom: 0.35rem; }
+.field input, .field textarea, .field select, .modal textarea, .copy-box {
+  width: 100%; font-family: var(--sans); font-size: 1rem; color: var(--ink);
+  background: rgba(3,6,5,0.75); border: 1px solid var(--line); border-radius: 10px;
+  padding: 0.7rem 0.85rem; resize: vertical;
+}
+.field textarea { min-height: 72px; }
+.field input:focus, .field textarea:focus, .field select:focus, .modal textarea:focus { outline: none; border-color: var(--flame); }
+.field select option { background: var(--forest); }
+.actions { display: flex; gap: 0.7rem; align-items: center; flex-wrap: wrap; margin-top: 1rem; }
+.note { font-size: 0.9rem; color: var(--flame); }
+
+/* ---------- Modal ---------- */
+.overlay {
+  position: fixed; inset: 0; z-index: 50; background: rgba(2,4,3,0.78);
+  backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+  display: flex; align-items: center; justify-content: center; padding: 16px;
+  opacity: 0; pointer-events: none; transition: opacity .25s;
+}
+.overlay.open { opacity: 1; pointer-events: auto; }
+.modal {
+  width: 100%; max-width: 560px; max-height: 88vh; overflow-y: auto; position: relative;
+  background: linear-gradient(180deg, #121e19 0%, #070b0a 100%);
+  border: 1px solid var(--line-warm); border-radius: 18px; padding: 1.9rem 1.6rem;
+  box-shadow: 0 30px 80px -20px rgba(0,0,0,0.9);
+}
+.modal-close { position: absolute; top: 0.7rem; right: 0.9rem; background: none; border: none; color: var(--ink-faint); font-size: 1.8rem; line-height: 1; cursor: pointer; }
+.modal-close:hover { color: var(--ink); }
+.modal-eyebrow { font-family: var(--caps); font-size: 0.9rem; letter-spacing: 0.2em; color: var(--moon-lt); margin-bottom: 0.8rem; }
+.modal-card { border-left: 2px solid var(--flame); padding-left: 1rem; margin-bottom: 1.3rem; }
+.modal-card .mc-name { font-family: var(--display); font-size: 1.5rem; margin-bottom: 0.3rem; }
+.modal-card .mc-text { color: var(--ink-dim); line-height: 1.55; }
+.modal-card .mc-text.lantern { font-family: var(--display); font-size: 1.25rem; color: var(--ink); }
+.modal-card .mc-client { margin-top: 0.7rem; font-size: 0.95rem; color: var(--mist); line-height: 1.5; }
+.modal-card .mc-client b { font-family: var(--caps); font-weight: 400; letter-spacing: 0.1em; }
+.modal textarea { min-height: 150px; line-height: 1.55; }
+.past { margin-top: 1.6rem; }
+.past h4 { font-family: var(--caps); font-weight: 400; font-size: 0.88rem; letter-spacing: 0.16em; color: var(--ink-faint); margin-bottom: 0.7rem; }
+
+.entry {
+  position: relative; background: var(--surface); border: 1px solid var(--line);
+  border-radius: 12px; padding: 1rem 1.1rem; margin-bottom: 0.7rem;
+}
+.entry .e-type { font-family: var(--caps); font-size: 0.78rem; letter-spacing: 0.16em; color: var(--moon-lt); }
+.entry .e-card { font-family: var(--display); font-size: 1.2rem; margin: 0.15rem 5.5rem 0.5rem 0; }
+.entry .e-body { line-height: 1.6; white-space: pre-wrap; }
+.entry .e-date { font-family: var(--caps); font-size: 0.76rem; letter-spacing: 0.1em; color: var(--ink-faint); margin-top: 0.6rem; }
+.entry .del { position: absolute; top: 0.8rem; right: 0.8rem; }
+.del {
+  background: none; border: 1px solid var(--line); color: var(--ink-faint); border-radius: 8px;
+  font-family: var(--sans); font-size: 0.8rem; padding: 0.25rem 0.6rem; cursor: pointer;
+}
+.del:hover, .del.armed { color: var(--moon-lt); border-color: var(--moon); }
+.empty { text-align: center; color: var(--ink-dim); line-height: 1.6; padding: 2rem 1rem; max-width: 26em; margin: 1rem auto 0; }
+.copy-box { min-height: 180px; margin-top: 1rem; font-size: 0.9rem; }
+
+footer { text-align: center; margin-top: 4.5rem; font-family: var(--caps); font-size: 0.9rem; letter-spacing: 0.12em; color: var(--ink-faint); }
+footer a { color: var(--flame); text-decoration: none; border-bottom: 1px solid var(--line-warm); }
+footer a:hover { color: var(--flame-lt); }
+
+@media (max-width: 640px) {
+  .howto { grid-template-columns: 1fr; gap: 1.2rem; }
+  .spread-grid { grid-template-columns: 1fr; max-width: 320px; margin-inline: auto; }
+  .row2 { grid-template-columns: 1fr; }
+  .card-name { font-size: 1.55rem; }
+  .card-text { font-size: 1.18rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .fog, .mote { animation: none; }
+  .mote { display: none; }
+  .flipper { transition: none; }
+}
+</style>
+
+<canvas id="grove" aria-hidden="true"></canvas>
+<div class="fog fog-1" aria-hidden="true"></div>
+<div class="fog fog-2" aria-hidden="true"></div>
+<div id="motes" aria-hidden="true"></div>
+
+<div class="wrap">
+  <header>
+    <h1 id="deckTitle">Shadow Work Deck</h1>
+    <p class="subtitle" id="deckSubtitle"></p>
+  </header>
+
+  <div class="controls">
+    <div class="group">
+      <span class="group-label" id="drawLbl">Draw from</span>
+      <div class="pills" id="filters" role="group" aria-labelledby="drawLbl">
+        <button class="pill" data-filter="all" aria-pressed="true">Whole deck</button>
+        <button class="pill" data-filter="shadow" aria-pressed="false">Shadow</button>
+        <button class="pill" data-filter="lantern" aria-pressed="false">Lantern</button>
+      </div>
+    </div>
+    <div class="group">
+      <span class="group-label" id="forLbl">Reading for</span>
+      <div class="pills" id="modes" role="group" aria-labelledby="forLbl">
+        <button class="pill" data-mode="self" aria-pressed="true">Myself</button>
+        <button class="pill" data-mode="client" aria-pressed="false">A client</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage">
+    <button class="deck-card" id="deckCard" aria-label="Draw a card">
+      <div class="flipper">
+        <div class="face back">
+          <svg viewBox="0 0 250 390" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+            <defs>
+              <radialGradient id="backMoon" cx="42%" cy="38%" r="65%">
+                <stop offset="0" stop-color="#eaa27c"/><stop offset="0.7" stop-color="#b95b3d"/><stop offset="1" stop-color="#7f3b26"/>
+              </radialGradient>
+              <radialGradient id="backGlow" cx="50%" cy="50%" r="50%">
+                <stop offset="0" stop-color="#c9694a" stop-opacity="0.35"/><stop offset="1" stop-color="#c9694a" stop-opacity="0"/>
+              </radialGradient>
+            </defs>
+            <rect x="12" y="12" width="226" height="366" rx="10" fill="none" stroke="#f3c56e" stroke-opacity="0.45"/>
+            <rect x="20" y="20" width="210" height="350" rx="6" fill="none" stroke="#f3c56e" stroke-opacity="0.2"/>
+            <g fill="#f3c56e" fill-opacity="0.7">
+              <path d="M34 28L36 34L34 40L32 34Z"/><path d="M216 28L218 34L216 40L214 34Z"/>
+              <path d="M34 350L36 356L34 362L32 356Z"/><path d="M216 350L218 356L216 362L214 356Z"/>
+            </g>
+            <g id="phases">
+              <g fill="none" stroke="#f3c56e" stroke-opacity="0.35" stroke-width="0.8">
+                <circle cx="85" cy="58" r="6"/><circle cx="105" cy="58" r="6"/><circle cx="145" cy="58" r="6"/><circle cx="165" cy="58" r="6"/>
+              </g>
+              <g fill="#ede5d3" fill-opacity="0.85">
+                <path d="M85 52A6 6 0 0 0 85 64A3.6 6 0 0 1 85 52Z"/>
+                <path d="M105 52A6 6 0 0 0 105 64Z"/>
+                <path d="M145 52A6 6 0 0 1 145 64Z"/>
+                <path d="M165 52A6 6 0 0 1 165 64A3.6 6 0 0 0 165 52Z"/>
+              </g>
+              <circle cx="125" cy="58" r="6.5" fill="#c9694a"/>
+            </g>
+            <circle cx="125" cy="190" r="95" fill="url(#backGlow)"/>
+            <circle cx="125" cy="190" r="66" fill="none" stroke="#f3c56e" stroke-opacity="0.22" stroke-dasharray="2 5"/>
+            <circle cx="125" cy="190" r="56" fill="none" stroke="#f3c56e" stroke-opacity="0.45"/>
+            <g stroke="#f3c56e" stroke-linecap="round">
+              <g stroke-opacity="0.6"><path d="M125 118V108M125 262V272M53 190H43M197 190H207"/></g>
+              <g stroke-opacity="0.35"><path d="M175.9 139.1L180.9 134.1M74.1 139.1L69.1 134.1M175.9 240.9L180.9 245.9M74.1 240.9L69.1 245.9"/></g>
+            </g>
+            <circle cx="125" cy="190" r="40" fill="url(#backMoon)"/>
+            <g fill="#6e3121" fill-opacity="0.35">
+              <circle cx="113" cy="178" r="7"/><circle cx="134" cy="200" r="9"/><circle cx="131" cy="173" r="4"/><circle cx="112" cy="204" r="4.5"/>
+            </g>
+            <text x="125" y="300" text-anchor="middle" font-family="'IM Fell English SC', Georgia, serif" font-size="16" letter-spacing="4" fill="#f3c56e">Shadow Work</text>
+            <path d="M95 311H155" stroke="#f3c56e" stroke-opacity="0.4"/>
+            <text x="125" y="328" text-anchor="middle" font-family="'IM Fell English', Georgia, serif" font-style="italic" font-size="12" fill="#9fb8ae">draw a card</text>
+            <use href="#phases" y="294"/>
+          </svg>
+        </div>
+        <div class="face front" id="cardFront"></div>
+      </div>
+    </button>
+    <div class="hint" id="hint">Tap the card to draw</div>
+    <div class="btn-row">
+      <button class="btn btn-primary" id="drawBtn">Draw a card</button>
+      <button class="btn btn-ghost" id="reflectBtn" hidden>Reflect on this card</button>
+      <button class="btn btn-ghost" id="spreadBtn">Lay the Candle Path</button>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-ghost btn-small" id="galleryBtn">Browse the deck</button>
+      <button class="btn btn-ghost btn-small" id="journalBtn">My journal</button>
+    </div>
+  </div>
+
+  <section class="spread" id="spreadSection" hidden>
+    <div class="section-head">
+      <h2>The Candle Path</h2>
+      <p>Three cards, read left to right. Tap any card to write on it.</p>
+    </div>
+    <div class="spread-grid" id="spreadGrid"></div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <h2>How to work with this deck</h2>
+    </div>
+    <div class="howto">
+      <div>
+        <h3>For yourself</h3>
+        <p>Pull a Shadow card and write for ten minutes without editing. Close with a Lantern card and say it out loud. Your reflections save to your journal in this browser.</p>
+      </div>
+      <div>
+        <h3>With a client</h3>
+        <p>Switch to <em>A client</em> and every Shadow card shows the question to ask in session. Draw together on a call, then let the Lantern card be the line they take home.</p>
+      </div>
+      <div>
+        <h3>The Candle Path</h3>
+        <p>A three-card spread. The Root names what is buried, the Moon names what is ready to be seen, and the Lantern gives you the action or belief to carry forward.</p>
+      </div>
+    </div>
+    <p class="care">Shadow work stirs things up. Go at your own pace, and refer a client to a licensed therapist when they need more support than coaching holds.</p>
+  </section>
+
+  <section id="gallerySection" hidden>
+    <div class="section-head">
+      <h2>The Full Deck</h2>
+      <p id="deckCount"></p>
+    </div>
+    <p class="tap-hint">Tap any card to reflect on it &nbsp;·&nbsp; a flame marks the ones you've written on</p>
+    <div class="gallery" id="gallery"></div>
+
+    <div class="panel">
+      <h3>Add your own card</h3>
+      <p class="help">Write a Shadow prompt or a Lantern affirmation and it shuffles into the deck. Your cards save to this browser.</p>
+      <div class="fields">
+        <div class="row2">
+          <div class="field">
+            <label for="typeField">Card type</label>
+            <select id="typeField">
+              <option value="shadow">Shadow (a prompt to write on)</option>
+              <option value="lantern">Lantern (an affirmation to claim)</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="nameInput">Card name</label>
+            <input type="text" id="nameInput" placeholder="e.g. The Thorn Gate" maxlength="36">
+          </div>
+        </div>
+        <div class="field">
+          <label for="textInput" id="textLabel">Journal prompt</label>
+          <textarea id="textInput" maxlength="240"></textarea>
+        </div>
+        <div class="field" id="clientField">
+          <label for="clientInput">Question to ask a client</label>
+          <textarea id="clientInput" maxlength="240" placeholder="e.g. What would change in your life if you let this be seen?"></textarea>
+        </div>
+      </div>
+      <div class="actions">
+        <button class="btn btn-primary" id="addBtn">Add to deck</button>
+        <button class="btn btn-ghost" id="clearMineBtn">Remove my cards</button>
+        <span class="note" id="addNote" role="status"></span>
+      </div>
+    </div>
+  </section>
+
+  <section id="journalSection" hidden>
+    <div class="section-head">
+      <h2>My Journal</h2>
+      <p id="journalCount"></p>
+    </div>
+    <div class="btn-row" id="journalActions" hidden>
+      <button class="btn btn-ghost btn-small" id="copyBtn">Copy my journal</button>
+      <span class="note" id="copyNote" role="status"></span>
+    </div>
+    <textarea class="copy-box" id="copyBox" readonly hidden aria-label="Your journal as text"></textarea>
+    <div id="journalList"></div>
+  </section>
+
+  <footer>Made for the <a href="https://www.skool.com/soul-forged-founders/about" target="_blank" rel="noopener">Alchemist's AI Toolkit</a></footer>
+</div>
+
+<div class="overlay" id="reflectModal">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalEyebrow">
+    <button class="modal-close" id="modalClose" aria-label="Close">&times;</button>
+    <div class="modal-eyebrow" id="modalEyebrow">Reflect</div>
+    <div class="modal-card" id="modalCard"></div>
+    <textarea id="reflectInput" maxlength="4000" aria-label="Your reflection"></textarea>
+    <div class="actions">
+      <button class="btn btn-primary" id="saveReflectBtn">Save to journal</button>
+      <span class="note" id="modalNote" role="status"></span>
+    </div>
+    <div class="past" id="modalPast"></div>
+  </div>
+</div>
+
+<script>
+/* ============================================================
+   THE DECK  :  edit me to build your own
+   ------------------------------------------------------------
+   Two kinds of cards:
+     { type: "shadow",  name: "...", text: "journal prompt", client: "question to ask a client" }
+     { type: "lantern", name: "...", text: "affirmation" }
+   ============================================================ */
+const DECK_META = {
+  title: "Shadow Work Deck",
+  subtitle: "Journal prompts and affirmations for the patterns you carry. Pull a card for your own journaling, or bring it into a session and ask your client the question on the card."
+};
+
+const CARDS = [
+  // ---- Shadow cards ----
+  { type: "shadow", name: "The Blood Moon",
+    text: "What part of yourself do you keep hidden because it feels like too much? Write about it in full.",
+    client: "What part of you do you tone down around other people?" },
+  { type: "shadow", name: "Black Rose",
+    text: "Name someone whose life stings a little to watch. Write exactly what they have that you want.",
+    client: "Whose life is hard for you to watch right now, and what does it show you that you want?" },
+  { type: "shadow", name: "The Twisted Root",
+    text: "Write your earliest memory of feeling you had to earn love or approval. What rule did it teach you?",
+    client: "What did you learn growing up about what makes a person worthy?" },
+  { type: "shadow", name: "The Candle Path",
+    text: "Name the change you keep moving to someday. Write what you expect to happen once you make it.",
+    client: "What change keeps getting moved to someday, and what are you bracing for once you make it?" },
+  { type: "shadow", name: "The Hollow",
+    text: "When someone pulls away from you, what story do you tell yourself about why? Write it word for word.",
+    client: "When someone goes quiet on you, what do you decide it says about you?" },
+  { type: "shadow", name: "Iron Lantern",
+    text: "Which of your strengths do you downplay when someone compliments it? Write the compliment and the reply you usually give.",
+    client: "What do people thank you for that you wave away?" },
+  { type: "shadow", name: "Fallen Petals",
+    text: "List three things you started and let go of. Beside each, write what you felt right before you stopped.",
+    client: "Tell me about the last thing you started and dropped. What happened the day you stopped?" },
+  { type: "shadow", name: "The Fog",
+    text: "What decision have you called unclear for more than a month? Write everything you already know about it.",
+    client: "If you had to decide today, what would you choose?" },
+  { type: "shadow", name: "Moss Stone",
+    text: "Where in your life are you staying small because it feels safe? Name the comfort you get from staying there.",
+    client: "What does staying where you are protect you from?" },
+  { type: "shadow", name: "The Archway",
+    text: "Picture your life with the thing you want most. Write who you worry would feel uneasy about it.",
+    client: "Who in your life might feel uneasy if you got what you want?" },
+  { type: "shadow", name: "The Wick",
+    text: "Where do you give more than you want to give? Make the list, then circle one place you are ready to give less.",
+    client: "Where do you feel drained after showing up for someone, and what would a boundary there look like?" },
+  { type: "shadow", name: "Nightshade",
+    text: "Write the harshest thing you fear someone could say about you. Then mark each line as fact or fear.",
+    client: "What criticism would you least want to hear, and who first said something like it to you?" },
+  { type: "shadow", name: "The Watcher",
+    text: "Whose approval do you still picture when you make a choice? Write what you imagine they think.",
+    client: "When you make a big choice, whose reaction do you picture first?" },
+  { type: "shadow", name: "The Burnt Candle",
+    text: "Recall the last time you ran yourself into the ground for someone else. Write what you were trying to prove.",
+    client: "What were you trying to prove the last time you gave more than you had?" },
+  { type: "shadow", name: "The Old Oak",
+    text: "Which family role do you still carry: the fixer, the quiet one, the responsible one? Write where it shows up in your life now.",
+    client: "Which role did you play in your family, and where does it show up in your life now?" },
+
+  // ---- Lantern cards ----
+  { type: "lantern", name: "The Clearing", text: "I let my whole self be seen." },
+  { type: "lantern", name: "Candlelight", text: "I receive love, help, and good things with ease." },
+  { type: "lantern", name: "Rose in Bloom", text: "Someone else's joy shows me what is possible for me." },
+  { type: "lantern", name: "Lantern Keeper", text: "I care for the people I love and I care for myself." },
+  { type: "lantern", name: "Moonrise", text: "I trust my intuition and I act on it." },
+  { type: "lantern", name: "Rooted", text: "I keep the beliefs that serve me and release the ones I inherited." },
+  { type: "lantern", name: "Evening Star", text: "I am safe to be seen." },
+  { type: "lantern", name: "The Ember", text: "I take the next step before I see the whole path." },
+  { type: "lantern", name: "Moss & Stone", text: "Rest is part of how I care for my life." },
+  { type: "lantern", name: "The Gate Opens", text: "I welcome people who love me as I am." },
+  { type: "lantern", name: "Silver Mist", text: "Clarity comes to me as I act." },
+  { type: "lantern", name: "Night Bloom", text: "The parts of me I used to hide are welcome here." },
+  { type: "lantern", name: "Full Moon", text: "I finish what I start and I celebrate it out loud." },
+  { type: "lantern", name: "Wax & Flame", text: "My energy is precious and I spend it on purpose." },
+  { type: "lantern", name: "The Path Home", text: "I meet my shadow with curiosity and walk forward whole." }
+];
+
+/* ============================================================
+   App logic
+   ============================================================ */
+const CARDS_KEY = "umbraUserCards.v1";
+const JOURNAL_KEY = "umbraJournal.v1";
+const MODE_KEY = "umbraMode.v1";
+
+const SIGIL = {
+  shadow: '<svg class="card-sigil" viewBox="0 0 32 32" aria-hidden="true"><path d="M20 4a12 12 0 1 0 8 20.5A10 10 0 0 1 20 4z" fill="#c9694a"/></svg>',
+  lantern: '<svg class="card-sigil" viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3c3 6 7 9 7 15a7 7 0 0 1-14 0c0-4 2-6 3-9 1 2 2 3 3 3-1-3 0-6 1-9z" fill="#f3c56e"/><path d="M16 15c1.5 2 3 3.5 3 5.5a3 3 0 0 1-6 0c0-2 1.5-3.5 3-5.5z" fill="#ffe2a3"/></svg>'
+};
+const TYPE_LABEL = { shadow: "Shadow", lantern: "Lantern" };
+
+function readStore(key, fallback) {
+  try { const v = JSON.parse(localStorage.getItem(key)); return v == null ? fallback : v; }
+  catch (e) { return fallback; }
+}
+function writeStore(key, val) { try { localStorage.setItem(key, JSON.stringify(val)); } catch (e) {} }
+
+let activeFilter = "all";
+let mode = readStore(MODE_KEY, "self") === "client" ? "client" : "self";
+let lastIndex = -1;
+let currentDrawn = null;
+
+const $ = id => document.getElementById(id);
+$("deckTitle").textContent = DECK_META.title;
+$("deckSubtitle").textContent = DECK_META.subtitle;
+
+function loadUserCards() { return readStore(CARDS_KEY, []); }
+function allCards() { return CARDS.concat(loadUserCards()); }
+function cardKey(c) { return c.type + "||" + (c.name || "") + "||" + c.text; }
+function loadJournal() { return readStore(JOURNAL_KEY, []); }
+function saveJournal(j) { writeStore(JOURNAL_KEY, j); }
+function reflectedSet() { return new Set(loadJournal().map(e => e.key)); }
+function esc(s) { return String(s).replace(/[&<>"']/g, m => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[m])); }
+function pad(n) { return String(n).padStart(2, "0"); }
+
+// The line a card shows depends on who you're reading for
+function shownText(c) { return (mode === "client" && c.type === "shadow" && c.client) ? c.client : c.text; }
+
+// ---------- Draw ----------
+const deckCard = $("deckCard"), cardFront = $("cardFront"), hint = $("hint");
+const drawBtn = $("drawBtn"), reflectBtn = $("reflectBtn");
+
+function renderFront(card, idx, total) {
+  let h = '<div class="card-type">' + TYPE_LABEL[card.type] + '</div>';
+  h += SIGIL[card.type];
+  h += '<div class="card-name">' + esc(card.name || TYPE_LABEL[card.type]) + '</div>';
+  if (mode === "client" && card.type === "shadow" && card.client) h += '<div class="card-for">Ask your client</div>';
+  if (mode === "client" && card.type === "lantern") h += '<div class="card-for">Have them say it aloud</div>';
+  h += '<div class="card-text">' + esc(shownText(card)) + '</div>';
+  h += '<div class="card-num">No. ' + pad(idx + 1) + ' of ' + total + '</div>';
+  if (reflectedSet().has(cardKey(card))) h += '<div class="reflected-mark" title="In your journal">&#10022;</div>';
+  cardFront.className = "face front " + card.type;
+  cardFront.innerHTML = h;
+}
+
+function pool() {
+  return allCards().map((c, i) => ({ c, i })).filter(o => activeFilter === "all" || o.c.type === activeFilter);
+}
+
+function draw() {
+  const p = pool();
+  if (!p.length) return;
+  let pick;
+  do { pick = p[Math.floor(Math.random() * p.length)]; } while (p.length > 1 && pick.i === lastIndex);
+  lastIndex = pick.i;
+  currentDrawn = { card: pick.c, idx: pick.i };
+  const total = allCards().length;
+  if (deckCard.classList.contains("revealed")) {
+    deckCard.classList.remove("revealed");
+    setTimeout(() => { renderFront(pick.c, pick.i, total); deckCard.classList.add("revealed"); }, 300);
+  } else {
+    renderFront(pick.c, pick.i, total);
+    deckCard.classList.add("revealed");
+  }
+  deckCard.setAttribute("aria-label", "Draw another card");
+  hint.textContent = "Tap to draw again";
+  drawBtn.textContent = "Draw again";
+  reflectBtn.hidden = false;
+}
+deckCard.addEventListener("click", draw);
+drawBtn.addEventListener("click", draw);
+reflectBtn.addEventListener("click", () => { if (currentDrawn) openReflect(currentDrawn.card); });
+
+function setPressed(groupEl, attr, value) {
+  groupEl.querySelectorAll(".pill").forEach(p => p.setAttribute("aria-pressed", String(p.dataset[attr] === value)));
+}
+$("filters").addEventListener("click", e => {
+  const b = e.target.closest(".pill"); if (!b) return;
+  activeFilter = b.dataset.filter; lastIndex = -1;
+  setPressed($("filters"), "filter", activeFilter);
+});
+$("modes").addEventListener("click", e => {
+  const b = e.target.closest(".pill"); if (!b) return;
+  mode = b.dataset.mode; writeStore(MODE_KEY, mode);
+  setPressed($("modes"), "mode", mode);
+  refreshAll();
+});
+setPressed($("modes"), "mode", mode);
+
+function refreshAll() {
+  if (currentDrawn && deckCard.classList.contains("revealed")) renderFront(currentDrawn.card, currentDrawn.idx, allCards().length);
+  if (!$("spreadSection").hidden) renderSpread();
+  if (!$("gallerySection").hidden) renderGallery();
+  if (!$("journalSection").hidden) renderJournal();
+  updateJournalBtn();
+}
+
+// ---------- Candle Path spread ----------
+const SLOTS = [
+  { key: "root", title: "Root", sub: "what is buried", type: "shadow" },
+  { key: "moon", title: "Moon", sub: "what is ready to be seen", type: "shadow" },
+  { key: "lantern", title: "Lantern", sub: "what carries you forward", type: "lantern" }
+];
+let spread = null;
+
+function laySpread() {
+  const all = allCards();
+  const shadows = all.filter(c => c.type === "shadow").sort(() => Math.random() - 0.5);
+  const lanterns = all.filter(c => c.type === "lantern");
+  spread = [shadows[0], shadows[1] || shadows[0], lanterns[Math.floor(Math.random() * lanterns.length)]];
+  renderSpread();
+  $("spreadSection").hidden = false;
+  $("spreadBtn").textContent = "Lay a new Candle Path";
+  $("spreadSection").scrollIntoView({ behavior: "smooth", block: "start" });
+}
+function renderSpread() {
+  if (!spread) return;
+  $("spreadGrid").innerHTML = SLOTS.map((s, i) => {
+    const c = spread[i];
+    if (!c) return "";
+    return '<div class="spread-slot"><div class="slot-label"><b>' + s.title + '</b><span>' + s.sub + '</span></div>' +
+      '<button class="spread-card ' + c.type + '" data-slot="' + i + '">' + SIGIL[c.type] +
+      '<span class="s-name">' + esc(c.name) + '</span><span class="s-text">' + esc(shownText(c)) + '</span></button></div>';
+  }).join("");
+}
+$("spreadBtn").addEventListener("click", laySpread);
+$("spreadGrid").addEventListener("click", e => {
+  const b = e.target.closest(".spread-card"); if (!b) return;
+  const i = +b.dataset.slot;
+  openReflect(spread[i], SLOTS[i].title + " · " + SLOTS[i].sub);
+});
+
+// ---------- Gallery ----------
+function renderGallery() {
+  const all = allCards(), mine = loadUserCards().length, done = reflectedSet();
+  $("deckCount").textContent = all.length + " cards" + (mine ? "  ·  " + mine + " of them yours" : "");
+  $("gallery").innerHTML = all.map((c, i) => {
+    const cls = "mini " + c.type + (i >= CARDS.length ? " user-card" : "") + (done.has(cardKey(c)) ? " reflected" : "");
+    return '<button class="' + cls + '" data-idx="' + i + '">' +
+      (done.has(cardKey(c)) ? '<span class="mbadge" title="In your journal">&#10022;</span>' : '') +
+      '<span class="mtype">' + TYPE_LABEL[c.type] + '</span>' +
+      '<span class="mname">' + esc(c.name || TYPE_LABEL[c.type]) + '</span>' +
+      '<span class="mtext">' + esc(shownText(c)) + '</span>' +
+      '<span class="mnum">' + pad(i + 1) + '</span></button>';
+  }).join("");
+}
+$("gallery").addEventListener("click", e => {
+  const m = e.target.closest(".mini"); if (!m) return;
+  const c = allCards()[+m.dataset.idx]; if (c) openReflect(c);
+});
+function toggleSection(sectionId, btnId, openLabel, closeLabel, render) {
+  const s = $(sectionId), b = $(btnId);
+  if (!s.hidden) { s.hidden = true; if (openLabel) b.textContent = openLabel; return; }
+  render(); s.hidden = false; if (closeLabel) b.textContent = closeLabel;
+  s.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+$("galleryBtn").addEventListener("click", () => toggleSection("gallerySection", "galleryBtn", "Browse the deck", "Hide the deck", renderGallery));
+
+// ---------- Add your own ----------
+const typeField = $("typeField");
+function syncForm() {
+  const shadow = typeField.value === "shadow";
+  $("clientField").hidden = !shadow;
+  $("textLabel").textContent = shadow ? "Journal prompt" : "Affirmation";
+  $("textInput").placeholder = shadow
+    ? "e.g. Write the thing you have been wanting to say, and who you want to say it to."
+    : "e.g. I am allowed to take up space.";
+}
+typeField.addEventListener("change", syncForm);
+syncForm();
+
+let noteTimer;
+function flash(el, msg) { el.textContent = msg; clearTimeout(el._t); el._t = setTimeout(() => { el.textContent = ""; }, 3200); }
+
+$("addBtn").addEventListener("click", () => {
+  const type = typeField.value, text = $("textInput").value.trim();
+  if (!text) { flash($("addNote"), "Write the card first."); return; }
+  const card = { type, name: $("nameInput").value.trim() || (type === "shadow" ? "Untitled Shadow" : "Untitled Lantern"), text };
+  if (type === "shadow" && $("clientInput").value.trim()) card.client = $("clientInput").value.trim();
+  const mine = loadUserCards(); mine.push(card); writeStore(CARDS_KEY, mine);
+  $("textInput").value = ""; $("nameInput").value = ""; $("clientInput").value = "";
+  renderGallery();
+  flash($("addNote"), "Added. It's in the deck now.");
+});
+
+// Two-tap confirm, since the viewer blocks confirm() dialogs
+function armed(btn, label) {
+  if (btn.classList.contains("armed")) return true;
+  btn.classList.add("armed");
+  const old = btn.textContent; btn.textContent = label;
+  setTimeout(() => { btn.classList.remove("armed"); btn.textContent = old; }, 3000);
+  return false;
+}
+$("clearMineBtn").addEventListener("click", e => {
+  if (!loadUserCards().length) { flash($("addNote"), "You haven't added any cards yet."); return; }
+  if (!armed(e.currentTarget, "Tap again to remove")) return;
+  writeStore(CARDS_KEY, []); lastIndex = -1;
+  renderGallery(); flash($("addNote"), "Your cards were removed. The original deck stays.");
+});
+
+// ---------- Reflect modal ----------
+const modal = $("reflectModal"), reflectInput = $("reflectInput");
+let modalCard = null;
+
+function formatDate(ts) {
+  const d = new Date(ts);
+  return d.toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" }) + "  ·  " +
+    d.toLocaleTimeString(undefined, { hour: "numeric", minute: "2-digit" });
+}
+function entryHtml(e, withCard) {
+  let h = '<div class="entry"><button class="del" data-id="' + e.id + '">Delete</button>';
+  if (withCard) h += '<div class="e-type">' + TYPE_LABEL[e.cardType] + (e.forClient ? " · client session" : "") + '</div><div class="e-card">' + esc(e.cardName) + '</div>';
+  else if (e.forClient) h += '<div class="e-type">Client session</div>';
+  return h + '<div class="e-body">' + esc(e.body) + '</div><div class="e-date">' + formatDate(e.ts) + '</div></div>';
+}
+function renderModalPast() {
+  const list = loadJournal().filter(e => e.key === cardKey(modalCard)).sort((a, b) => b.ts - a.ts);
+  $("modalPast").innerHTML = list.length ? '<h4>Earlier entries on this card</h4>' + list.map(e => entryHtml(e, false)).join("") : "";
+}
+function openReflect(card, eyebrow) {
+  modalCard = card;
+  $("modalEyebrow").textContent = eyebrow || (mode === "client" ? "Session notes" : "Reflect");
+  let h = '<div class="mc-name">' + esc(card.name) + '</div>';
+  h += '<div class="mc-text ' + card.type + '">' + esc(card.text) + '</div>';
+  if (card.type === "shadow" && card.client) h += '<div class="mc-client"><b>Ask a client</b> &nbsp;' + esc(card.client) + '</div>';
+  $("modalCard").innerHTML = h;
+  reflectInput.value = "";
+  reflectInput.placeholder = mode === "client"
+    ? "Session notes. Keep names and identifying details out."
+    : "Write what comes up. This stays in your browser.";
+  $("modalNote").textContent = "";
+  renderModalPast();
+  modal.classList.add("open");
+  setTimeout(() => reflectInput.focus(), 80);
+}
+function closeModal() { modal.classList.remove("open"); modalCard = null; }
+$("modalClose").addEventListener("click", closeModal);
+modal.addEventListener("click", e => { if (e.target === modal) closeModal(); });
+document.addEventListener("keydown", e => { if (e.key === "Escape" && modal.classList.contains("open")) closeModal(); });
+
+$("saveReflectBtn").addEventListener("click", () => {
+  const body = reflectInput.value.trim();
+  if (!body) { flash($("modalNote"), "Write something first."); return; }
+  const j = loadJournal();
+  j.push({ id: Date.now().toString(36) + Math.random().toString(36).slice(2, 7), key: cardKey(modalCard),
+    cardType: modalCard.type, cardName: modalCard.name, cardText: modalCard.text, forClient: mode === "client", body, ts: Date.now() });
+  saveJournal(j);
+  reflectInput.value = "";
+  flash($("modalNote"), "Saved to your journal.");
+  renderModalPast();
+  refreshAll();
+});
+
+function deleteFrom(e) {
+  const b = e.target.closest(".del"); if (!b) return;
+  if (!armed(b, "Tap again")) return;
+  saveJournal(loadJournal().filter(x => x.id !== b.dataset.id));
+  if (modalCard) renderModalPast();
+  refreshAll();
+}
+$("modalPast").addEventListener("click", deleteFrom);
+
+// ---------- Journal ----------
+function renderJournal() {
+  const j = loadJournal().sort((a, b) => b.ts - a.ts);
+  $("journalCount").textContent = j.length ? j.length + (j.length === 1 ? " entry" : " entries") : "";
+  $("journalActions").hidden = !j.length;
+  if (!j.length) $("copyBox").hidden = true;
+  $("journalList").innerHTML = j.length ? j.map(e => entryHtml(e, true)).join("")
+    : '<div class="empty">Nothing here yet. Draw a card or tap one in the deck, then write what comes up. Entries save here, in this browser.</div>';
+}
+$("journalList").addEventListener("click", deleteFrom);
+function updateJournalBtn() { const n = loadJournal().length; $("journalBtn").textContent = n ? "My journal (" + n + ")" : "My journal"; }
+$("journalBtn").addEventListener("click", () => toggleSection("journalSection", "journalBtn", null, null, renderJournal));
+
+function journalText() {
+  const j = loadJournal().sort((a, b) => b.ts - a.ts);
+  const line = "------------------------------------------------------------";
+  let out = DECK_META.title + " Journal\nCopied " + formatDate(Date.now()) + "\n" + line + "\n\n";
+  out += j.map(e => formatDate(e.ts) + "\n" + TYPE_LABEL[e.cardType] + ": " + e.cardName + (e.forClient ? " (client session)" : "") +
+    "\n" + e.cardText + "\n\n" + e.body + "\n").join("\n" + line + "\n\n");
+  return out + "\n" + line + "\nMade for the Alchemist's AI Toolkit\nhttps://www.skool.com/soul-forged-founders/about\n";
+}
+$("copyBtn").addEventListener("click", () => {
+  const text = journalText(), box = $("copyBox");
+  const fallback = () => { box.value = text; box.hidden = false; box.focus(); box.select(); flash($("copyNote"), "Select all and copy from the box below."); };
+  try {
+    navigator.clipboard.writeText(text).then(() => flash($("copyNote"), "Copied. Paste it anywhere you keep notes."), fallback);
+  } catch (e) { fallback(); }
+});
+
+updateJournalBtn();
+
+// ---------- The grove: moon, mist, and arching trees ----------
+(function grove() {
+  const cv = $("grove"), ctx = cv.getContext("2d");
+  let lastW = 0, lastH = 0;
+  function rng(seed) { return () => { seed = (seed * 16807) % 2147483647; return (seed - 1) / 2147483646; }; }
+
+  function paint() {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const W = window.innerWidth, H = window.innerHeight;
+    if (W === lastW && Math.abs(H - lastH) < 120) return;
+    lastW = W; lastH = H;
+    cv.width = W * dpr; cv.height = H * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    const bg = ctx.createLinearGradient(0, 0, 0, H);
+    bg.addColorStop(0, "#0b1512"); bg.addColorStop(0.55, "#070c0a"); bg.addColorStop(1, "#040706");
+    ctx.fillStyle = bg; ctx.fillRect(0, 0, W, H);
+
+    const mx = W / 2, my = Math.min(95, H * 0.12), mr = Math.max(34, Math.min(W, 900) * 0.055);
+    const halo = ctx.createRadialGradient(mx, my, mr * 0.5, mx, my, mr * 7);
+    halo.addColorStop(0, "rgba(201,105,74,0.32)"); halo.addColorStop(0.35, "rgba(120,150,138,0.10)"); halo.addColorStop(1, "rgba(0,0,0,0)");
+    ctx.fillStyle = halo; ctx.fillRect(0, 0, W, H);
+    const moon = ctx.createRadialGradient(mx - mr * 0.3, my - mr * 0.3, mr * 0.1, mx, my, mr);
+    moon.addColorStop(0, "#eaa27c"); moon.addColorStop(0.7, "#b95b3d"); moon.addColorStop(1, "#86402a");
+    ctx.fillStyle = moon; ctx.beginPath(); ctx.arc(mx, my, mr, 0, Math.PI * 2); ctx.fill();
+    const r = rng(7);
+    ctx.fillStyle = "rgba(90,40,26,0.35)";
+    for (let i = 0; i < 9; i++) {
+      const a = r() * Math.PI * 2, d = r() * mr * 0.75, s = mr * (0.08 + r() * 0.16);
+      ctx.beginPath(); ctx.arc(mx + Math.cos(a) * d, my + Math.sin(a) * d, s, 0, Math.PI * 2); ctx.fill();
+    }
+
+    const rand = rng(1234);
+    function branch(x, y, ang, len, w, depth, side, color) {
+      if (depth <= 0 || len < 6) return;
+      const bend = side * 0.16 * (1 - y / H + 0.3);
+      const nx = x + Math.cos(ang) * len, ny = y + Math.sin(ang) * len;
+      const cx = (x + nx) / 2 + (rand() - 0.5) * len * 0.5, cy = (y + ny) / 2 + (rand() - 0.5) * len * 0.3;
+      ctx.strokeStyle = color; ctx.lineWidth = w; ctx.lineCap = "round";
+      ctx.beginPath(); ctx.moveTo(x, y); ctx.quadraticCurveTo(cx, cy, nx, ny); ctx.stroke();
+      const kids = depth > 5 ? 1 + (rand() < 0.45 ? 1 : 0) : 2;
+      for (let k = 0; k < kids; k++) {
+        const spread = kids === 1 ? (rand() - 0.5) * 0.35 : (k === 0 ? -1 : 1) * (0.25 + rand() * 0.45);
+        branch(nx, ny, ang + spread + bend, len * (0.76 + rand() * 0.14), w * 0.7, depth - 1, side, color);
+      }
+    }
+    const scale = Math.max(0.6, Math.min(1.25, W / 1100));
+    const trunks = W < 640 ? 2 : 3;
+    [["rgba(20,32,26,0.9)", 1.15], ["#020403", 1]].forEach(([color, spreadMul], layer) => {
+      for (let side = -1; side <= 1; side += 2) {
+        for (let t = 0; t < trunks; t++) {
+          const edge = side === -1 ? 0 : W;
+          const x = edge - side * (W * (0.02 + t * 0.07) * spreadMul + rand() * 20);
+          const up = -Math.PI / 2 + side * -0.2;
+          branch(x, H + 10, up, (H * 0.2 + rand() * 50) * (layer ? 1 : 0.9), (22 - t * 5) * scale, 9, -side, color);
+        }
+      }
+    });
+    const mist = ctx.createLinearGradient(0, H * 0.6, 0, H);
+    mist.addColorStop(0, "rgba(159,184,174,0)"); mist.addColorStop(1, "rgba(159,184,174,0.08)");
+    ctx.fillStyle = mist; ctx.fillRect(0, H * 0.6, W, H * 0.4);
+  }
+  paint();
+  let t; window.addEventListener("resize", () => { clearTimeout(t); t = setTimeout(paint, 150); });
+})();
+
+// ---------- Candle motes ----------
+(function motes() {
+  if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const host = $("motes");
+  for (let i = 0; i < 22; i++) {
+    const m = document.createElement("div");
+    m.className = "mote";
+    m.style.left = Math.random() * 100 + "vw";
+    const dur = 14 + Math.random() * 14;
+    m.style.animationDuration = dur + "s";
+    m.style.animationDelay = (-Math.random() * dur) + "s";
+    m.style.setProperty("--drift", (Math.random() * 90 - 45) + "px");
+    const s = 1.5 + Math.random() * 2.5;
+    m.style.width = s + "px"; m.style.height = s + "px";
+    host.appendChild(m);
+  }
+})();
+</script>
+
+</body></html>
