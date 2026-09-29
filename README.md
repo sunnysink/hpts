@@ -11,5 +11,11 @@ The GitHub Pages site lists everything at the root:
 |---|---|
 | `index.html` | The Library — the index page that links to every artifact |
 | `archetypal-path/` | The Archetypal Path, a pathworking journey through the 22 Major Arcana |
+| `peace-love-balance-spreads/` | Peace, Love & Balance four-card spreads |
+| `sacred-inimacy-spreads/` | Sacred Intimacy four-card spreads |
+| `goddess-oracle/` | She Speaks, the goddess oracle deck |
+| `virgo-season-workbook/` | Virgo Season Workbook |
+| `libra-season-workbook/` | Libra Season Workbook |
+| `scorpio-workbook/` | Scorpio Season Handbook |
 
 Each new artifact goes in its own folder and gets a tile added to `index.html`.
