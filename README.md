@@ -14,6 +14,7 @@ The GitHub Pages site lists everything at the root:
 | `peace-love-balance-spreads/` | Peace, Love & Balance four-card spreads |
 | `sacred-intimacy-spreads/` | Sacred Intimacy four-card spreads |
 | `shadow-work-oracle/` | Shadow Work Deck, journal prompts and affirmations |
+| `moonlit-familiars/` | Moonlit Familiars, 25-card animal oracle (web-size images only) |
 | `goddess-oracle/` | She Speaks, the goddess oracle deck |
 | `virgo-season-workbook/` | Virgo Season Workbook |
 | `libra-season-workbook/` | Libra Season Workbook |
