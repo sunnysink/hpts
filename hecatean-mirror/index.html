@@ -91,8 +91,6 @@ section { padding-block: clamp(64px, 10vw, 116px); scroll-margin-top: 64px; }
 .logo h1 { font-family: var(--deco); font-weight: 400; font-size: clamp(2.8rem, 10vw, 6.4rem); line-height: 1; letter-spacing: 0.02em; color: var(--bone); }
 .logo .sub { font-family: var(--cinzel); font-weight: 500; font-size: clamp(1.5rem, 5vw, 3.1rem); letter-spacing: 0.5em; padding-left: 0.5em; color: var(--bone); line-height: 1.1; }
 .tagline { margin: 16px auto 0; font-family: var(--serif); font-size: clamp(1rem, 2.2vw, 1.3rem); color: var(--ash); }
-.tonight { margin: 22px auto 0; display: inline-flex; flex-wrap: wrap; justify-content: center; gap: 6px 18px; font-family: var(--label); font-style: italic; font-weight: 500; font-size: 0.68rem; letter-spacing: 0.26em; text-transform: uppercase; color: var(--mist); }
-.tonight b { font-weight: 600; color: var(--gold-pale); }
 .hold-hint { margin: 16px auto 0; max-width: 440px; font-style: italic; font-size: 1.08rem; color: var(--ash); }
 .hold-hint small { display: block; font-family: var(--label); font-style: italic; font-weight: 500; font-size: 0.64rem; letter-spacing: 0.26em; text-transform: uppercase; color: var(--mist); margin-top: 8px; }
 .toggle { margin: 20px auto 0; display: inline-flex; align-items: center; gap: 12px; cursor: pointer; font-family: var(--label); font-style: italic; font-weight: 500; font-size: 0.66rem; letter-spacing: 0.24em; text-transform: uppercase; color: var(--mist); }
@@ -304,7 +302,6 @@ footer .f-mark { font-family: var(--deco); font-style: normal; text-transform: n
   </button>
   <div class="logo"><h1>Hecatean</h1><div class="sub">MIRROR</div></div>
   <p class="tagline">The Mirror of the Veil, by Sunny Sink</p>
-  <div class="tonight"><span>Tonight</span><b id="phaseName">&nbsp;</b><span id="phaseLit">&nbsp;</span></div>
   <p class="hold-hint">Press and hold the torch until it flares. The card meeting you at this threshold turns over below.<small>Keep holding while the flame rises</small></p>
   <label class="toggle"><input type="checkbox" id="revToggle"><span class="sw"></span>Draw reversed cards too</label>
 </header>
@@ -387,7 +384,7 @@ footer .f-mark { font-family: var(--deco); font-style: normal; text-transform: n
       <span class="eyebrow">Kept on this device</span>
       <h2>Mirror Journal</h2>
       <div class="flourish"><i></i></div>
-      <p>Every card and spread you keep is saved here with the date and the moon it came under.</p>
+      <p>Every card and spread you keep is saved here with the date you drew it.</p>
     </div>
     <div class="journal" id="journalList"></div>
     <div class="safe" id="safe">
@@ -455,15 +452,6 @@ var BACK = '<img src="cards/back.webp" alt="">';
 document.querySelectorAll('.face.back').forEach(function(b){ b.innerHTML = BACK; });
 function setFront(cardEl, i, rev){ var f=cardEl.querySelector('.face.front'); f.classList.toggle('rev', !!rev); f.innerHTML = '<img src="'+img(i)+'" alt="'+esc(DECK[i].t)+(rev?', reversed':'')+'" loading="lazy">'; }
 
-/* ---------- moon phase ---------- */
-var SYN = 29.530588853, REF = Date.UTC(2000,0,6,18,14);
-function moonNow(){ var age=((Date.now()-REF)/86400000)%SYN; if(age<0) age+=SYN; var f=age/SYN; var lit=(1-Math.cos(2*Math.PI*f))/2;
-  var name = age<1.85?'Dark Moon': age<5.54?'Waxing Crescent': age<9.23?'First Quarter': age<12.92?'Waxing Gibbous': age<16.61?'Full Moon': age<20.30?'Waning Gibbous': age<23.99?'Last Quarter': age<27.68?'Waning Crescent':'Dark Moon';
-  return {f:f, lit:lit, name:name}; }
-var MOON = moonNow();
-document.getElementById('phaseName').textContent = MOON.name;
-document.getElementById('phaseLit').textContent = Math.round(MOON.lit*100) + '% lit';
-
 /* ---------- reversals ---------- */
 var revToggle=document.getElementById('revToggle'), ALLOW_REV=!!lsGet(K+'reversals',false);
 revToggle.checked=ALLOW_REV;
@@ -481,7 +469,7 @@ function readingHTML(i, opts){ var c=DECK[i]; opts=opts||{};
 }
 var stage=document.getElementById('stage'), stageCard=document.getElementById('stageCard'), stageReading=document.getElementById('stageReading');
 function showWaiting(){ stageReading.innerHTML='<div class="waiting"><div class="num">Face down</div><h3>Your card is waiting</h3><p class="meaning" style="color:var(--mist)">Hold the torch above until it flares. The card meeting you tonight turns over here.</p><button class="btn" data-scrolltop>Back to the torch</button></div>'; }
-function stageLabel(){ return 'Drawn under a '+MOON.name.toLowerCase(); }
+function stageLabel(){ return 'Drawn today'; }
 function showCard(i, rev, animate){
   var place=function(){ setFront(stageCard,i,rev); stageReading.innerHTML=readingHTML(i,{id:'stage',again:true,rev:rev,label:stageLabel()}); };
   if(!animate || REDUCED){ stageCard.classList.remove('flipped'); place(); stageCard.classList.add('flipped'); return; }
@@ -570,7 +558,7 @@ dlg.addEventListener('click',function(e){ if(e.target===dlg) dlg.close(); });
 /* ---------- journal ---------- */
 var JKEY=K+'journal';
 function entries(){ var e=lsGet(JKEY,[]); return Array.isArray(e)?e:[]; }
-function addEntry(o){ var e=entries(); e.unshift({id:Date.now()+''+rand(1000), t:new Date().toISOString(), phase:MOON.name, lit:Math.round(MOON.lit*100), kind:o.kind, spread:o.spread||'', pos:o.pos||[], pnotes:o.pnotes||[], cards:o.cards, revs:o.revs||[], note:o.note||''}); lsSet(JKEY,e); renderJournal(); }
+function addEntry(o){ var e=entries(); e.unshift({id:Date.now()+''+rand(1000), t:new Date().toISOString(), kind:o.kind, spread:o.spread||'', pos:o.pos||[], pnotes:o.pnotes||[], cards:o.cards, revs:o.revs||[], note:o.note||''}); lsSet(JKEY,e); renderJournal(); }
 function renderJournal(){ var list=document.getElementById('journalList'), e=entries();
   if(!e.length){ list.innerHTML='<div class="empty"><p>Your journal is empty for now.</p><p>Draw a card or lay a spread, then choose Keep in my journal.</p></div>'; return; }
   list.innerHTML='';
@@ -578,7 +566,7 @@ function renderJournal(){ var list=document.getElementById('journalList'), e=ent
     var revs=en.revs||[];
     var names=en.cards.map(function(i,k){ return DECK[i]?DECK[i].t+(revs[k]?' (reversed)':''):''; });
     el.innerHTML='<div class="thumbs">'+en.cards.map(function(i,k){ return '<img src="'+img(i)+'" alt="'+esc(DECK[i].t)+'"'+(revs[k]?' class="rev"':'')+'>'; }).join('')+'</div>'
-      +'<div style="min-width:0"><div class="entry-meta">'+d.toLocaleDateString(undefined,{month:'long',day:'numeric',year:'numeric'})+' &middot; '+esc(en.phase)+', '+en.lit+'% lit'+'</div>'
+      +'<div style="min-width:0"><div class="entry-meta">'+d.toLocaleDateString(undefined,{month:'long',day:'numeric',year:'numeric'})+'</div>'
       +'<h4>'+esc(en.kind==='spread'?en.spread:names[0])+'</h4>'
       +(en.kind==='spread' ? en.cards.map(function(i,k){ var pl=(en.pos||[])[k]; return '<div class="pn"><span class="sj-label">'+(k+1)+(pl?' &middot; '+esc(pl):'')+' <span class="cn">&middot; '+esc(names[k])+'</span></span><textarea data-k="'+k+'" aria-label="Note for '+esc(names[k])+'">'+esc((en.pnotes||[])[k]||'')+'</textarea></div>'; }).join('')+'<div class="pn"><span class="sj-label">The whole reading</span>' : '')
       +'<textarea data-k="whole" aria-label="Note">'+esc(en.note)+'</textarea>'+(en.kind==='spread'?'</div>':'')+'<div class="entry-foot"><span class="toast">Saved</span><button class="btn quiet" data-del>Delete</button></div></div>';
