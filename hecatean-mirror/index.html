@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>The Hecatean Mirror</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cinzel:wght@400;500;600&family=Lora:ital,wght@0,400;0,500;1,400;1,500&family=Montserrat:ital,wght@1,500;1,600&display=swap" rel="stylesheet">
+<style>
+/* Layout: a night shore lit by one torch. Hold the torch to draw, then three spreads from the guidebook, the full deck by movement, how to read, and a journal. Hecate's Path board, single dark look by design. */
+:root {
+  color-scheme: dark;
+  --abyss: #0B1113;       /* board primary dark */
+  --abyss-2: #121B1E;
+  --slate: #3E5060;       /* dark neutral */
+  --sea: #2A4A44;         /* deep secondary green */
+  --ash: #D3D3D5;         /* board primary light */
+  --bone: #EDEBE6;        /* light accent */
+  --mist: #9DAAAD;
+  --gold: #E0A73E;        /* torch gold */
+  --gold-pale: #EBC983;
+  --tan: #C4A47A;
+  --gold-soft: rgba(224,167,62,0.40);
+  --gold-faint: rgba(224,167,62,0.16);
+  --line: rgba(211,211,213,0.13);
+  --teal-glow: rgba(70,140,146,0.22);
+  --deco: 'Cinzel Decorative', 'Cinzel', 'Trajan Pro', Georgia, serif;
+  --cinzel: 'Cinzel', 'Trajan Pro', Georgia, serif;
+  --serif: 'Lora', Georgia, 'Times New Roman', serif;
+  --label: 'Montserrat', 'Helvetica Neue', Arial, sans-serif;
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --card-ratio: 640 / 1068;
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+html, body { overflow-x: clip; }
+body {
+  margin: 0; min-height: 100vh; background: var(--abyss); color: var(--ash);
+  font-family: var(--serif); font-size: 17px; line-height: 1.7; -webkit-font-smoothing: antialiased;
+}
+body::before {
+  content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 0;
+  background:
+    radial-gradient(1100px 640px at 50% -8%, var(--teal-glow), transparent 62%),
+    radial-gradient(900px 600px at -10% 85%, rgba(42,74,68,0.55), transparent 65%),
+    radial-gradient(700px 520px at 110% 60%, rgba(62,80,96,0.40), transparent 65%),
+    radial-gradient(520px 380px at 50% 34%, rgba(224,167,62,0.07), transparent 70%);
+}
+#embers { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
+.wrap { position: relative; z-index: 1; width: 100%; max-width: 1140px; margin: 0 auto; padding-left: max(18px, env(safe-area-inset-left, 0px)); padding-right: max(18px, env(safe-area-inset-right, 0px)); }
+img { max-width: 100%; display: block; }
+button { font: inherit; color: inherit; }
+:focus-visible { outline: 1px solid var(--gold); outline-offset: 4px; }
+
+/* labels: the board's spaced bold italic caps */
+.eyebrow { font-family: var(--label); font-style: italic; font-weight: 600; font-size: 0.68rem; letter-spacing: 0.42em; text-transform: uppercase; color: var(--gold); padding-left: 0.42em; }
+h1, h2, h3, h4 { font-weight: 400; color: var(--bone); margin: 0; text-wrap: balance; }
+h2 { font-family: var(--deco); font-size: clamp(2rem, 5vw, 3.2rem); line-height: 1.08; letter-spacing: 0.01em; }
+section { padding-block: clamp(64px, 10vw, 116px); scroll-margin-top: 64px; }
+.sec-head { text-align: center; max-width: 640px; margin: 0 auto 46px; display: grid; gap: 14px; justify-items: center; }
+.sec-head p { margin: 0; color: var(--mist); }
+.flourish { display: flex; align-items: center; gap: 12px; color: var(--gold); width: min(240px, 60%); }
+.flourish::before, .flourish::after { content: ''; height: 1px; flex: 1; background: linear-gradient(90deg, transparent, var(--gold-soft)); }
+.flourish::after { background: linear-gradient(90deg, var(--gold-soft), transparent); }
+.flourish i { width: 7px; height: 7px; transform: rotate(45deg); background: var(--gold); display: block; }
+
+/* nav */
+.nav { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); background: rgba(11,17,19,0.78); border-bottom: 1px solid var(--line); }
+.nav .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 14px; }
+.nav-mark { font-family: var(--deco); font-size: 1.05rem; color: var(--bone); text-decoration: none; white-space: nowrap; letter-spacing: 0.02em; }
+.nav-links { display: flex; gap: 22px; flex-wrap: wrap; justify-content: flex-end; }
+.nav-links a { font-family: var(--label); font-style: italic; font-weight: 500; font-size: 0.64rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--mist); text-decoration: none; transition: color .3s; }
+.nav-links a:hover { color: var(--gold-pale); }
+
+/* hero */
+.hero { text-align: center; padding-block: clamp(36px, 6vw, 70px) clamp(30px, 5vw, 56px); }
+.hero > .eyebrow { display: block; margin-bottom: 18px; }
+.torch-btn { position: relative; width: min(260px, 66vw); aspect-ratio: 1; margin: 0 auto; border: 0; background: none; padding: 0; cursor: pointer; border-radius: 50%; touch-action: none; -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; display: block; }
+.torch-halo { position: absolute; inset: 4%; border-radius: 50%; background: radial-gradient(circle at 50% 38%, rgba(240,184,80,0.30) 0%, rgba(224,167,62,0.10) 34%, transparent 64%); animation: halo 5s ease-in-out infinite; transition: opacity .5s, transform .8s var(--ease); }
+.torch-btn.holding .torch-halo { transform: scale(1.18); opacity: 1; }
+@keyframes halo { 0%,100% { opacity: .7; } 50% { opacity: 1; } }
+.torch { position: absolute; inset: 9%; width: 82%; height: 82%; object-fit: contain; pointer-events: none; transform-origin: 50% 62%; animation: flicker 3.2s ease-in-out infinite; transition: transform 1.6s var(--ease); }
+.torch-btn.holding .torch { transform: scale(1.14) translateY(-3%); animation-duration: .8s; }
+@keyframes flicker { 0%,100% { filter: brightness(1) drop-shadow(0 0 14px rgba(240,170,60,0.35)); } 30% { filter: brightness(1.07) drop-shadow(0 0 22px rgba(240,170,60,0.5)); } 55% { filter: brightness(.96) drop-shadow(0 0 12px rgba(240,170,60,0.3)); } 80% { filter: brightness(1.05) drop-shadow(0 0 20px rgba(240,170,60,0.45)); } }
+.ring { display: none; }
+.ring circle { fill: none; stroke-width: 0.6; }
+.ring .track { stroke: var(--gold-faint); stroke-dasharray: 0.5 2.6; }
+.ring .prog { stroke: var(--gold); stroke-linecap: round; stroke-dasharray: 289; stroke-dashoffset: 289; filter: drop-shadow(0 0 4px rgba(224,167,62,0.8)); }
+.logo { margin-top: 22px; display: grid; justify-items: center; gap: 2px; }
+.logo h1 { font-family: var(--deco); font-weight: 400; font-size: clamp(2.8rem, 10vw, 6.4rem); line-height: 1; letter-spacing: 0.02em; color: var(--bone); }
+.logo .sub { font-family: var(--cinzel); font-weight: 500; font-size: clamp(1.5rem, 5vw, 3.1rem); letter-spacing: 0.5em; padding-left: 0.5em; color: var(--bone); line-height: 1.1; }
+.tagline { margin: 16px auto 0; font-family: var(--serif); font-size: clamp(1rem, 2.2vw, 1.3rem); color: var(--ash); }
+.tonight { margin: 22px auto 0; display: inline-flex; flex-wrap: wrap; justify-content: center; gap: 6px 18px; font-family: var(--label); font-style: italic; font-weight: 500; font-size: 0.68rem; letter-spacing: 0.26em; text-transform: uppercase; color: var(--mist); }
+.tonight b { font-weight: 600; color: var(--gold-pale); }
+.hold-hint { margin: 16px auto 0; max-width: 440px; font-style: italic; font-size: 1.08rem; color: var(--ash); }
+.hold-hint small { display: block; font-family: var(--label); font-style: italic; font-weight: 500; font-size: 0.64rem; letter-spacing: 0.26em; text-transform: uppercase; color: var(--mist); margin-top: 8px; }
+.toggle { margin: 20px auto 0; display: inline-flex; align-items: center; gap: 12px; cursor: pointer; font-family: var(--label); font-style: italic; font-weight: 500; font-size: 0.66rem; letter-spacing: 0.24em; text-transform: uppercase; color: var(--mist); }
+.toggle input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.toggle .sw { width: 38px; height: 20px; border-radius: 20px; border: 1px solid var(--gold-soft); position: relative; transition: background .3s; flex: none; }
+.toggle .sw::after { content: ''; position: absolute; top: 3px; left: 3px; width: 12px; height: 12px; border-radius: 50%; background: var(--mist); transition: transform .35s var(--ease), background .3s; }
+.toggle input:checked + .sw { background: rgba(224,167,62,0.18); }
+.toggle input:checked + .sw::after { transform: translateX(18px); background: var(--gold); }
+.toggle input:focus-visible + .sw { outline: 1px solid var(--gold); outline-offset: 3px; }
+
+/* cards */
+.card { position: relative; width: 100%; max-width: 100%; aspect-ratio: var(--card-ratio); perspective: 1600px; }
+.card-inner { position: absolute; inset: 0; transform-style: preserve-3d; transition: transform 1.3s var(--ease); }
+.card.flipped .card-inner { transform: rotateY(180deg); }
+.face { position: absolute; inset: 0; border-radius: 12px; overflow: hidden; backface-visibility: hidden; -webkit-backface-visibility: hidden; box-shadow: 0 30px 60px -22px rgba(0,0,0,0.85), 0 0 0 1px rgba(224,167,62,0.30); }
+.face.front { transform: rotateY(180deg); background: var(--abyss-2); }
+.face img { width: 100%; height: 100%; object-fit: cover; }
+.face.front.rev img { transform: rotate(180deg); }
+.face.back { background: var(--abyss-2); }
+.face.back::after { content: ''; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(115deg, transparent 38%, rgba(255,226,170,0.16) 50%, transparent 62%); background-size: 260% 100%; background-position: 130% 0; transition: background-position 1.4s var(--ease); mix-blend-mode: screen; }
+.card:hover .face.back::after, .card:focus-visible .face.back::after { background-position: -30% 0; }
+.stage-card .card:not(.flipped) .face.back::after { animation: sheen 7s var(--ease) infinite; }
+@keyframes sheen { 0%, 60% { background-position: 130% 0; } 100% { background-position: -30% 0; } }
+.card.small .face { border-radius: 8px; }
+
+/* reading stage */
+.stage { display: grid; grid-template-columns: minmax(0, 360px) minmax(0, 1fr); gap: clamp(32px, 6vw, 76px); align-items: center; }
+.stage-card { position: relative; }
+.stage-card .card { transition: transform 1.1s var(--ease), opacity 1.1s var(--ease); }
+.stage.arriving .stage-card .card { transform: translateY(40px) scale(0.96); opacity: 0.15; }
+.glow { position: absolute; inset: -18% -25%; pointer-events: none; opacity: 0; background: radial-gradient(closest-side, rgba(240,184,80,0.32), transparent 70%); filter: blur(26px); transition: opacity 1.4s var(--ease); }
+.stage.revealing .glow { opacity: 1; }
+.reading { min-width: 0; }
+.reading .num { font-family: var(--label); font-style: italic; font-weight: 600; font-size: 0.66rem; letter-spacing: 0.36em; color: var(--gold); text-transform: uppercase; }
+.reading h3 { font-family: var(--cinzel); font-weight: 500; font-size: clamp(2.1rem, 5vw, 3.4rem); line-height: 1.05; letter-spacing: 0.02em; margin: 12px 0 12px; }
+.keys { font-family: var(--cinzel); font-size: 0.86rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--tan); }
+.meaning { font-size: clamp(1.08rem, 1.9vw, 1.24rem); line-height: 1.7; color: var(--bone); margin: 24px 0 26px; }
+.rev-note { margin: -8px 0 24px; padding: 12px 16px; border-left: 2px solid var(--gold-soft); background: rgba(224,167,62,0.06); font-size: 0.96rem; color: var(--ash); }
+.rev-note b { font-family: var(--label); font-style: italic; font-weight: 600; font-size: 0.62rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); display: block; margin-bottom: 2px; }
+.facets { display: grid; border-top: 1px solid var(--line); margin: 0; }
+.facet { display: grid; grid-template-columns: 9.5rem minmax(0, 1fr); gap: 18px; padding: 15px 0; border-bottom: 1px solid var(--line); }
+.facet dt { font-family: var(--label); font-style: italic; font-weight: 600; font-size: 0.62rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); padding-top: 5px; }
+.facet dd { margin: 0; min-width: 0; }
+.facet.ask dd { display: grid; gap: 8px; font-style: italic; font-size: 1.08rem; color: var(--bone); }
+.keep { margin-top: 24px; display: grid; gap: 12px; }
+textarea { width: 100%; min-height: 96px; resize: vertical; background: rgba(211,211,213,0.04); border: 1px solid var(--line); border-radius: 8px; padding: 14px 16px; color: var(--bone); font: 400 0.98rem/1.6 var(--serif); transition: border-color .3s, background .3s; }
+textarea::placeholder { color: rgba(157,170,173,0.85); font-style: italic; }
+textarea:focus { outline: none; border-color: var(--gold-soft); background: rgba(211,211,213,0.06); }
+.actions { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+.btn { position: relative; overflow: hidden; isolation: isolate; display: inline-flex; align-items: center; gap: 10px; border: 1px solid transparent; border-radius: 3px; padding: 13px 24px; font-family: var(--label); font-style: italic; font-weight: 600; font-size: 0.66rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--bone); cursor: pointer;
+  background: linear-gradient(var(--abyss-2), var(--abyss-2)) padding-box, linear-gradient(120deg, #8d6324, #f3d38c 38%, #c8913a 58%, #f0c877 80%, #8d6324) border-box;
+  transition: box-shadow .5s var(--ease), transform .4s var(--ease), color .4s; }
+.btn::after { content: ''; position: absolute; inset: -1px; z-index: -1; pointer-events: none; background: linear-gradient(110deg, transparent 32%, rgba(255,236,200,0.30) 50%, transparent 68%); transform: translateX(-130%); transition: transform 1s var(--ease); }
+.btn:hover::after, .btn:focus-visible::after { transform: translateX(130%); }
+.btn:hover { box-shadow: 0 0 20px rgba(224,167,62,0.30); transform: translateY(-1px); }
+.btn.solid { color: #1c1408; text-shadow: 0 1px 0 rgba(255,244,220,0.4);
+  background: linear-gradient(135deg, #9a6f2a 0%, #f0cf86 28%, #d39a3e 52%, #f6dea6 74%, #a87a30 100%); background-size: 180% 180%;
+  box-shadow: 0 0 22px rgba(224,167,62,0.28), inset 0 1px 0 rgba(255,255,255,0.55), inset 0 -1px 0 rgba(90,55,10,0.35); transition: box-shadow .5s var(--ease), transform .4s var(--ease), background-position 1.2s var(--ease); }
+.btn.solid:hover { background-position: 100% 50%; box-shadow: 0 0 34px rgba(240,184,80,0.5), inset 0 1px 0 rgba(255,255,255,0.65); }
+.btn.quiet { background: none; border-color: transparent; color: var(--mist); padding-inline: 8px; }
+.btn.quiet::after { display: none; }
+.btn.quiet:hover { color: var(--gold-pale); box-shadow: none; transform: none; }
+.toast { font-family: var(--label); font-style: italic; font-weight: 600; font-size: 0.64rem; letter-spacing: 0.26em; text-transform: uppercase; color: var(--gold); opacity: 0; transition: opacity .4s; }
+.toast.on { opacity: 1; }
+.waiting h3 { color: var(--ash); }
+
+/* spreads */
+.tabs { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin: 0 auto 14px; }
+.tab { border: 1px solid var(--line); background: none; border-radius: 3px; padding: 10px 18px; cursor: pointer; font-family: var(--label); font-style: italic; font-weight: 600; font-size: 0.64rem; letter-spacing: 0.26em; text-transform: uppercase; color: var(--mist); transition: color .3s, border-color .3s, background .3s; }
+.tab:hover { color: var(--bone); }
+.tab[aria-selected="true"] { color: var(--gold-pale); border-color: var(--gold-soft); background: rgba(224,167,62,0.07); }
+.spread-intro { text-align: center; margin: 0 auto 36px; color: var(--mist); font-style: italic; max-width: 560px; }
+.spread { display: grid; gap: clamp(12px, 2.4vw, 30px); margin: 0 auto; justify-content: center; }
+.spread.n3 { grid-template-columns: repeat(3, minmax(0, 210px)); }
+.spread.n4 { grid-template-columns: repeat(4, minmax(0, 200px)); }
+.spread.n5 { grid-template-columns: repeat(3, minmax(0, 190px)); grid-template-areas: ". p4 ." "p2 p1 p3" ". p5 ."; }
+.spread.n5 .pos:nth-child(1) { grid-area: p1; } .spread.n5 .pos:nth-child(2) { grid-area: p2; } .spread.n5 .pos:nth-child(3) { grid-area: p3; } .spread.n5 .pos:nth-child(4) { grid-area: p4; } .spread.n5 .pos:nth-child(5) { grid-area: p5; }
+.pos { display: grid; gap: 12px; justify-items: center; align-content: start; text-align: center; min-width: 0; }
+.pos .card { cursor: pointer; }
+.pos .card:not(.flipped):hover .card-inner { transform: translateY(-6px); }
+.pos-label { display: grid; gap: 4px; }
+.pos-label .eyebrow { font-size: 0.58rem; letter-spacing: 0.3em; padding-left: 0.3em; }
+.pos-label .q { font-style: italic; color: var(--ash); font-size: 0.96rem; line-height: 1.35; }
+.pos-read { min-height: 3em; font-size: 0.88rem; color: var(--mist); opacity: 0; transition: opacity .8s .5s; }
+.pos-read.on { opacity: 1; }
+.pos-read b { display: block; font-family: var(--cinzel); font-weight: 500; font-size: 1.05rem; color: var(--bone); letter-spacing: 0.04em; }
+.pos-read button { margin-top: 6px; background: none; border: 0; color: var(--gold); font-family: var(--label); font-style: italic; font-weight: 600; font-size: 0.6rem; letter-spacing: 0.24em; text-transform: uppercase; cursor: pointer; }
+.spread-bar { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; align-items: center; margin-top: 40px; }
+.spread-journal { max-width: 760px; margin: 44px auto 0; padding: clamp(20px, 4vw, 34px); border: 1px solid var(--gold-faint); border-radius: 10px; background: rgba(211,211,213,0.03); display: grid; gap: 20px; }
+.sj-head { display: grid; gap: 6px; }
+.sj-head h3 { font-family: var(--cinzel); font-weight: 500; font-size: 1.4rem; letter-spacing: 0.04em; }
+.sj-head p { margin: 0; color: var(--mist); font-size: 0.96rem; }
+.sj-fields { display: grid; gap: 16px; }
+.sj-field { display: grid; gap: 6px; }
+.sj-label { font-family: var(--label); font-style: italic; font-weight: 600; font-size: 0.62rem; letter-spacing: 0.26em; text-transform: uppercase; color: var(--gold); }
+.sj-label .cn { color: var(--bone); font-family: var(--cinzel); font-style: normal; font-weight: 500; letter-spacing: 0.08em; }
+.sj-field .q { font-style: italic; color: var(--ash); font-size: 0.95rem; }
+.sj-field textarea { min-height: 76px; }
+.sj-field.whole textarea { min-height: 110px; }
+.safe { max-width: 880px; margin: 34px auto 0; padding: clamp(20px, 4vw, 30px); border: 1px dashed var(--gold-faint); border-radius: 10px; display: grid; gap: 16px; }
+.safe textarea { min-height: 80px; font-size: 0.82rem; font-family: ui-monospace, Consolas, monospace; }
+.safe-msg { color: var(--gold-pale); font-size: 0.92rem; }
+.entry .pn { display: grid; gap: 4px; margin-bottom: 12px; }
+.entry .pn .sj-label { font-size: 0.58rem; }
+
+/* the deck */
+.filters { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-bottom: 18px; }
+.mv-intro { text-align: center; max-width: 600px; margin: 0 auto 36px; color: var(--mist); font-style: italic; min-height: 3.4em; }
+.deck-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: clamp(12px, 2vw, 22px); }
+.tile { border: 0; padding: 0; background: none; cursor: pointer; transition: transform .6s var(--ease); }
+.tile:hover { transform: translateY(-6px); }
+.tile .card-inner { transform: rotateY(180deg); transition: none; }
+.tile .face { box-shadow: 0 18px 36px -18px rgba(0,0,0,0.9), 0 0 0 1px rgba(224,167,62,0.22); }
+.tile:hover .face { box-shadow: 0 24px 44px -18px rgba(0,0,0,0.9), 0 0 0 1px rgba(224,167,62,0.6); }
+
+/* how to read */
+.how { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: clamp(28px, 5vw, 64px); max-width: 1000px; margin: 0 auto; }
+.steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; border-top: 1px solid var(--line); counter-reset: s; }
+.steps li { counter-increment: s; display: grid; grid-template-columns: 2.6rem minmax(0, 1fr); gap: 14px; padding: 16px 0; border-bottom: 1px solid var(--line); }
+.steps li::before { content: counter(s, upper-roman); font-family: var(--cinzel); color: var(--gold); font-size: 1rem; padding-top: 2px; }
+.notes { display: grid; gap: 22px; align-content: start; }
+.note h4 { font-family: var(--cinzel); font-weight: 500; font-size: 1.15rem; letter-spacing: 0.06em; margin-bottom: 6px; }
+.note p { margin: 0; color: var(--ash); font-size: 0.98rem; }
+
+/* dialog */
+dialog { width: min(980px, calc(100vw - 32px)); max-height: calc(100vh - 32px); border: 1px solid var(--gold-faint); border-radius: 12px; padding: clamp(22px, 4vw, 44px); background: linear-gradient(160deg, #15211f, #0c1214); color: var(--ash); box-shadow: 0 40px 120px rgba(0,0,0,0.75); }
+dialog::backdrop { background: rgba(5,8,9,0.76); backdrop-filter: blur(6px); }
+dialog .stage { grid-template-columns: minmax(0, 300px) minmax(0, 1fr); }
+.close { position: absolute; top: 12px; right: 14px; background: none; border: 0; color: var(--mist); font-size: 1.7rem; line-height: 1; cursor: pointer; padding: 6px 10px; }
+.close:hover { color: var(--bone); }
+
+/* journal */
+.journal { display: grid; gap: 18px; max-width: 880px; margin: 0 auto; }
+.entry { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 22px; padding: 22px; border: 1px solid var(--line); border-radius: 10px; background: rgba(211,211,213,0.025); }
+.thumbs { display: flex; flex-wrap: wrap; gap: 8px; max-width: 200px; align-self: start; align-items: flex-start; }
+.thumbs img { width: 56px; height: auto; aspect-ratio: var(--card-ratio); object-fit: cover; border-radius: 5px; box-shadow: 0 0 0 1px var(--gold-faint); }
+.thumbs img.rev { transform: rotate(180deg); }
+.entry-meta { font-family: var(--label); font-style: italic; font-weight: 600; font-size: 0.6rem; letter-spacing: 0.26em; text-transform: uppercase; color: var(--gold); }
+.entry h4 { margin: 6px 0 10px; font-family: var(--cinzel); font-weight: 500; font-size: 1.2rem; color: var(--bone); line-height: 1.3; letter-spacing: 0.03em; }
+.entry textarea { min-height: 70px; font-size: 0.94rem; }
+.entry-foot { display: flex; justify-content: flex-end; gap: 12px; align-items: center; margin-top: 8px; font-size: 0.86rem; flex-wrap: wrap; }
+.empty { text-align: center; padding: 46px 20px; border: 1px dashed var(--line); border-radius: 10px; color: var(--mist); }
+.empty p { margin: 0; }
+.empty p:first-child { font-family: var(--cinzel); font-size: 1.15rem; color: var(--ash); margin-bottom: 6px; letter-spacing: 0.04em; }
+
+footer { position: relative; z-index: 1; text-align: center; padding: 44px 20px 64px; border-top: 1px solid var(--line); color: var(--mist); font-family: var(--label); font-style: italic; font-weight: 500; font-size: 0.64rem; letter-spacing: 0.26em; text-transform: uppercase; }
+footer .print-btn { margin-top: 22px; text-decoration: none; }
+footer .f-mark { font-family: var(--deco); font-style: normal; text-transform: none; letter-spacing: 0.02em; font-size: 1.4rem; color: var(--bone); margin-bottom: 8px; }
+
+@media (max-width: 860px) {
+  .stage, dialog .stage { grid-template-columns: minmax(0, 1fr); }
+  .stage-card { max-width: 300px; width: 100%; margin: 0 auto; }
+  .facet { grid-template-columns: minmax(0, 1fr); gap: 4px; }
+  .how { grid-template-columns: minmax(0, 1fr); }
+  .nav-links { gap: 14px; }
+  .nav-links a { font-size: 0.58rem; letter-spacing: 0.2em; }
+}
+@media (max-width: 620px) {
+  .nav-mark { display: none; }
+  .nav .wrap { justify-content: center; }
+  .nav-links { gap: 12px; justify-content: center; }
+  .nav-links a { font-size: 0.54rem; letter-spacing: 0.14em; }
+  .spread.n3 { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+  .spread.n4 { grid-template-columns: repeat(2, minmax(0, 170px)); }
+  .spread.n5 { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+  .pos-label .q { font-size: 0.82rem; }
+  .pos-read b { font-size: 0.9rem; }
+  .entry { grid-template-columns: minmax(0, 1fr); }
+  .deck-grid { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition-duration: 0.01ms !important; }
+  html { scroll-behavior: auto; }
+}
+</style>
+<!-- link preview -->
+<meta name="description" content="Hold the torch to draw a card, lay the three guidebook spreads, and keep your readings in the Mirror Journal.">
+<link rel="canonical" href="https://sunnysink.github.io/hpts/hecatean-mirror/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="High Priestess Tarot School">
+<meta property="og:title" content="The Hecatean Mirror | A 44 Card Shadow Inquiry Oracle">
+<meta property="og:description" content="Hold the torch to draw a card, lay the three guidebook spreads, and keep your readings in the Mirror Journal.">
+<meta property="og:url" content="https://sunnysink.github.io/hpts/hecatean-mirror/">
+<meta property="og:image" content="https://sunnysink.github.io/hpts/hecatean-mirror/preview.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The Hecatean Mirror | A 44 Card Shadow Inquiry Oracle">
+<meta name="twitter:description" content="Hold the torch to draw a card, lay the three guidebook spreads, and keep your readings in the Mirror Journal.">
+<meta name="twitter:image" content="https://sunnysink.github.io/hpts/hecatean-mirror/preview.jpg">
+<!-- /link preview -->
+</head>
+<body>
+<canvas id="embers" aria-hidden="true"></canvas>
+
+<nav class="nav" aria-label="Sections">
+  <div class="wrap">
+    <a class="nav-mark" href="#top">Hecatean Mirror</a>
+    <div class="nav-links"><a href="#draw">Draw</a><a href="#spreads">Spreads</a><a href="#deck">The Deck</a><a href="#how">How to Read</a><a href="#journal">Journal</a></div>
+  </div>
+</nav>
+
+<header class="hero wrap" id="top">
+  <span class="eyebrow">A 44 card shadow inquiry oracle</span>
+  <button class="torch-btn" id="torchBtn" aria-label="Press and hold the torch to draw a card">
+    <span class="torch-halo"></span>
+    <img class="torch" src="torch.webp" alt="" draggable="false">
+    <svg class="ring" viewBox="0 0 100 100" aria-hidden="true"><circle class="track" cx="50" cy="50" r="46"/><circle class="prog" id="ring" cx="50" cy="50" r="46"/></svg>
+  </button>
+  <div class="logo"><h1>Hecatean</h1><div class="sub">MIRROR</div></div>
+  <p class="tagline">The Mirror of the Veil, by Sunny Sink</p>
+  <div class="tonight"><span>Tonight</span><b id="phaseName">&nbsp;</b><span id="phaseLit">&nbsp;</span></div>
+  <p class="hold-hint">Press and hold the torch until it flares. The card meeting you at this threshold turns over below.<small>Keep holding while the flame rises</small></p>
+  <label class="toggle"><input type="checkbox" id="revToggle"><span class="sw"></span>Draw reversed cards too</label>
+</header>
+
+<section id="draw" style="padding-top: 20px;">
+  <div class="wrap">
+    <div class="stage" id="stage">
+      <div class="stage-card">
+        <div class="glow"></div>
+        <div class="card" id="stageCard"><div class="card-inner"><div class="face back"></div><div class="face front"></div></div></div>
+      </div>
+      <div class="reading" id="stageReading" aria-live="polite"></div>
+    </div>
+  </div>
+</section>
+
+<section id="spreads">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Spreads for the journey</span>
+      <h2>Lay the Cards</h2>
+      <div class="flourish"><i></i></div>
+      <p>Place the cards in order and read each position as a question. Then notice how the cards speak to one another.</p>
+    </div>
+    <div class="tabs" role="tablist" id="spreadTabs"></div>
+    <p class="spread-intro" id="spreadIntro"></p>
+    <div class="spread" id="spread"></div>
+    <div class="spread-bar"><button class="btn solid" id="laySpread">Lay the spread</button></div>
+    <div class="spread-journal" id="spreadJournal" hidden>
+      <div class="sj-head"><span class="eyebrow">Journal this reading</span><h3 id="sjTitle"></h3><p>Write beside each position as you turn its card, then what the cards say together.</p></div>
+      <div class="sj-fields" id="sjFields"></div>
+      <div class="sj-field whole"><label class="sj-label" for="spreadNote">The whole reading</label><textarea id="spreadNote" placeholder="What the cards are telling you together..."></textarea></div>
+      <div class="actions"><button class="btn solid" id="keepSpread">Keep this reading in my journal</button><span class="toast" id="spreadToast">Kept in your journal</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="deck">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">All forty-four</span>
+      <h2>The Deck</h2>
+      <div class="flourish"><i></i></div>
+      <p>Three movements trace the path, and you can walk into it at any point. Open any card to sit with it on purpose.</p>
+    </div>
+    <div class="filters" role="tablist" id="filters"></div>
+    <p class="mv-intro" id="mvIntro"></p>
+    <div class="deck-grid" id="deckGrid"></div>
+  </div>
+</section>
+
+<section id="how">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Before you read</span>
+      <h2>How to Read</h2>
+      <div class="flourish"><i></i></div>
+      <p>Hecate is present here as a companion of thresholds, keys, and crossroads. You decide what a card means in your circumstances.</p>
+    </div>
+    <div class="how">
+      <ol class="steps">
+        <li><span>Begin with an open question. Try &ldquo;What am I ready to see about this choice?&rdquo; or &ldquo;What support would help me act with integrity?&rdquo;</span></li>
+        <li><span>Hold the torch to draw one card, or lay one of the three spreads.</span></li>
+        <li><span>Notice your first response to the title and symbol. What stands out? What feeling or memory arrives?</span></li>
+        <li><span>Read the entry and choose one mirror question. The guide offers possibilities; your context decides what fits.</span></li>
+        <li><span>Close with one grounded step. Resting, gathering information, and asking for support are all steps.</span></li>
+      </ol>
+      <div class="notes">
+        <div class="note"><h4>Reversed cards</h4><p>Turn on reversed cards beside the torch if you read them. Use the same entry and ask where its theme is muted, resisted, overextended, or ready to return. Reading every card upright works just as well.</p></div>
+        <div class="note"><h4>At your own pace</h4><p>Set a question down whenever it feels like too much. Try a shorter reading, orient to the room, or come back another day. This deck is a tool for reflection. When you need care, reach out to the people you trust and to qualified professionals.</p></div>
+        <div class="note"><h4>A one card daily practice</h4><p>Ask, &ldquo;What deserves my attention today?&rdquo; Draw a card, write one sentence about its symbol, and choose one mirror question. In the evening, note where the theme appeared.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="journal">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Kept on this device</span>
+      <h2>Mirror Journal</h2>
+      <div class="flourish"><i></i></div>
+      <p>Every card and spread you keep is saved here with the date and the moon it came under.</p>
+    </div>
+    <div class="journal" id="journalList"></div>
+    <div class="safe" id="safe">
+      <div class="sj-head"><span class="eyebrow">Keep your journal safe</span><p>Your journal lives in this browser. Back it up to keep a copy or move it to another device, then bring it back in here. Bringing a backup in adds its entries to what is already here.</p></div>
+      <div class="actions">
+        <button class="btn solid" id="exportBtn">Copy my backup</button>
+        <button class="btn" id="downloadBtn" hidden>Save a backup file</button>
+        <label class="btn" for="importFile">Bring in a backup file</label><input type="file" id="importFile" accept=".json,.txt" hidden>
+      </div>
+      <textarea id="backupBox" placeholder="Your backup appears here when you copy it. To bring one in, paste it here and press Bring it in."></textarea>
+      <div class="actions"><button class="btn" id="importBtn">Bring it in</button><span class="safe-msg" id="backupMsg" role="status"></span></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="f-mark">The Hecatean Mirror</div>
+  <div>The Mirror of the Veil &middot; 44 cards of shadow inquiry</div>
+  <a class="btn solid print-btn" id="printBtn" href="#" target="_blank" rel="noopener" hidden>Print your own deck</a>
+</footer>
+
+<dialog id="dlg" aria-label="Card">
+  <button class="close" id="dlgClose" aria-label="Close">&times;</button>
+  <div class="stage">
+    <div class="stage-card"><div class="card flipped" id="dlgCard"><div class="card-inner"><div class="face back"></div><div class="face front"></div></div></div></div>
+    <div class="reading" id="dlgReading"></div>
+  </div>
+</dialog>
+
+<script>
+var DECK = [{"no":"01","t":"The Knock","m":"The Calling Deep","mi":0,"s":"Three marks on a closed door","k":"calling · attention · beginning","mean":"Something keeps asking for your attention: a recurring thought, a pause in your body, a dream, a wish that outlasts every argument against it. Hearing it is the first step. Name what is present today and let the path reveal itself as you walk.","q1":"What keeps returning, even when I set it aside?","q2":"What becomes possible if I acknowledge the call today?","p":"Write one sentence beginning, “I hear the part of me that wants…” Leave it where you can see it for a day."},{"no":"02","t":"The Forgotten Flame","m":"The Calling Deep","mi":0,"s":"Ember beneath ash","k":"desire · remembrance · aliveness","mean":"A desire that once mattered deeply got buried under duty, criticism, or the wish to be easy to love. The ember is still warm. Remember what made you feel alive and give that feeling a little air.","q1":"What did I once love before I learned to call it impractical?","q2":"Whose comfort has shaped the size of my desire?","p":"Spend ten minutes with an old interest and notice what still feels warm. Enjoy it for its own sake."},{"no":"03","t":"The Inherited Mask","m":"The Calling Deep","mi":0,"s":"Ancestral mask","k":"roles · inheritance · authenticity","mean":"Some roles were handed to you before you could consent: the capable one, the quiet one, the healer, the peacekeeper. A role that helped you belong can feel too narrow now. Notice where the mask protects you and where it asks you to disappear.","q1":"Which role do I perform without remembering when I chose it?","q2":"Who am I when no one needs that version of me?","p":"Finish two lines in your journal: “This role helped me by…” and “Today it costs me…”"},{"no":"04","t":"The Familiar Cage","m":"The Calling Deep","mi":0,"s":"Open birdcage","k":"comfort · limits · experiment","mean":"The door is open, and the known space still feels safer than the wider world. Honor the caution that kept you safe, then ask whether this limit fits your life now. Start with a small experiment your nervous system can keep up with.","q1":"What familiar limit am I treating as permanent?","q2":"What tiny, reversible step would let me test a different choice?","p":"Choose one low-stakes action outside the old pattern. Afterwards, record what actually happened."},{"no":"05","t":"The Silent Bell","m":"The Calling Deep","mi":0,"s":"Bell without a clapper","k":"intuition · signal · listening","mean":"Your inner signal speaks in small ways: a pause, a wave of relief, a tightening, a sudden steadiness. If you learned to dismiss it when other people sounded more certain, this card calls you to listen again and check it against what surrounds you.","q1":"When did I first notice that something felt off or right?","q2":"What information did my body offer before I explained it away?","p":"Pause before one decision today. Note what you feel, what you know, and what you still need to learn."},{"no":"06","t":"The Repeating Path","m":"The Calling Deep","mi":0,"s":"Circular footprints","k":"cycles · awareness · choice","mean":"A pattern shows itself when the details change and the ending feels familiar. Look for the moment a choice enters the sequence. Curiosity reveals the need beneath the habit, and your past decisions become information you can learn from.","q1":"What situation keeps producing a similar feeling or result?","q2":"At what point in that sequence might I try one new response?","p":"Map a recent cycle in four words or phrases: trigger, feeling, action, result. Circle the place with room to choose."},{"no":"07","t":"The Hollow Promise","m":"The Calling Deep","mi":0,"s":"Cracked vow ring","k":"commitment · honesty · renegotiation","mean":"A promise can sound noble while asking you to abandon your own limits. This card looks at commitments made from fear, obligation, or an old identity. Honor the intention behind a promise and renegotiate how it lives in your present.","q1":"Which commitment no longer reflects an honest yes?","q2":"What would a truthful version of that commitment look like now?","p":"Write the promise in one sentence, then draft a version that includes your actual time, energy, and consent."},{"no":"08","t":"The Hidden Fear","m":"The Calling Deep","mi":0,"s":"Moth beneath glass","k":"avoidance · fear · protection","mean":"Avoidance often guards something that matters to you. Beneath delay, perfectionism, or dismissal sits a fear of loss, exposure, rejection, or change. Meet that fear and keep the decision in your own hands. Listen for what it protects, then find another way to protect it.","q1":"What outcome am I afraid would follow if I moved?","q2":"What support or boundary would help me feel safer?","p":"Name the fear plainly on paper. Beside it, list one piece of support available in the real world."},{"no":"09","t":"The Withheld Yes","m":"The Calling Deep","mi":0,"s":"Seed in a closed fist","k":"desire · permission · possibility","mean":"This card finds you saying no to yourself before anyone else gets the chance. A wish stays hidden when asking would show how much it matters. The seed in the closed fist needs light before it needs a plan. Let your desire count as information.","q1":"What do I want that I have been minimizing?","q2":"What assumption makes wanting it feel unsafe or selfish?","p":"Say the wish aloud in private or write it without a qualifier. Let that be enough for today."},{"no":"10","t":"The Unspoken Name","m":"The Calling Deep","mi":0,"s":"Sealed name scroll","k":"identity · language · becoming","mean":"A part of your identity is becoming clear to you, one you have sensed for years without words that felt true. The timing is yours, and so is the choice of who hears it. Try language on and notice what fits.","q1":"What truth about me has been waiting for words?","q2":"Which name or description feels expansive in my own mouth?","p":"Freewrite for five minutes beginning, “One true thing about me is…” The page is yours to keep private."},{"no":"11","t":"The Broken Mirror","m":"The Calling Deep","mi":0,"s":"Fractured hand mirror","k":"self-image · old wounds · perspective","mean":"An old wound can distort the way you see yourself. A criticism, betrayal, or failure became the lens for judging every new moment. The cracks show what happened to the mirror. You are the whole person standing in front of it.","q1":"Whose words am I still using to describe myself?","q2":"What present-day evidence complicates that old description?","p":"Make two columns labeled “old story” and “what I can observe now.” Place one honest detail in each."},{"no":"12","t":"The Empty Altar","m":"The Calling Deep","mi":0,"s":"Cold incense bowl","k":"disconnection · meaning · return","mean":"The practices that once nourished you feel distant. Disconnection can follow exhaustion, grief, a change of faith, or a crowded season. Start from where you are today and ask what brings you into contact with meaning now, however ordinary it looks.","q1":"What have I been missing from my spiritual or creative life?","q2":"What simple act feels sincere to me now?","p":"Clear a small space, place one meaningful object there, and spend one minute with it."},{"no":"13","t":"The Witness","m":"The Calling Deep","mi":0,"s":"Eye beneath a crescent moon","k":"presence · compassion · observation","mean":"You can observe a difficult feeling and still know it is one part of you. Witnessing opens a little room between the experience and the story you tell about it. Compassion and choice live in that room.","q1":"What am I feeling right now, named plainly?","q2":"How does the feeling change when I say “a part of me feels this”?","p":"Place a hand somewhere comfortable and name three things you notice in the present room. Then write one sentence about the feeling."},{"no":"14","t":"The First Key","m":"The Calling Deep","mi":0,"s":"Iron key with three teeth","k":"agency · access · first steps","mean":"A locked place opens through one honest question, conversation, or decision. Begin before you understand the whole journey. The key is your own agency, including the right to pause, seek support, or choose another door.","q1":"What door am I ready to approach?","q2":"What is the smallest action that would make this opening real?","p":"Write that action on a slip of paper. Give it a date or a clear condition under which you will revisit it."},{"no":"15","t":"The Crossroads","m":"The Tidal Crossroads","mi":1,"s":"Three-way stone marker","k":"choice · values · direction","mean":"Two or more paths ask for your attention. Name what each one asks you to value. Give every choice its honest shape: its costs, its gifts, and the season of life you are actually in.","q1":"What choices are truly before me?","q2":"Which value do I want to honor in the way I choose?","p":"Draw three paths on paper. On each, write one possible gift and one real cost."},{"no":"16","t":"The Binding Thread","m":"The Tidal Crossroads","mi":1,"s":"Red thread tied in a knot","k":"loyalty · entanglement · space","mean":"A connection can carry love and obligation in unequal measure. This card asks where loyalty has become a knot, where you keep a role, secret, or burden to hold your place. Care for the person and examine the terms of that care.","q1":"Which relationship asks me to stay smaller than I am?","q2":"What would connection look like with a little more room for both of us?","p":"Sketch the knot as lines between people, duties, and fears. Mark one strand that belongs to your choice."},{"no":"17","t":"The Grief Vessel","m":"The Tidal Crossroads","mi":1,"s":"Rain-filled chalice","k":"loss · tenderness · witness","mean":"A loss needs somewhere to be held. Grief comes with an ending, an unlived future, a changed belief, or a version of yourself you have released. Today is for making space for what mattered. The lesson can wait.","q1":"What am I grieving that still needs a name?","q2":"What form of companionship or quiet would help me hold it?","p":"Write the name of what was lost. Set the page beside a glass of water for a few minutes."},{"no":"18","t":"The Borrowed Burden","m":"The Tidal Crossroads","mi":1,"s":"Satchel of stones","k":"responsibility · capacity · release","mean":"You are carrying a task, emotion, or outcome that belongs to someone else. Your capability is real, and the weight still belongs to them. Take a careful inventory: what is truly yours to tend, what can be shared, and what goes back to its owner.","q1":"What am I managing that someone else can own?","q2":"What fear rises when I imagine putting it down?","p":"List three current burdens. Put your initials only beside the parts that genuinely belong to you."},{"no":"19","t":"The Unsent Letter","m":"The Tidal Crossroads","mi":1,"s":"Letter floating on dark water","k":"expression · truth · timing","mean":"Words have gathered behind your teeth: an apology, a request, a truth, or anger that needs a safe place to take shape. Expression can begin in private. You decide whether, when, and how another person hears it.","q1":"What have I been trying to say?","q2":"What outcome am I hoping for, and which part is within my control?","p":"Write the letter without sending it. Return to it later and decide whether it is for release, revision, or conversation."},{"no":"20","t":"The Tidal Return","m":"The Tidal Crossroads","mi":1,"s":"Wave climbing a stair","k":"recurrence · emotion · unmet needs","mean":"An emotional wave keeps reaching the same shore. It points to a need still waiting to be met, a boundary that slipped, or a memory asking for care. Repetition is information. Notice what comes before the wave and what helps it recede.","q1":"When does this feeling tend to return?","q2":"What does it seem to ask for each time?","p":"Record the next return with three details: what happened just before, what you felt, and what helped even a little."},{"no":"21","t":"The Uneasy Yes","m":"The Tidal Crossroads","mi":1,"s":"Hand signing a vow","k":"consent · hesitation · pause","mean":"Maybe your mouth agreed while the rest of you hesitated. A yes given to avoid disappointment, conflict, or disapproval leaves a debt you carry inside. This card asks you to feel the difference between a willing commitment and a reflexive one.","q1":"Where did I agree before checking with myself?","q2":"What would I have said if I had time to pause?","p":"Rehearse a sentence you can use next time: “Let me check what I can offer and get back to you.”"},{"no":"22","t":"The Necessary No","m":"The Tidal Crossroads","mi":1,"s":"Two crossed reeds","k":"refusal · integrity · protection","mean":"A clear refusal protects your time, energy, values, or a fragile new beginning. It can disappoint someone and still be honest. A boundary is a relationship with your own capacity, said in words another person can understand.","q1":"What am I protecting with this no?","q2":"What is the plainest way I can say it?","p":"Draft one short boundary sentence. Read it aloud and cut the explanations until it stands alone."},{"no":"23","t":"The Shifting Ground","m":"The Tidal Crossroads","mi":1,"s":"Earth split by a stream","k":"change · uncertainty · inquiry","mean":"The conditions have changed, and the old map has stopped matching the land. Uncertainty pulls toward control, urgency, or a hunt for perfect reassurance. Return to what you can observe, decide what needs attention now, and let the rest stay open.","q1":"What has changed in the situation itself?","q2":"What do I know today, and what am I only predicting?","p":"Divide a page into “known,” “unknown,” and “next inquiry.” Put each worry where it belongs."},{"no":"24","t":"The Cost of Staying","m":"The Tidal Crossroads","mi":1,"s":"Salt-filled hourglass","k":"inaction · cost · preparation","mean":"Staying where you are is also a choice, and it has a price. Look at that price honestly; your readiness sets the timing of any move. Count the energy, opportunities, relationships, and sense of self it takes to keep things as they are.","q1":"What does staying ask of me each day?","q2":"What would I need in place to consider a different path safely?","p":"Write the costs and benefits of staying for one more season. Include practical realities alongside feelings."},{"no":"25","t":"The Uncast Spell","m":"The Tidal Crossroads","mi":1,"s":"Unlit taper candle","k":"intention · readiness · action","mean":"Intention has been gathered, and the action is still sitting on the altar. Waiting for certainty, approval, or a perfect version of yourself keeps it there. In this deck, magic includes the ordinary action that gives an intention a place to land.","q1":"What action have I been calling “not ready yet”?","q2":"Which small version could I try with the resources I have?","p":"Choose a ten-minute act that serves the intention. Do it, then note what you learned."},{"no":"26","t":"The Cut Cord","m":"The Tidal Crossroads","mi":1,"s":"Severed rope with loose ends","k":"completion · release · new terms","mean":"Something is complete, even while your feelings about it stay complex. Release can mean changing access, withdrawing a promise, or loosening your grip on a story. Honor what the bond once gave you and choose new terms for your life now.","q1":"What am I ready to stop renewing?","q2":"What boundary or practice would support that release?","p":"Tie a loose knot in a length of string, name what you are releasing, and untie it. Dispose of or keep the string as you prefer."},{"no":"27","t":"The Bridge of Mist","m":"The Tidal Crossroads","mi":1,"s":"Narrow bridge in fog","k":"transition · support · uncertainty","mean":"The next shore is still in the fog. A crossing is wise when your values are clear and your support is real. Find the first span of the bridge you can see, and what will help you walk it.","q1":"What part of the way forward is visible right now?","q2":"Who or what can help me cross the uncertain stretch?","p":"Write one step, one support, and one checkpoint at which you will reassess."},{"no":"28","t":"The Chosen Step","m":"The Tidal Crossroads","mi":1,"s":"Bare footprint beyond a line","k":"decision · movement · learning","mean":"A decision takes shape when it enters the world. Today asks for one chosen step. That step brings new information, builds trust in yourself, or shows you where the route needs adjusting.","q1":"What action would make my choice visible to me?","q2":"How will I recognize that I took it, even if the result is imperfect?","p":"Take one specific step within the next day. Record the action separately from its outcome."},{"no":"29","t":"The Lit Wick","m":"The Tidal Crossroads","mi":1,"s":"Spark touching a wick","k":"beginning · tending · rhythm","mean":"The intention has met an action. A small flame is enough to start tending a new pattern. Celebrate that you began, then plan what will keep the work going after the first rush of courage passes.","q1":"What have I already set in motion?","q2":"What rhythm can help me tend it without burning out?","p":"Mark the beginning with a simple ritual: light a candle if safe, or draw a flame, and name the next repeatable action."},{"no":"30","t":"The Salt Line","m":"The Salt Crown","mi":2,"s":"Ring of salt","k":"boundaries · clarity · follow-through","mean":"A boundary needs attention as circumstances change. It can be clear and flexible, warm and firm at once. This card asks where your line is, how you say it, and what you will do when someone crosses it.","q1":"Where does my energy begin to feel overextended?","q2":"What response will help me keep the boundary I name?","p":"Write a boundary in two parts: “I can offer…” and “I cannot offer…” Keep the language concrete."},{"no":"31","t":"The Queen Uncrowned","m":"The Salt Crown","mi":2,"s":"Crown resting on an empty chair","k":"permission · leadership · recognition","mean":"You may be waiting for someone to confirm a capacity you already use. Recognition is welcome, and your authority starts with you. Notice the places where you are competent and trusted, and still hesitating to claim your seat.","q1":"Whose permission am I waiting for?","q2":"What evidence of my own leadership have I discounted?","p":"List three moments when you acted with judgment and care. Let the examples speak before you evaluate them."},{"no":"32","t":"The Crowned Flame","m":"The Salt Crown","mi":2,"s":"Flame within a coronet","k":"identity · devotion · choice","mean":"You have named a truth and begun to live by it. The crown is responsibility for your own life. The flame asks you to keep choosing that life in ordinary moments. Claiming yourself can be private, visible, unfinished, and real all at once.","q1":"What identity am I ready to claim in my own words?","q2":"What daily choice would make that claim believable to me?","p":"Speak or write one present-tense declaration, then attach it to a small action you can repeat."},{"no":"33","t":"The Open Veil","m":"The Salt Crown","mi":2,"s":"Veil drawn back from a window","k":"visibility · trust · discernment","mean":"Being seen can stir old fear, especially if visibility once brought criticism or obligation. You choose where, when, and with whom to reveal more of yourself. Find the kind of visibility that matches your values and your capacity.","q1":"What part of me is ready for more light?","q2":"What conditions would make sharing feel honest and supported?","p":"Share one true sentence with a trusted person or in a space you choose. Notice how it feels afterward."},{"no":"34","t":"The Sovereign Voice","m":"The Salt Crown","mi":2,"s":"Golden tuning fork","k":"voice · authority · honesty","mean":"Your words carry authority while you are still learning. Speak from experience, name what you know, and say what you are still finding out. A clear voice holds conviction and openness together.","q1":"Where do I soften my words until my meaning disappears?","q2":"What would the direct, generous version sound like?","p":"Rewrite one sentence you often qualify. Keep the meaning and remove the apology that hides it."},{"no":"35","t":"The Chosen Circle","m":"The Salt Crown","mi":2,"s":"Three chairs around a hearth","k":"belonging · reciprocity · community","mean":"Belonging is built through reciprocity and honest presence. If a room required a performance, you are free to outgrow it. Look for relationships where care moves both ways and your growth has room to exist.","q1":"Where do I feel more like myself after spending time together?","q2":"What kind of community am I willing to help create?","p":"Reach toward one person or gathering that reflects the kind of connection you want to tend."},{"no":"36","t":"The Receiving Bowl","m":"The Salt Crown","mi":2,"s":"Bowl held beneath falling fruit","k":"receiving · care · abundance","mean":"Support is available, and accepting it can expose an old belief that every bit of care must be earned. Receiving is an active choice. You can ask, accept, set terms, and give thanks, and let a gift stay a gift.","q1":"What offer of care do I find hardest to accept?","q2":"What belief appears when I imagine receiving and letting the repaying wait?","p":"Accept one small act of care this week, if it is genuinely welcome. Let a simple thank-you be complete."},{"no":"37","t":"The Sacred Rest","m":"The Salt Crown","mi":2,"s":"Nest of leaves","k":"rest · renewal · capacity","mean":"Rest belongs inside a life of devotion, work, and care. If you only stop once you are exhausted, this card asks what an easier rhythm looks like. Renewal can be still, playful, nourishing, or simply free of demands.","q1":"What signs tell me I am approaching depletion?","q2":"What kind of rest actually restores me in this season?","p":"Set aside a stretch of time that belongs to rest alone. Notice what your body asks for when the agenda loosens."},{"no":"38","t":"The Devoted Hand","m":"The Salt Crown","mi":2,"s":"Hand tending a small garden","k":"practice · devotion · return","mean":"What you value grows through repeated attention. Devotion looks like practice, repair, study, showing up, or tending a small corner of life. Choose a rhythm you can return to, including after a missed day.","q1":"What deserves steady care from me?","q2":"What version of consistency fits my actual life?","p":"Design a five-minute practice linked to an existing part of your day. Make the return easy."},{"no":"39","t":"The Rooted Body","m":"The Salt Crown","mi":2,"s":"Bare feet growing roots","k":"embodiment · self-trust · action","mean":"Insight becomes trustworthy when it has somewhere to live in your body and your schedule. Notice whether a new truth changes how you stand, rest, speak, spend time, or meet pressure. Small choices, made many times, build it into your life.","q1":"Where does my body feel a yes, a no, or a need for pause?","q2":"Which daily habit supports the person I am becoming?","p":"Stand or sit with your feet supported. Name one choice you want to practice, then take one physical step toward it."},{"no":"40","t":"The Living Altar","m":"The Salt Crown","mi":2,"s":"Flower growing beside incense","k":"ritual · ordinary life · meaning","mean":"Ritual meets the ordinary world. A meal, a clean desk, a boundary kept, or a creative hour can express devotion as surely as a candle. This card asks where your values show up in the life you actually live.","q1":"Where is my practice already visible in daily life?","q2":"What ordinary act could I make more intentional?","p":"Choose one familiar task. Before it begins, name what it tends or honors."},{"no":"41","t":"The New Name","m":"The Salt Crown","mi":2,"s":"Engraved signet","k":"identity · recognition · truth","mean":"Change often happens before the people around you notice. A new name can be literal, symbolic, or a more truthful way to describe your work and life. Let it describe the choices you are already living.","q1":"What words describe who I am becoming?","q2":"What old description can I now set down?","p":"Write a two-sentence introduction to yourself as you are today. Keep only the words that feel honest."},{"no":"42","t":"The Guarded Gate","m":"The Salt Crown","mi":2,"s":"Gate with a single latch","k":"access · discernment · limits","mean":"Openness and discernment live together. You choose who has access to your time, stories, home, work, and inner life. The gate is yours to open, close, or leave ajar, according to the relationship and the moment.","q1":"Who currently has access that I would like to reconsider?","q2":"What access would feel appropriate and sustainable?","p":"Make one practical adjustment to availability, sharing, or response time. Communicate it if another person is affected."},{"no":"43","t":"The Lantern Bearer","m":"The Salt Crown","mi":2,"s":"Lantern held aloft","k":"guidance · agency · accompaniment","mean":"What you have lived through can help you walk beside someone else. A lantern lights the road and leaves the choosing to the traveler. Share from experience, keep your own center, and respect the other person’s agency.","q1":"What have I lived through that I can share as my own story?","q2":"How can I support someone while leaving their choice intact?","p":"In your next supportive conversation, ask what kind of help is welcome before offering advice."},{"no":"44","t":"The Mirror of the Veil","m":"The Salt Crown","mi":2,"s":"Clear mirror beneath a sheer veil","k":"wholeness · integration · welcome","mean":"Meet the parts of yourself that have felt divided: the longing and the fear, the grief and the joy, who you were and who you are becoming. Wholeness lives alongside open questions. Look steadily and warmly at what is here.","q1":"Which part of myself am I ready to welcome back into the picture?","q2":"What would it mean to live with all of me present?","p":"Look into a mirror, or imagine one. Name three true qualities side by side. Close with a breath and one kind action."}];
+/* the printable deck PDF; the footer button shows once this holds a link */
+var PRINT_URL = '';
+var MOVEMENTS = [
+ {n:'The Calling Deep', d:'This first movement listens for the summons beneath old roles and habits. Its cards name what has been hidden and open a first door with care.'},
+ {n:'The Tidal Crossroads', d:'At the crossroads, emotion and choice move together. These cards examine entanglement, grief, uncertainty, release, and the first actions that make a choice real.'},
+ {n:'The Salt Crown', d:'The final movement lives the truth already found. Its cards tend boundaries, voice, belonging, rest, devotion, and a fuller way of being seen.'}
+];
+var SPREADS = [
+ {id:'doorway', t:'The Doorway', d:'A three card reading for the beginning of an inquiry.', pos:[
+   {t:'The call', q:'What is asking for my attention?'},
+   {t:'The threshold', q:'What old story or protection surrounds it?'},
+   {t:'The first step', q:'What first step can I take from here?'}]},
+ {id:'crossroads', t:'At the Crossroads', d:'A five card reading when a decision holds both feeling and practical consequence.', pos:[
+   {t:'The choice', q:'What choice am I facing?'},
+   {t:'The fear', q:'What am I afraid of losing?'},
+   {t:'The value', q:'What value do I want to honor?'},
+   {t:'The lantern', q:'What information or support is still needed?'},
+   {t:'The step', q:'What is one honest step I can take now?'}]},
+ {id:'crown', t:'The Salt Crown', d:'A four card reading for bringing an insight into your life.', pos:[
+   {t:'The truth', q:'What truth am I ready to live?'},
+   {t:'The boundary', q:'What boundary will help it take root?'},
+   {t:'The practice', q:'What practice will sustain it?'},
+   {t:'The growth', q:'What growth can I already see, unfinished as it is?'}]}
+];
+function img(i){ return 'cards/' + DECK[i].no + '.webp'; }
+function esc(s){ var d=document.createElement('div'); d.textContent=s==null?'':s; return d.innerHTML; }
+function lsGet(k,f){ try{ var v=localStorage.getItem(k); return v?JSON.parse(v):f; }catch(e){ return f; } }
+function lsSet(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
+function rand(n){ try{ var a=new Uint32Array(1); crypto.getRandomValues(a); return a[0]%n; }catch(e){ return Math.floor(Math.random()*n); } }
+var REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+var K = 'hecatean-mirror-';
+
+var BACK = '<img src="cards/back.webp" alt="">';
+document.querySelectorAll('.face.back').forEach(function(b){ b.innerHTML = BACK; });
+function setFront(cardEl, i, rev){ var f=cardEl.querySelector('.face.front'); f.classList.toggle('rev', !!rev); f.innerHTML = '<img src="'+img(i)+'" alt="'+esc(DECK[i].t)+(rev?', reversed':'')+'" loading="lazy">'; }
+
+/* ---------- moon phase ---------- */
+var SYN = 29.530588853, REF = Date.UTC(2000,0,6,18,14);
+function moonNow(){ var age=((Date.now()-REF)/86400000)%SYN; if(age<0) age+=SYN; var f=age/SYN; var lit=(1-Math.cos(2*Math.PI*f))/2;
+  var name = age<1.85?'Dark Moon': age<5.54?'Waxing Crescent': age<9.23?'First Quarter': age<12.92?'Waxing Gibbous': age<16.61?'Full Moon': age<20.30?'Waning Gibbous': age<23.99?'Last Quarter': age<27.68?'Waning Crescent':'Dark Moon';
+  return {f:f, lit:lit, name:name}; }
+var MOON = moonNow();
+document.getElementById('phaseName').textContent = MOON.name;
+document.getElementById('phaseLit').textContent = Math.round(MOON.lit*100) + '% lit';
+
+/* ---------- reversals ---------- */
+var revToggle=document.getElementById('revToggle'), ALLOW_REV=!!lsGet(K+'reversals',false);
+revToggle.checked=ALLOW_REV;
+revToggle.addEventListener('change',function(){ ALLOW_REV=revToggle.checked; lsSet(K+'reversals',ALLOW_REV); });
+function flip(){ return ALLOW_REV && rand(2)===1; }
+
+/* ---------- reading ---------- */
+function readingHTML(i, opts){ var c=DECK[i]; opts=opts||{};
+  return '<div class="num">'+c.no+' &middot; '+esc(c.m)+(opts.label?' &middot; '+esc(opts.label):'')+'</div>'
+   +'<h3>'+esc(c.t)+'</h3><div class="keys">'+esc(c.k)+'</div>'
+   +'<p class="meaning">'+esc(c.mean)+'</p>'
+   +(opts.rev?'<div class="rev-note"><b>Reversed</b>Ask where this theme is muted, resisted, overextended, or ready to return.</div>':'')
+   +'<dl class="facets"><div class="facet"><dt>Symbol</dt><dd>'+esc(c.s)+'</dd></div><div class="facet ask"><dt>Mirror questions</dt><dd><span>'+esc(c.q1)+'</span><span>'+esc(c.q2)+'</span></dd></div><div class="facet"><dt>Practice</dt><dd>'+esc(c.p)+'</dd></div></dl>'
+   +'<div class="keep"><textarea id="'+opts.id+'-note" placeholder="What came up when you met '+esc(c.t)+'..."></textarea><div class="actions"><button class="btn solid" data-keep="'+i+'" data-rev="'+(opts.rev?1:0)+'" data-note="'+opts.id+'-note">Keep in my journal</button>'+(opts.again?'<button class="btn quiet" data-again>Draw again</button>':'')+'<span class="toast">Kept</span></div></div>';
+}
+var stage=document.getElementById('stage'), stageCard=document.getElementById('stageCard'), stageReading=document.getElementById('stageReading');
+function showWaiting(){ stageReading.innerHTML='<div class="waiting"><div class="num">Face down</div><h3>Your card is waiting</h3><p class="meaning" style="color:var(--mist)">Hold the torch above until it flares. The card meeting you tonight turns over here.</p><button class="btn" data-scrolltop>Back to the torch</button></div>'; }
+function stageLabel(){ return 'Drawn under a '+MOON.name.toLowerCase(); }
+function showCard(i, rev, animate){
+  var place=function(){ setFront(stageCard,i,rev); stageReading.innerHTML=readingHTML(i,{id:'stage',again:true,rev:rev,label:stageLabel()}); };
+  if(!animate || REDUCED){ stageCard.classList.remove('flipped'); place(); stageCard.classList.add('flipped'); return; }
+  stageCard.classList.remove('flipped'); stage.classList.add('arriving');
+  document.getElementById('draw').scrollIntoView({behavior:'smooth', block:'start'});
+  setTimeout(function(){ setFront(stageCard,i,rev); stage.classList.remove('arriving'); stage.classList.add('revealing'); },650);
+  setTimeout(function(){ stageCard.classList.add('flipped'); },1500);
+  setTimeout(function(){ stageReading.innerHTML=readingHTML(i,{id:'stage',again:true,rev:rev,label:stageLabel()}); stage.classList.remove('revealing'); },2300);
+}
+var last=lsGet(K+'last',null);
+if(last && DECK[last.i]) showCard(last.i,last.r,false); else showWaiting();
+
+/* ---------- hold to draw ---------- */
+var btn=document.getElementById('torchBtn'), ring=document.getElementById('ring'), holdT=null, raf=null, DUR=1700, C=289;
+function setRing(p){ ring.style.strokeDashoffset = C*(1-p); }
+function startHold(e){ if(e && e.button!=null && e.button!==0) return; if(e && e.cancelable) e.preventDefault(); if(holdT) return;
+  btn.classList.add('holding'); holdT=performance.now();
+  var tick=function(now){ var p=Math.min(1,(now-holdT)/DUR); setRing(p); if(p>=1){ finish(); return; } raf=requestAnimationFrame(tick); };
+  raf=requestAnimationFrame(tick); }
+function stopHold(){ if(!holdT) return; cancelAnimationFrame(raf); holdT=null; btn.classList.remove('holding');
+  var from=parseFloat(ring.style.strokeDashoffset||C), t0=performance.now();
+  var back=function(now){ var q=Math.min(1,(now-t0)/400); ring.style.strokeDashoffset = from+(C-from)*q; if(q<1) requestAnimationFrame(back); }; requestAnimationFrame(back); }
+function finish(){ cancelAnimationFrame(raf); holdT=null; btn.classList.remove('holding'); setRing(1);
+  var prev=lsGet(K+'last',null), i; do{ i=rand(DECK.length); }while(prev && i===prev.i);
+  var r=flip(); lsSet(K+'last',{i:i,r:r}); showCard(i,r,true); setTimeout(function(){ setRing(0); },900); }
+btn.addEventListener('pointerdown',startHold);
+['pointerup','pointerleave','pointercancel'].forEach(function(ev){ btn.addEventListener(ev,stopHold); });
+btn.addEventListener('contextmenu',function(e){ e.preventDefault(); });
+btn.addEventListener('keydown',function(e){ if((e.key===' '||e.key==='Enter') && !e.repeat){ e.preventDefault(); startHold(); } });
+btn.addEventListener('keyup',function(e){ if(e.key===' '||e.key==='Enter') stopHold(); });
+if(REDUCED){ DUR=500; }
+
+/* ---------- spreads ---------- */
+var spreadEl=document.getElementById('spread'), tabsEl=document.getElementById('spreadTabs'), SP=lsGet(K+'spread',0), spread=null;
+if(!SPREADS[SP]) SP=0;
+SPREADS.forEach(function(s,k){ var b=document.createElement('button'); b.className='tab'; b.setAttribute('role','tab'); b.id='tab-'+s.id; b.textContent=s.t+' · '+s.pos.length;
+  b.addEventListener('click',function(){ SP=k; lsSet(K+'spread',k); spread=null; renderSpread(); }); tabsEl.appendChild(b); });
+function renderSpread(){ var S=SPREADS[SP];
+  tabsEl.querySelectorAll('.tab').forEach(function(b,k){ b.setAttribute('aria-selected', k===SP?'true':'false'); });
+  document.getElementById('spreadIntro').textContent=S.d;
+  document.getElementById('laySpread').textContent = spread ? 'Lay a new spread' : 'Lay the spread';
+  document.getElementById('spreadJournal').hidden=!spread; document.getElementById('sjTitle').textContent=S.t;
+  document.getElementById('sjFields').innerHTML=S.pos.map(function(p,k){ return '<div class="sj-field"><label class="sj-label" for="sjn'+k+'">'+(k+1)+' &middot; '+esc(p.t)+' <span class="cn" id="sjc'+k+'"></span></label><span class="q">'+esc(p.q)+'</span><textarea id="sjn'+k+'" placeholder="Turn the card, then write what you see here..."></textarea></div>'; }).join('');
+  spreadEl.className='spread n'+S.pos.length; spreadEl.innerHTML='';
+  S.pos.forEach(function(p,k){ var d=document.createElement('div'); d.className='pos';
+    d.innerHTML='<div class="pos-label"><span class="eyebrow">'+(k+1)+' &middot; '+esc(p.t)+'</span><span class="q">'+esc(p.q)+'</span></div><div class="card small" tabindex="0" role="button" aria-label="Turn the '+esc(p.t)+' card"><div class="card-inner"><div class="face back">'+BACK+'</div><div class="face front"></div></div></div><div class="pos-read" id="pr'+k+'"></div>';
+    spreadEl.appendChild(d);
+    var cardEl=d.querySelector('.card');
+    var turn=function(){ if(!spread || cardEl.classList.contains('flipped')) return; var c=spread[k]; setFront(cardEl,c.i,c.r); requestAnimationFrame(function(){ cardEl.classList.add('flipped'); });
+      var pr=document.getElementById('pr'+k); pr.innerHTML='<b>'+esc(DECK[c.i].t)+(c.r?' (reversed)':'')+'</b>'+esc(DECK[c.i].k)+'<br><button data-open="'+c.i+'" data-orev="'+(c.r?1:0)+'">Read in full</button>'; pr.classList.add('on');
+      document.getElementById('sjc'+k).textContent='· '+DECK[c.i].t+(c.r?' (reversed)':''); };
+    cardEl.addEventListener('click',turn); cardEl.addEventListener('keydown',function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); turn(); } });
+  }); levelLabels(); }
+function levelLabels(){ var ls=spreadEl.querySelectorAll('.pos-label'), h=0; ls.forEach(function(l){ l.style.minHeight=''; h=Math.max(h,l.offsetHeight); }); ls.forEach(function(l){ l.style.minHeight=h+'px'; }); }
+addEventListener('resize',levelLabels); if(document.fonts&&document.fonts.ready) document.fonts.ready.then(levelLabels);
+renderSpread();
+document.getElementById('laySpread').addEventListener('click',function(){
+  var n=SPREADS[SP].pos.length, pool=DECK.map(function(_,i){return i;}); spread=[];
+  for(var j=0;j<n;j++){ spread.push({i:pool.splice(rand(pool.length),1)[0], r:flip()}); }
+  renderSpread(); document.getElementById('spreadNote').value='';
+  spreadEl.querySelectorAll('.card').forEach(function(c,k){ c.style.transition='transform .9s var(--ease), opacity .9s'; c.style.transform='translateY(18px)'; c.style.opacity='0'; setTimeout(function(){ c.style.transform=''; c.style.opacity=''; },120+k*140); });
+});
+document.getElementById('keepSpread').addEventListener('click',function(){ if(!spread) return;
+  var S=SPREADS[SP];
+  addEntry({kind:'spread', spread:S.t, pos:S.pos.map(function(p){return p.t;}), cards:spread.map(function(c){return c.i;}), revs:spread.map(function(c){return c.r?1:0;}), pnotes:S.pos.map(function(_,k){ var t=document.getElementById('sjn'+k); return t?t.value:''; }), note:document.getElementById('spreadNote').value});
+  var t=document.getElementById('spreadToast'); t.classList.add('on'); setTimeout(function(){ t.classList.remove('on'); },2000); });
+
+/* ---------- the deck ---------- */
+var grid=document.getElementById('deckGrid'), filtersEl=document.getElementById('filters'), MV=-1;
+DECK.forEach(function(c,i){ var b=document.createElement('button'); b.className='tile'; b.setAttribute('data-open',i); b.setAttribute('data-mv',c.mi); b.setAttribute('aria-label','Open '+c.t);
+  b.innerHTML='<div class="card small"><div class="card-inner"><div class="face front"></div></div></div>'; setFront(b.querySelector('.card'),i,false); grid.appendChild(b); });
+[{n:'All 44'}].concat(MOVEMENTS).forEach(function(m,k){ var b=document.createElement('button'); b.className='tab'; b.setAttribute('role','tab'); b.textContent=m.n; b.setAttribute('data-mvk',k-1); filtersEl.appendChild(b); });
+function renderFilter(){ filtersEl.querySelectorAll('.tab').forEach(function(b){ b.setAttribute('aria-selected', +b.getAttribute('data-mvk')===MV?'true':'false'); });
+  grid.querySelectorAll('.tile').forEach(function(t){ t.hidden = MV>=0 && +t.getAttribute('data-mv')!==MV; });
+  document.getElementById('mvIntro').textContent = MV>=0 ? MOVEMENTS[MV].d : 'The Calling Deep names what has been hidden or learned. The Tidal Crossroads meets emotion, relationship, and choice. The Salt Crown brings the insight into daily life, boundaries, visibility, and care.'; }
+filtersEl.addEventListener('click',function(e){ var b=e.target.closest('[data-mvk]'); if(!b) return; MV=+b.getAttribute('data-mvk'); renderFilter(); });
+renderFilter();
+
+/* ---------- dialog ---------- */
+var dlg=document.getElementById('dlg');
+function openCard(i, rev){ setFront(document.getElementById('dlgCard'),i,rev); document.getElementById('dlgReading').innerHTML=readingHTML(i,{id:'dlg',rev:rev});
+  if(dlg.showModal) dlg.showModal(); else dlg.setAttribute('open',''); }
+document.getElementById('dlgClose').addEventListener('click',function(){ dlg.close ? dlg.close() : dlg.removeAttribute('open'); });
+dlg.addEventListener('click',function(e){ if(e.target===dlg) dlg.close(); });
+
+/* ---------- journal ---------- */
+var JKEY=K+'journal';
+function entries(){ var e=lsGet(JKEY,[]); return Array.isArray(e)?e:[]; }
+function addEntry(o){ var e=entries(); e.unshift({id:Date.now()+''+rand(1000), t:new Date().toISOString(), phase:MOON.name, lit:Math.round(MOON.lit*100), kind:o.kind, spread:o.spread||'', pos:o.pos||[], pnotes:o.pnotes||[], cards:o.cards, revs:o.revs||[], note:o.note||''}); lsSet(JKEY,e); renderJournal(); }
+function renderJournal(){ var list=document.getElementById('journalList'), e=entries();
+  if(!e.length){ list.innerHTML='<div class="empty"><p>Your journal is empty for now.</p><p>Draw a card or lay a spread, then choose Keep in my journal.</p></div>'; return; }
+  list.innerHTML='';
+  e.forEach(function(en){ var d=new Date(en.t); var el=document.createElement('article'); el.className='entry';
+    var revs=en.revs||[];
+    var names=en.cards.map(function(i,k){ return DECK[i]?DECK[i].t+(revs[k]?' (reversed)':''):''; });
+    el.innerHTML='<div class="thumbs">'+en.cards.map(function(i,k){ return '<img src="'+img(i)+'" alt="'+esc(DECK[i].t)+'"'+(revs[k]?' class="rev"':'')+'>'; }).join('')+'</div>'
+      +'<div style="min-width:0"><div class="entry-meta">'+d.toLocaleDateString(undefined,{month:'long',day:'numeric',year:'numeric'})+' &middot; '+esc(en.phase)+', '+en.lit+'% lit'+'</div>'
+      +'<h4>'+esc(en.kind==='spread'?en.spread:names[0])+'</h4>'
+      +(en.kind==='spread' ? en.cards.map(function(i,k){ var pl=(en.pos||[])[k]; return '<div class="pn"><span class="sj-label">'+(k+1)+(pl?' &middot; '+esc(pl):'')+' <span class="cn">&middot; '+esc(names[k])+'</span></span><textarea data-k="'+k+'" aria-label="Note for '+esc(names[k])+'">'+esc((en.pnotes||[])[k]||'')+'</textarea></div>'; }).join('')+'<div class="pn"><span class="sj-label">The whole reading</span>' : '')
+      +'<textarea data-k="whole" aria-label="Note">'+esc(en.note)+'</textarea>'+(en.kind==='spread'?'</div>':'')+'<div class="entry-foot"><span class="toast">Saved</span><button class="btn quiet" data-del>Delete</button></div></div>';
+    var toast=el.querySelector('.toast'), tm;
+    el.querySelectorAll('textarea').forEach(function(ta){ ta.addEventListener('input',function(){ var k=ta.getAttribute('data-k'), all=entries();
+      all.forEach(function(x){ if(x.id!==en.id) return; if(k==='whole') x.note=ta.value; else { x.pnotes=x.pnotes||[]; x.pnotes[+k]=ta.value; } });
+      lsSet(JKEY,all); toast.classList.add('on'); clearTimeout(tm); tm=setTimeout(function(){ toast.classList.remove('on'); },1400); }); });
+    el.querySelector('[data-del]').addEventListener('click',function(){ var foot=this.parentNode;
+      foot.innerHTML='<span style="color:var(--ash)">Delete this entry for good?</span><button class="btn quiet" data-yes style="color:var(--gold)">Delete</button><button class="btn quiet" data-no>Keep it</button>';
+      foot.querySelector('[data-yes]').onclick=function(){ lsSet(JKEY,entries().filter(function(x){ return x.id!==en.id; })); renderJournal(); };
+      foot.querySelector('[data-no]').onclick=renderJournal; });
+    list.appendChild(el); });
+}
+renderJournal();
+if(PRINT_URL){ var pb=document.getElementById('printBtn'); pb.href=PRINT_URL; pb.hidden=false; }
+
+/* ---------- backup ---------- */
+var box=document.getElementById('backupBox'), bmsg=document.getElementById('backupMsg');
+function backupText(){ return JSON.stringify({deck:'hecatean-mirror', saved:new Date().toISOString(), journal:entries()}); }
+document.getElementById('exportBtn').addEventListener('click',function(){ var txt=backupText(), n=entries().length; box.value=txt;
+  var done=function(){ bmsg.textContent='Backup of '+n+' '+(n===1?'entry':'entries')+' copied. Paste it into a note or an email to yourself.'; };
+  var fail=function(){ box.focus(); box.select(); bmsg.textContent='Your backup is in the box above. Select all of it and copy.'; };
+  try{ navigator.clipboard.writeText(txt).then(done,fail); }catch(e){ fail(); } });
+/* a file download works where the page is hosted on its own; inside a preview frame it is blocked, so the button only shows outside one */
+var framed=true; try{ framed = window.self !== window.top; }catch(e){}
+var dl=document.getElementById('downloadBtn'); dl.hidden=framed;
+dl.addEventListener('click',function(){ var a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([backupText()],{type:'application/json'}));
+  a.download='hecatean-mirror-journal-'+new Date().toISOString().slice(0,10)+'.json'; document.body.appendChild(a); a.click(); a.remove(); bmsg.textContent='Backup file saved.'; });
+function bringIn(txt){ try{ var o=JSON.parse(txt), list=Array.isArray(o)?o:o&&o.journal; if(!Array.isArray(list)) throw 0;
+    var cur=entries(), have={}, added=0; cur.forEach(function(x){ have[x.id]=1; });
+    list.forEach(function(x){ if(x && x.id && Array.isArray(x.cards) && !have[x.id] && x.cards.every(function(i){ return DECK[i]; })){ cur.push(x); have[x.id]=1; added++; } });
+    cur.sort(function(a,b){ return a.t<b.t?1:-1; }); lsSet(JKEY,cur); renderJournal(); box.value='';
+    bmsg.textContent = added ? 'Brought in '+added+' '+(added===1?'entry':'entries')+'.' : 'Everything in that backup is already in your journal.';
+  }catch(e){ bmsg.textContent='That does not look like a Hecatean Mirror backup. Copy the whole backup and try again.'; } }
+document.getElementById('importBtn').addEventListener('click',function(){ var t=box.value.trim(); if(t) bringIn(t); else { box.focus(); bmsg.textContent='Paste a backup in the box first.'; } });
+document.getElementById('importFile').addEventListener('change',function(){ var f=this.files[0]; if(!f) return; var r=new FileReader(); r.onload=function(){ bringIn(r.result); }; r.readAsText(f); this.value=''; });
+
+/* ---------- delegated clicks ---------- */
+document.addEventListener('click',function(e){
+  var o=e.target.closest('[data-open]'); if(o){ openCard(+o.getAttribute('data-open'), o.getAttribute('data-orev')==='1'); return; }
+  var k=e.target.closest('[data-keep]'); if(k){ var note=document.getElementById(k.getAttribute('data-note')); addEntry({kind:'single', cards:[+k.getAttribute('data-keep')], revs:[+k.getAttribute('data-rev')], note:note?note.value:''}); if(note) note.value='';
+    var tt=k.parentNode.querySelector('.toast'); if(tt){ tt.classList.add('on'); setTimeout(function(){ tt.classList.remove('on'); },2000); } return; }
+  if(e.target.closest('[data-again]') || e.target.closest('[data-scrolltop]')){ if(dlg.open) dlg.close(); document.getElementById('top').scrollIntoView({behavior:'smooth'}); btn.focus({preventScroll:true}); }
+});
+
+/* ---------- embers: gold sparks rising from the torch side of the night ---------- */
+(function(){ if(REDUCED) return; var c=document.getElementById('embers'), x=c.getContext('2d'), P=[], W, H, dpr=Math.min(2,window.devicePixelRatio||1);
+  function size(){ W=c.width=innerWidth*dpr; H=c.height=innerHeight*dpr; }
+  size(); addEventListener('resize',size);
+  for(var i=0;i<42;i++) P.push({x:Math.random(),y:Math.random(),r:.4+Math.random()*1.3,s:.00006+Math.random()*.00016,a:Math.random()*6.28,o:.15+Math.random()*.5,g:Math.random()<.7});
+  (function loop(){ x.clearRect(0,0,W,H); P.forEach(function(p){ p.y-=p.s; p.a+=.006; if(p.y<-.02){ p.y=1.02; p.x=Math.random(); }
+    var px=(p.x+Math.sin(p.a)*.012)*W, py=p.y*H, tw=p.o*(.55+.45*Math.sin(p.a*3.3));
+    var col=p.g?'240,184,80':'200,225,225';
+    var g=x.createRadialGradient(px,py,0,px,py,p.r*6*dpr); g.addColorStop(0,'rgba('+col+','+tw+')'); g.addColorStop(1,'rgba('+col+',0)');
+    x.fillStyle=g; x.beginPath(); x.arc(px,py,p.r*6*dpr,0,6.283); x.fill(); }); requestAnimationFrame(loop); })();
+})();
+</script>
+</body>
+</html>
