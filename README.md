@@ -19,5 +19,6 @@ The GitHub Pages site lists everything at the root:
 | `virgo-season-workbook/` | Virgo Season Workbook |
 | `libra-season-workbook/` | Libra Season Workbook |
 | `scorpio-workbook/` | Scorpio Season Handbook |
+| `sagittarius-workbook/` | Sagittarius Season Handbook |
 
 Each new artifact goes in its own folder and gets a tile added to `index.html`.
