@@ -290,7 +290,7 @@ footer .f-mark { font-family: var(--display); font-weight: 500; text-transform: 
         <p>Your notes live in this browser. Copy a backup to keep them safe or move them to another device, then bring it in here.</p>
         <div class="actions"><button class="btn solid" id="exportBtn">Copy my backup</button><button class="btn" id="downloadBtn" hidden>Save a backup file</button><label class="btn" for="importFile">Bring in a backup file</label><input type="file" id="importFile" accept=".json,.txt" hidden></div>
         <textarea id="backupBox" aria-label="Backup" placeholder="Your backup appears here when you copy it. To bring one in, paste it here and press Bring it in."></textarea>
-        <div class="actions"><button class="btn" id="importBtn">Bring it in</button><span class="safe-msg" id="backupMsg" role="status"></span></div>
+        <div class="actions"><button class="btn" id="importBtn">Bring it in</button><button class="btn quiet" id="clearAll">Clear everything</button><span class="safe-msg" id="backupMsg" role="status"></span></div>
       </div>
     </div>
   </div>
@@ -328,7 +328,6 @@ footer .f-mark { font-family: var(--display); font-weight: 500; text-transform: 
       <div class="flourish"><i></i></div>
     </div>
     <div id="arcView"></div>
-    <div class="review" id="reviewBar" hidden><b>Review only:</b> <button class="btn quiet" id="fillSample">Fill 30 sample days</button><button class="btn quiet" id="clearAll">Clear everything</button></div>
   </div>
 </section>
 
@@ -499,15 +498,11 @@ function drawConf(conf){ var el=document.getElementById('confChart'); if(!el) re
 }
 
 /* review helpers: only on the review copy, never on the members' page */
-var REVIEW = false;
-if(REVIEW){ document.getElementById('reviewBar').hidden=false;
-  document.getElementById('fillSample').addEventListener('click',function(){ P={days:{}, viewing:30}; var t=Date.now()-30*864e5;
-    for(var n=1;n<=30;n++){ var D=DAYS[n-1], used=[], cs=D.o.map(function(o){ var i; do{ i=rand(78); }while(used.indexOf(i)>=0); used.push(i); return {i:i, r:o==='R'?true:o==='U'?false:rand(2)===1}; });
-      P.days[n]={done:new Date(t+n*864e5).toISOString(), conf:Math.max(1,Math.min(5,Math.round(1.5+n/10+(rand(3)-1)*0.6))), cards:cs, f:D.fields.map(function(){ return 'Sample note for review. The card shows a pattern I can recognize in my week.'; })}; }
-    P.days[30].f[DAYS[29].fields.length-1]='I start with the phrase, then I pick the lens that fits the question: too much, too little, blocked, inward, delayed or releasing.';
-    save(); render(); document.getElementById('arc').scrollIntoView(); });
-  document.getElementById('clearAll').addEventListener('click',function(){ P={days:{}, viewing:1}; save(); render(); });
-}
+/* clear everything: a second click within 5 seconds confirms */
+var clearArm=null;
+document.getElementById('clearAll').addEventListener('click',function(){ var btn=this;
+  if(!clearArm){ btn.textContent='Click again to clear all 30 days'; clearArm=setTimeout(function(){ clearArm=null; btn.textContent='Clear everything'; },5000); return; }
+  clearTimeout(clearArm); clearArm=null; btn.textContent='Clear everything'; P={days:{}, viewing:1}; save(); render(); document.getElementById('backupMsg').textContent='Everything is cleared. Day 1 is ready.'; });
 
 function render(){ renderStrip(); renderDay(); renderArc(); }
 document.getElementById('dayView').addEventListener('click',function(e){ var g=e.target.closest('[data-goto]'); if(g){ P.viewing=+g.getAttribute('data-goto'); save(); render(); return; }
