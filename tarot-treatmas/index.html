@@ -1,0 +1,391 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>12 Days of Tarot Treatmas</title>
+<meta name="description" content="Twelve doors, one gift a day from the winter solstice to New Year's Day, for members of the High Priestess Collective.">
+<!-- link preview -->
+<link rel="canonical" href="https://sunnysink.github.io/hpts/tarot-treatmas/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="High Priestess Tarot School">
+<meta property="og:title" content="12 Days of Tarot Treatmas">
+<meta property="og:description" content="Twelve doors, one gift a day from the winter solstice to New Year's Day, for members of the High Priestess Collective.">
+<meta property="og:url" content="https://sunnysink.github.io/hpts/tarot-treatmas/">
+<meta property="og:image" content="https://sunnysink.github.io/hpts/tarot-treatmas/preview.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="12 Days of Tarot Treatmas">
+<meta name="twitter:description" content="Twelve doors, one gift a day from the winter solstice to New Year's Day, for members of the High Priestess Collective.">
+<meta name="twitter:image" content="https://sunnysink.github.io/hpts/tarot-treatmas/preview.jpg">
+<!-- /link preview -->
+<meta name="theme-color" content="#06182F">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Jost:wght@300;400;500;600&display=swap">
+<style>
+/* Layout: one centered column under a night sky. Title and countdown, then twelve arched doors in a 4 x 3 grid (3 across on tablets, 2 on phones). A door opens into a dialog with the day's gift. HPTS board, dark only by design. */
+:root {
+  --night: #06182F;
+  --deep: #0D2342;
+  --sea: #224E79;
+  --ink: #141929;
+  --cream: #F5EFE4;
+  --cream-shadow: #E9E1CF;
+  --mist: #D5D2E5;
+  --peri: #8298B9;
+  --gold: #C58F46;
+  --honey: #F0C265;
+  --gold-soft: rgba(240, 194, 101, .32);
+  --serif: "DM Serif Display", "Bodoni Moda", Didot, "Times New Roman", serif;
+  --sans: "Jost", "Futura", "Segoe UI", system-ui, sans-serif;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html, body { min-height: 100%; }
+body {
+  margin: 0;
+  background: radial-gradient(ellipse 70% 45% at 50% -5%, rgba(34, 78, 121, .75), transparent 70%) fixed, radial-gradient(ellipse 60% 40% at 90% 105%, rgba(197, 143, 70, .14), transparent 70%) fixed, linear-gradient(180deg, var(--deep), var(--night) 45%, var(--ink)) fixed, var(--night);
+  color: var(--cream);
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.6;
+}
+#sky { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
+.wrap {
+  position: relative; z-index: 1;
+  max-width: 1040px; margin: 0 auto;
+  padding-block: 44px 64px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  display: flex; flex-direction: column; align-items: center; gap: 34px;
+}
+header { text-align: center; display: flex; flex-direction: column; gap: 12px; align-items: center; }
+.eyebrow {
+  font-size: 13px; letter-spacing: .28em; text-transform: uppercase; color: var(--gold); font-weight: 600;
+  display: flex; align-items: center; gap: 12px;
+}
+.eyebrow::before, .eyebrow::after { content: ""; width: 34px; height: 1px; background: var(--gold-soft); }
+h1 {
+  font-family: var(--serif); font-weight: 400; font-size: clamp(40px, 7.5vw, 68px); line-height: 1.05;
+  margin: 0; text-wrap: balance;
+}
+h1 em { color: var(--honey); font-style: italic; text-shadow: 0 0 24px rgba(240, 194, 101, .5); }
+.sub { margin: 0; color: var(--mist); max-width: 36em; text-wrap: balance; font-weight: 300; font-size: 18px; }
+
+.divider { display: flex; align-items: center; gap: 10px; color: var(--gold); }
+.divider span { width: 90px; border-top: 2px dotted var(--gold-soft); }
+
+.countdown { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+.countdown .label { font-size: 13px; letter-spacing: .22em; text-transform: uppercase; color: var(--peri); font-weight: 500; }
+.clock { display: flex; gap: 10px; }
+.clock div {
+  min-width: 74px; padding: 10px 8px 8px; border: 1px solid var(--gold-soft); border-radius: 12px;
+  background: rgba(13, 35, 66, .7); display: flex; flex-direction: column; align-items: center;
+}
+.clock b { font-family: var(--serif); font-weight: 400; font-size: 30px; line-height: 1; font-variant-numeric: tabular-nums; color: var(--cream); }
+.clock small { font-size: 13px; letter-spacing: .14em; text-transform: uppercase; color: var(--peri); margin-top: 4px; }
+
+.grid {
+  width: 100%;
+  display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 26px 22px;
+  list-style: none; margin: 0; padding: 0;
+}
+@media (max-width: 820px) { .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 520px) { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px 14px; } }
+
+.door {
+  --tint: var(--deep);
+  position: relative; width: 100%; aspect-ratio: 3 / 4.3; max-width: 100%;
+  border: 1px solid rgba(197, 143, 70, .55);
+  border-radius: 999px 999px 14px 14px;
+  background:
+    radial-gradient(circle at 50% 30%, rgba(240, 194, 101, .12), transparent 55%),
+    linear-gradient(170deg, var(--tint), var(--night));
+  color: var(--cream); font: inherit; cursor: pointer; padding: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, .35), inset 0 0 0 6px rgba(6, 24, 47, .55), inset 0 0 0 7px rgba(197, 143, 70, .35);
+  transition: transform .35s cubic-bezier(.2, .9, .3, 1.3), box-shadow .35s ease, border-color .35s ease;
+  overflow: hidden;
+}
+.door:nth-child(3n+2) { --tint: var(--sea); }
+.door:nth-child(4n+3) { --tint: #1A3A62; }
+.door::after {
+  content: ""; position: absolute; inset: 0; border-radius: inherit;
+  background: linear-gradient(115deg, transparent 35%, rgba(245, 239, 228, .14) 50%, transparent 65%);
+  transform: translateX(-120%); transition: transform .8s ease;
+}
+.door:hover, .door:focus-visible {
+  transform: translateY(-12px) rotate(-1deg);
+  border-color: var(--honey);
+  box-shadow: 0 22px 34px rgba(0, 0, 0, .5), 0 0 30px rgba(240, 194, 101, .28), inset 0 0 0 6px rgba(6, 24, 47, .55), inset 0 0 0 7px rgba(240, 194, 101, .6);
+}
+.door:nth-child(even):hover, .door:nth-child(even):focus-visible { transform: translateY(-12px) rotate(1deg); }
+.door:hover::after { transform: translateX(120%); }
+.door:focus-visible { outline: 2px solid var(--honey); outline-offset: 5px; }
+
+.door .star { width: 22px; height: 22px; color: var(--gold); }
+.door .num { font-family: var(--serif); font-size: clamp(46px, 7vw, 64px); line-height: 1; color: var(--cream); }
+.door .date { font-size: 13px; letter-spacing: .2em; text-transform: uppercase; color: var(--peri); font-weight: 500; }
+.door .state { font-size: 13px; color: var(--gold); letter-spacing: .06em; min-height: 1.4em; }
+.door.today { border-color: var(--honey); animation: glow 2.6s ease-in-out infinite; }
+.door.today .state { color: var(--honey); font-weight: 600; }
+@keyframes glow {
+  0%, 100% { box-shadow: 0 6px 14px rgba(0, 0, 0, .35), 0 0 14px rgba(240, 194, 101, .2), inset 0 0 0 6px rgba(6, 24, 47, .55), inset 0 0 0 7px rgba(240, 194, 101, .5); }
+  50% { box-shadow: 0 6px 14px rgba(0, 0, 0, .35), 0 0 34px rgba(240, 194, 101, .45), inset 0 0 0 6px rgba(6, 24, 47, .55), inset 0 0 0 7px rgba(240, 194, 101, .7); }
+}
+.door.opened {
+  background: radial-gradient(circle at 50% 28%, #FFF8EA, var(--cream) 55%, var(--cream-shadow));
+  border-color: var(--gold);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, .35), inset 0 0 0 6px rgba(233, 225, 207, .9), inset 0 0 0 7px rgba(197, 143, 70, .5);
+}
+.door.opened .num { color: var(--sea); }
+.door.opened .date { color: var(--ink); }
+.door.opened .state { color: var(--gold); }
+.door.locked { cursor: default; }
+.door.locked .num { opacity: .75; }
+.door.shake { animation: shake .45s ease; }
+@keyframes shake {
+  0%, 100% { transform: translateX(0); } 20% { transform: translateX(-6px) rotate(-1.5deg); }
+  40% { transform: translateX(5px) rotate(1.5deg); } 60% { transform: translateX(-3px); } 80% { transform: translateX(2px); }
+}
+
+.foot { text-align: center; color: var(--peri); font-size: 14px; display: flex; flex-direction: column; gap: 6px; align-items: center; }
+.foot a { color: var(--honey); }
+.preview-note {
+  font-size: 13px; letter-spacing: .08em; color: var(--ink); background: var(--honey);
+  padding: 6px 14px; border-radius: 999px; font-weight: 600;
+}
+
+dialog {
+  border: 1px solid var(--gold); border-radius: 22px; padding: 0; max-width: min(540px, calc(100vw - 32px)); width: 100%;
+  background: var(--cream); color: var(--ink);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, .6), 0 0 40px rgba(240, 194, 101, .25);
+}
+dialog::backdrop { background: rgba(6, 24, 47, .78); backdrop-filter: blur(3px); }
+dialog[open] { animation: rise .45s cubic-bezier(.2, .9, .3, 1.2); }
+@keyframes rise { from { transform: translateY(24px) scale(.96); opacity: 0; } to { transform: none; opacity: 1; } }
+dialog { max-height: calc(100dvh - 32px); overflow-y: auto; }
+.gift { padding: 34px 28px 28px; display: flex; flex-direction: column; gap: 14px; text-align: center; align-items: center; }
+.gift .eyebrow { color: var(--gold); }
+.gift .eyebrow::before, .gift .eyebrow::after { background: rgba(197, 143, 70, .5); }
+.gift h2 { font-family: var(--serif); font-weight: 400; font-size: clamp(30px, 6vw, 40px); line-height: 1.1; margin: 0; text-wrap: balance; }
+.gift h2 em { color: var(--sea); font-style: italic; }
+.gift .art {
+  width: 100%; max-width: 100%; aspect-ratio: 4 / 5; border-radius: 14px; overflow: hidden;
+  border: 1px solid rgba(197, 143, 70, .6); background: radial-gradient(circle at 50% 35%, var(--sea), var(--night) 75%);
+  display: flex; align-items: center; justify-content: center; color: var(--honey);
+}
+.gift .art img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.gift .art svg { width: 64px; height: 64px; filter: drop-shadow(0 0 14px rgba(240, 194, 101, .6)); }
+.gift p { margin: 0; font-size: 17px; color: #2A3048; }
+.gift .placeholder { font-size: 13px; letter-spacing: .06em; color: var(--gold); border: 1px dashed var(--gold); border-radius: 8px; padding: 6px 12px; }
+.btn {
+  display: inline-block; text-decoration: none; font: 600 15px var(--sans); letter-spacing: .06em;
+  background: var(--sea); color: var(--cream); border: 0; border-radius: 999px; padding: 13px 26px; cursor: pointer;
+  transition: transform .2s ease, background .2s ease;
+}
+.btn:hover, .btn:focus-visible { background: var(--night); transform: translateY(-2px); }
+.btn:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+.close {
+  position: absolute; top: 12px; right: 14px; width: 38px; height: 38px; border-radius: 50%;
+  border: 1px solid rgba(197, 143, 70, .5); background: transparent; color: var(--ink); font-size: 20px; cursor: pointer;
+}
+.close:focus-visible { outline: 2px solid var(--sea); }
+
+.toast {
+  position: fixed; left: 50%; bottom: calc(24px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%) translateY(20px);
+  background: var(--deep); color: var(--cream); border: 1px solid var(--gold); border-radius: 999px;
+  padding: 10px 20px; font-size: 15px; opacity: 0; transition: opacity .25s ease, transform .25s ease; pointer-events: none; z-index: 5;
+  max-width: calc(100vw - 32px); text-align: center;
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+@media (prefers-reduced-motion: reduce) {
+  .door, .door::after, .btn, .toast { transition: none; }
+  .door.today, .door.shake, dialog[open] { animation: none; }
+  .door:hover, .door:focus-visible, .door:nth-child(even):hover { transform: translateY(-6px); }
+}
+</style>
+</head>
+<body>
+<canvas id="sky" aria-hidden="true"></canvas>
+<main class="wrap">
+  <header>
+    <div class="eyebrow">High Priestess Collective</div>
+    <h1>12 Days of Tarot <em>Treatmas</em></h1>
+    <p class="sub">A gift from Sunny behind every door. The first one opens on the winter solstice, and a new door opens each day at midnight Pacific until New Year's Day.</p>
+  </header>
+
+  <div class="divider" aria-hidden="true"><span></span><svg width="18" height="18" viewBox="0 0 24 24"><path fill="currentColor" d="M12 0 14.2 9.8 24 12l-9.8 2.2L12 24l-2.2-9.8L0 12l9.8-2.2Z"/></svg><span></span></div>
+
+  <section class="countdown" id="countdown" aria-live="polite">
+    <div class="label" id="cd-label">The first door opens in</div>
+    <div class="clock" id="clock">
+      <div><b id="cd-d">00</b><small>Days</small></div>
+      <div><b id="cd-h">00</b><small>Hours</small></div>
+      <div><b id="cd-m">00</b><small>Min</small></div>
+      <div><b id="cd-s">00</b><small>Sec</small></div>
+    </div>
+  </section>
+
+  <ol class="grid" id="grid" aria-label="Twelve doors"></ol>
+
+  <footer class="foot">
+    <span id="preview-flag" class="preview-note" hidden>Preview: every door is open</span>
+    <span>Each gift lives inside the Collective. Sign in at <a href="https://www.highpriestessts.com/feed" target="_blank" rel="noopener">highpriestessts.com</a> or the Circle app to open it.</span>
+  </footer>
+</main>
+
+<dialog id="gift" aria-labelledby="gift-title">
+  <button class="close" id="close" aria-label="Close">&times;</button>
+  <div class="gift">
+    <div class="eyebrow" id="gift-eyebrow">Day 1</div>
+    <h2 id="gift-title">Gift</h2>
+    <div class="art" id="gift-art"></div>
+    <p id="gift-body"></p>
+    <span class="placeholder" id="gift-ph" hidden>Placeholder until Sunny picks the gift</span>
+    <a class="btn" id="gift-link" href="https://www.highpriestessts.com/feed" target="_blank" rel="noopener">Get today's gift in the Collective</a>
+  </div>
+</dialog>
+
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+/* The twelve gifts. For each day fill title, body, image (a file name in this folder, e.g. "day-01.jpg")
+   and link (that day's members-only Circle post; the gift itself lives only there).
+   placeholder: true shows the dashed "placeholder" note in the dialog. */
+const DAYS = [
+  { date: "2026-12-21", label: "Dec 21", title: "Winter <em>Solstice</em>", body: "The longest night opens the first door.", image: "", link: "", placeholder: true },
+  { date: "2026-12-22", label: "Dec 22", title: "Gift <em>Two</em>", body: "", image: "", link: "", placeholder: true },
+  { date: "2026-12-23", label: "Dec 23", title: "Gift <em>Three</em>", body: "", image: "", link: "", placeholder: true },
+  { date: "2026-12-24", label: "Dec 24", title: "Gift <em>Four</em>", body: "", image: "", link: "", placeholder: true },
+  { date: "2026-12-25", label: "Dec 25", title: "Gift <em>Five</em>", body: "", image: "", link: "", placeholder: true },
+  { date: "2026-12-26", label: "Dec 26", title: "Gift <em>Six</em>", body: "", image: "", link: "", placeholder: true },
+  { date: "2026-12-27", label: "Dec 27", title: "Gift <em>Seven</em>", body: "", image: "", link: "", placeholder: true },
+  { date: "2026-12-28", label: "Dec 28", title: "Gift <em>Eight</em>", body: "", image: "", link: "", placeholder: true },
+  { date: "2026-12-29", label: "Dec 29", title: "Gift <em>Nine</em>", body: "", image: "", link: "", placeholder: true },
+  { date: "2026-12-30", label: "Dec 30", title: "Gift <em>Ten</em>", body: "", image: "", link: "", placeholder: true },
+  { date: "2026-12-31", label: "Dec 31", title: "Gift <em>Eleven</em>", body: "", image: "", link: "", placeholder: true },
+  { date: "2027-01-01", label: "Jan 1", title: "New <em>Year</em>", body: "The last door opens on New Year's Day.", image: "", link: "", placeholder: true }
+];
+const FEED = "https://www.highpriestessts.com/feed";
+const PREVIEW = location.hash === "#preview"; /* PREVIEW_FLAG */
+
+/* Today's date in Pacific time, as YYYY-MM-DD. */
+function pacificToday() {
+  const p = new Intl.DateTimeFormat("en-CA", { timeZone: "America/Los_Angeles", year: "numeric", month: "2-digit", day: "2-digit" }).formatToParts(new Date());
+  const g = t => p.find(x => x.type === t).value;
+  return `${g("year")}-${g("month")}-${g("day")}`;
+}
+/* Midnight Pacific on a date, as a timestamp (December is PST, UTC-8). */
+const midnightPT = d => Date.parse(d + "T08:00:00Z");
+
+let opened = new Set();
+try { opened = new Set(JSON.parse(localStorage.getItem("treatmas-opened") || "[]")); } catch (e) {}
+const saveOpened = () => { try { localStorage.setItem("treatmas-opened", JSON.stringify([...opened])); } catch (e) {} };
+
+const starSVG = '<svg class="star" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 0 14.2 9.8 24 12l-9.8 2.2L12 24l-2.2-9.8L0 12l9.8-2.2Z"/></svg>';
+const grid = document.getElementById("grid");
+
+function render() {
+  const today = pacificToday();
+  grid.innerHTML = "";
+  DAYS.forEach((d, i) => {
+    const unlocked = PREVIEW || d.date <= today;
+    const isToday = !PREVIEW && d.date === today;
+    const li = document.createElement("li");
+    li.style.display = "contents";
+    const b = document.createElement("button");
+    b.className = "door" + (unlocked ? "" : " locked") + (isToday && !opened.has(i) ? " today" : "") + (unlocked && opened.has(i) ? " opened" : "");
+    b.type = "button";
+    b.id = "door-" + (i + 1);
+    const state = !unlocked ? "Opens " + d.label : opened.has(i) ? "Opened" : isToday ? "Open me" : "Ready";
+    b.setAttribute("aria-label", `Day ${i + 1}, ${d.label}. ${state}`);
+    b.innerHTML = `${starSVG}<span class="num">${i + 1}</span><span class="date">${d.label}</span><span class="state">${state}</span>`;
+    b.addEventListener("click", () => unlocked ? openGift(i) : nudge(b, d));
+    li.appendChild(b);
+    grid.appendChild(li);
+  });
+  document.getElementById("preview-flag").hidden = !PREVIEW;
+}
+
+function nudge(b, d) {
+  b.classList.remove("shake"); void b.offsetWidth; b.classList.add("shake");
+  toast("This door opens " + d.label + " at midnight Pacific");
+}
+let tt;
+function toast(msg) {
+  const t = document.getElementById("toast");
+  t.textContent = msg; t.classList.add("show");
+  clearTimeout(tt); tt = setTimeout(() => t.classList.remove("show"), 2600);
+}
+
+const dlg = document.getElementById("gift");
+function openGift(i) {
+  const d = DAYS[i];
+  document.getElementById("gift-eyebrow").textContent = `Day ${i + 1} · ${d.label}`;
+  document.getElementById("gift-title").innerHTML = d.title;
+  const body = document.getElementById("gift-body");
+  body.textContent = d.body || "Sunny's gift for this day goes here.";
+  const art = document.getElementById("gift-art");
+  art.innerHTML = d.image ? `<img src="${d.image}" alt="">` : starSVG.replace('class="star"', '');
+  document.getElementById("gift-ph").hidden = !d.placeholder;
+  document.getElementById("gift-link").href = d.link || FEED;
+  if (typeof dlg.showModal === "function") dlg.showModal(); else dlg.setAttribute("open", "");
+  opened.add(i); saveOpened(); render();
+}
+document.getElementById("close").addEventListener("click", () => dlg.close());
+dlg.addEventListener("click", e => { if (e.target === dlg) dlg.close(); });
+
+/* Countdown to the next door. Hidden once every door is open. */
+function tick() {
+  const now = Date.now();
+  const next = DAYS.find(d => midnightPT(d.date) > now);
+  const box = document.getElementById("countdown");
+  if (PREVIEW || !next) { box.hidden = true; return; }
+  const first = next === DAYS[0];
+  document.getElementById("cd-label").textContent = first ? "The first door opens in" : `Door ${DAYS.indexOf(next) + 1} opens in`;
+  let s = Math.max(0, Math.floor((midnightPT(next.date) - now) / 1000));
+  const pad = n => String(n).padStart(2, "0");
+  document.getElementById("cd-d").textContent = pad(Math.floor(s / 86400)); s %= 86400;
+  document.getElementById("cd-h").textContent = pad(Math.floor(s / 3600)); s %= 3600;
+  document.getElementById("cd-m").textContent = pad(Math.floor(s / 60));
+  document.getElementById("cd-s").textContent = pad(s % 60);
+}
+let lastDay = pacificToday();
+setInterval(() => { const t = pacificToday(); if (t !== lastDay) { lastDay = t; render(); } }, 30000);
+
+/* Twinkling night sky. */
+(function sky() {
+  const c = document.getElementById("sky"), x = c.getContext("2d");
+  const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let stars = [];
+  function size() {
+    c.width = innerWidth * devicePixelRatio; c.height = innerHeight * devicePixelRatio;
+    stars = Array.from({ length: Math.round(innerWidth * innerHeight / 9000) }, () => ({
+      x: Math.random() * c.width, y: Math.random() * c.height, r: (Math.random() * 1.2 + .3) * devicePixelRatio,
+      p: Math.random() * Math.PI * 2, s: Math.random() * .02 + .005, gold: Math.random() < .18
+    }));
+  }
+  function draw() {
+    x.clearRect(0, 0, c.width, c.height);
+    for (const st of stars) {
+      st.p += st.s;
+      x.globalAlpha = .35 + .5 * Math.abs(Math.sin(st.p));
+      x.fillStyle = st.gold ? "#F0C265" : "#F5EFE4";
+      x.beginPath(); x.arc(st.x, st.y, st.r, 0, Math.PI * 2); x.fill();
+    }
+    if (!still) requestAnimationFrame(draw);
+  }
+  addEventListener("resize", () => { size(); if (still) draw(); });
+  size(); draw();
+})();
+
+addEventListener("hashchange", () => location.reload());
+render(); tick(); setInterval(tick, 1000);
+</script>
+
+</body>
+</html>
